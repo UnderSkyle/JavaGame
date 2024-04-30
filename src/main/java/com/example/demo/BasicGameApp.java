@@ -8,23 +8,19 @@ import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.app.scene.Viewport;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
-import com.almasb.fxgl.entity.components.CollidableComponent;
-import javafx.geometry.Point2D;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
 
 import java.util.Map;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
-import static java.lang.Math.abs;
 
 /**
  * @author Almas Baimagambetov (almaslvl@gmail.com)
  */
 public class BasicGameApp extends GameApplication {
+
 
 
     @Override
@@ -35,9 +31,6 @@ public class BasicGameApp extends GameApplication {
         settings.setVersion("0.2");
     }
 
-    public enum EntityType {
-        PLAYER, COIN, WALL
-    }
 
     @Override
     protected void initInput() {
@@ -72,29 +65,20 @@ public class BasicGameApp extends GameApplication {
 
     @Override
     protected void initGame() {
-        getGameScene().setBackgroundColor(Color.BLACK);;
+        getGameWorld().addEntityFactory(new GameFactory());
+
+        getGameScene().setBackgroundColor(Color.BLACK);
         Entity world = entityBuilder()
                 .viewWithBBox(new Rectangle(getAppWidth(), getAppHeight(), Color.BEIGE))
                 .zIndex(-1)
                 .buildAndAttach();
 
-        player = entityBuilder()
-                .type(EntityType.PLAYER)
-                .at(300, 300)
-                .viewWithBBox(new Rectangle(20, 20, Color.BLUE))
-                .with(new CollidableComponent(true))
-                .buildAndAttach();
-
+        player = spawn("player");
         player.setProperty("prevX", player.getX());
         player.setProperty("prevY", player.getY());
 
 
-        entityBuilder()
-                .type(EntityType.COIN)
-                .at(500, 200)
-                .viewWithBBox(new Circle(15, 15, 15, Color.YELLOW))
-                .with(new CollidableComponent(true))
-                .buildAndAttach();
+        spawn("coin");
 
         initScreenBounds();
 
@@ -108,12 +92,12 @@ public class BasicGameApp extends GameApplication {
     @Override
     protected void initPhysics() {
         // order of types on the right is the same as on the left
-        onCollisionBegin(EntityType.PLAYER, EntityType.COIN, (player, coin) -> {
+        onCollisionBegin(GameTypes.PLAYER, GameTypes.COIN, (player, coin) -> {
             coin.removeFromWorld();
 
         });
 
-        onCollisionBegin(EntityType.PLAYER, EntityType.WALL, (player, boundary) -> {
+        onCollisionBegin(GameTypes.PLAYER, GameTypes.WALL, (player, boundary) -> {
             /*Point2D center = boundary.getCenter();        //this is the function to have collisions
             double dx = center.getX() - player.getX();
             double dy = center.getY() - player.getY();
@@ -143,7 +127,7 @@ public class BasicGameApp extends GameApplication {
     }
     private void initScreenBounds(){
         Entity walls = entityBuilder()
-                .type(EntityType.WALL)
+                .type(GameTypes.WALL)
                 .collidable()
                 .buildScreenBounds(50);
 
