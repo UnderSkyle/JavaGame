@@ -5,17 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="450a246a-b8c4-4045-9d6d-b0c01123dc97" name="Changes" comment="setup">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/BasicGameApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/HelloApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/HelloController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/demo/hello-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/BasicGameApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/BasicGameApp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -28,8 +27,8 @@
 }</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/UnderSkyle/JavaGame&quot;,
-    &quot;accountId&quot;: &quot;e1042283-646b-4fda-b9d3-a6f02e4f0bf3&quot;
+    &quot;url&quot;: &quot;https://github.com/UnderSkyle/JavaGame.git&quot;,
+    &quot;accountId&quot;: &quot;868be4df-b09e-4d44-ac0d-42ce3ebedf2e&quot;
   }
 }</component>
   <component name="MavenImportPreferences">
@@ -39,6 +38,7 @@
       </MavenGeneralSettings>
     </option>
   </component>
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="/bin/php" />
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
@@ -125,6 +125,11 @@
       <workItem from="1713860886247" duration="40000" />
       <workItem from="1713862106301" duration="2541000" />
       <workItem from="1714414787445" duration="33000" />
+      <workItem from="1714460243074" duration="219000" />
+      <workItem from="1714460469403" duration="5000" />
+      <workItem from="1714461183207" duration="1080000" />
+      <workItem from="1714462277466" duration="7752000" />
+      <workItem from="1714475493283" duration="1043000" />
     </task>
     <task id="LOCAL-00001" summary="setup">
       <option name="closed" value="true" />
