@@ -73,7 +73,7 @@ public class BasicGameApp extends GameApplication {
     @Override
     protected void initGame() {
         getGameScene().setBackgroundColor(Color.BLACK);;
-        entityBuilder()
+        Entity world = entityBuilder()
                 .viewWithBBox(new Rectangle(getAppWidth(), getAppHeight(), Color.BEIGE))
                 .zIndex(-1)
                 .buildAndAttach();
@@ -100,8 +100,7 @@ public class BasicGameApp extends GameApplication {
 
         Viewport viewport = FXGL.getGameScene().getViewport();
         viewport.bindToEntity(player, getAppWidth() / 2.0, getAppHeight() / 2.0);
-        viewport.setBounds(0, 0, getAppWidth(), FXGL.getAppHeight());
-        viewport.bindToEntity(player, FXGL.getAppWidth() / 2.0, FXGL.getAppHeight() / 2.0);
+        viewport.setBounds(0, 0, (int) world.getWidth(), (int) world.getHeight());
         viewport.setLazy(true);
 
     }
@@ -115,7 +114,7 @@ public class BasicGameApp extends GameApplication {
         });
 
         onCollisionBegin(EntityType.PLAYER, EntityType.WALL, (player, boundary) -> {
-            /*Point2D center = boundary.getCenter();
+            /*Point2D center = boundary.getCenter();        //this is the function to have collisions
             double dx = center.getX() - player.getX();
             double dy = center.getY() - player.getY();
             System.out.println(dx);
@@ -135,7 +134,8 @@ public class BasicGameApp extends GameApplication {
             else if (dy > -395 && dy < -370) {
                 player.translateY(-15);
 
-            }*/
+            }
+            */
             player.setPosition(boundary.getCenter());
 
         });
