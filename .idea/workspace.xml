@@ -5,8 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="450a246a-b8c4-4045-9d6d-b0c01123dc97" name="Changes" comment="Cleaned up code into different files">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/components/PlayerComponent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/BasicGameApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/BasicGameApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/GameFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/GameFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/GameTypes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/GameTypes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,8 +23,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -72,6 +76,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -141,6 +146,7 @@
       <workItem from="1714475493283" duration="1320000" />
       <workItem from="1714480196273" duration="686000" />
       <workItem from="1714483502293" duration="2426000" />
+      <workItem from="1714631842035" duration="11152000" />
     </task>
     <task id="LOCAL-00001" summary="setup">
       <option name="closed" value="true" />
@@ -193,5 +199,9 @@
     <MESSAGE value="added tp to center if touch boundary" />
     <MESSAGE value="Cleaned up code into different files" />
     <option name="LAST_COMMIT_MESSAGE" value="Cleaned up code into different files" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
