@@ -11,6 +11,7 @@ import com.almasb.fxgl.app.scene.SceneFactory;
 import com.almasb.fxgl.app.scene.Viewport;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.components.CollidableComponent;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.pathfinding.CellState;
@@ -20,6 +21,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import com.example.demo.components.PlayerComponent;
+
 import com.almasb.fxgl.entity.level.Level;
 import java.util.Map;
 
@@ -39,6 +41,11 @@ public class BasicGameApp extends GameApplication {
     private AStarGrid grid;
 
     private PlayerComponent playerComponent;
+    private boolean isMoveDownKeyPressed = false;
+    private boolean isMoveLeftKeyPressed = false;
+    private boolean isMoveRightKeyPressed = false;
+    private boolean isMoveUpKeyPressed = false;
+
 
     public AStarGrid getGrid() {
         return grid;
@@ -58,86 +65,6 @@ public class BasicGameApp extends GameApplication {
     }
 
 
-    @Override
-    protected void initInput() {
-        FXGL.getInput().addAction(new UserAction("Move Down") {
-
-            @Override
-            protected void onActionBegin() {
-                player.getComponent(PhysicsComponent.class).setVelocityY(SPEED);
-
-            }
-            @Override
-            protected void onActionEnd() {
-                PhysicsComponent playerPhysics= player.getComponent(PhysicsComponent.class);
-
-                if(playerPhysics.getVelocityY() > 0 ){
-                    player.getComponent(PhysicsComponent.class).setVelocityY(0);
-
-                }
-            }
-        }, KeyCode.S);
-        FXGL.getInput().addAction(new UserAction("Move Left") {
-
-
-            @Override
-            protected void onActionBegin() {
-                player.getComponent(PhysicsComponent.class).setVelocityX(-SPEED);
-
-            }
-
-            @Override
-            protected void onActionEnd() {
-                PhysicsComponent playerPhysics= player.getComponent(PhysicsComponent.class);
-
-                if(playerPhysics.getVelocityX() < 0 ){
-                    player.getComponent(PhysicsComponent.class).setVelocityX(0);
-
-                }
-            }
-        }, KeyCode.Q);
-        FXGL.getInput().addAction(new UserAction("Move Right") {
-            @Override
-            protected void onActionBegin() {
-                player.getComponent(PhysicsComponent.class).setVelocityX(SPEED);
-            }
-
-            @Override
-            protected void onActionEnd() {
-                PhysicsComponent playerPhysics= player.getComponent(PhysicsComponent.class);
-                if(playerPhysics.getVelocityX() > 0 ){
-                    player.getComponent(PhysicsComponent.class).setVelocityX(0);
-
-                }}
-        }, KeyCode.D);
-        FXGL.getInput().addAction(new UserAction("Move UP") {
-            @Override
-            protected void onActionBegin() {
-                player.getComponent(PhysicsComponent.class).setVelocityY(-SPEED);
-            }
-
-            @Override
-            protected void onActionEnd() {
-                PhysicsComponent playerPhysics= player.getComponent(PhysicsComponent.class);
-                if(playerPhysics.getVelocityY() < 0 ){
-                    player.getComponent(PhysicsComponent.class).setVelocityY(0);
-
-                }
-            }
-        }, KeyCode.Z);
-
-        getInput().addAction(new UserAction("Speak Woman") {
-            @Override
-            protected void onAction() {
-                getDialogService().showMessageBox("SHUT UP WOMAN", () -> {
-                    // code to run after dialog is dismissed
-                });
-            }
-        },KeyCode.T);
-
-    }
-
-
 
     @Override
     protected void initGame() {
@@ -146,11 +73,10 @@ public class BasicGameApp extends GameApplication {
         getGameScene().setBackgroundColor(Color.BLACK);
         Entity world = entityBuilder()
                 .type(WORLD)
+                .at(100,100)
                 .viewWithBBox(new Rectangle(getAppWidth(), getAppHeight(), Color.BEIGE))
                 .zIndex(-1)
                 .buildAndAttach();
-
-
 
 
         grid = AStarGrid.fromWorld(getGameWorld(), 40, 40, CELL_SIZE, CELL_SIZE, type -> CellState.WALKABLE);
@@ -158,9 +84,29 @@ public class BasicGameApp extends GameApplication {
         spawn("coin");
 
         player = spawn("player");
-        //playerComponent = player.getComponent(PlayerComponent.class);
+        playerComponent = player.getComponent(PlayerComponent.class);
 
-        initScreenBounds();
+        spawn("trigger", 200, 200);
+
+        SpawnData wallSpawn = new SpawnData(0 ,0);
+        wallSpawn.put("width", CELL_SIZE);
+        wallSpawn.put("height", (int)world.getHeight());
+        spawn("wall", wallSpawn);
+
+        SpawnData wallSpawn2 = new SpawnData(0 ,0);
+        wallSpawn2.put("width", (int)world.getWidth());
+        wallSpawn2.put("height", CELL_SIZE);
+        spawn("wall", wallSpawn2);
+
+        SpawnData wallSpawn3 = new SpawnData((int)world.getWidth()-CELL_SIZE  ,0);
+        wallSpawn3.put("width", CELL_SIZE);
+        wallSpawn3.put("height", (int)world.getHeight());
+        spawn("wall", wallSpawn3);
+
+        SpawnData wallSpawn4 = new SpawnData(0 , (int)world.getHeight() - CELL_SIZE );
+        wallSpawn4.put("width", (int)world.getWidth());
+        wallSpawn4.put("height", CELL_SIZE);
+        spawn("wall", wallSpawn4);
 
         Viewport viewport = FXGL.getGameScene().getViewport();
         viewport.bindToEntity(player, getAppWidth() / 2.0, getAppHeight() / 2.0);
@@ -169,55 +115,90 @@ public class BasicGameApp extends GameApplication {
 
     }
 
+
+    @Override
+    protected void initInput() {
+
+        // Track key presses and releases
+        FXGL.getInput().addAction(new UserAction("Move Down") {
+            @Override
+            protected void onActionBegin() {
+                isMoveDownKeyPressed = true;
+                playerComponent.moveDown();
+            }
+
+            @Override
+            protected void onActionEnd() {
+                isMoveDownKeyPressed = false;
+                if (!isMoveUpKeyPressed) {
+                    playerComponent.stopY();
+                }
+            }
+        }, KeyCode.S);
+
+        FXGL.getInput().addAction(new UserAction("Move Left") {
+            @Override
+            protected void onActionBegin() {
+                isMoveLeftKeyPressed = true;
+                playerComponent.moveLeft();
+            }
+
+            @Override
+            protected void onActionEnd() {
+                isMoveLeftKeyPressed = false;
+                if (!isMoveRightKeyPressed) {
+                    playerComponent.stopX();
+                }
+            }
+        }, KeyCode.Q);
+
+        FXGL.getInput().addAction(new UserAction("Move Right") {
+            @Override
+            protected void onActionBegin() {
+                isMoveRightKeyPressed = true;
+                playerComponent.moveRight();
+            }
+
+            @Override
+            protected void onActionEnd() {
+                isMoveRightKeyPressed = false;
+                if (!isMoveLeftKeyPressed) {
+                    playerComponent.stopX();
+                }
+            }
+        }, KeyCode.D);
+
+        FXGL.getInput().addAction(new UserAction("Move UP") {
+            @Override
+            protected void onActionBegin() {
+                isMoveUpKeyPressed = true;
+                playerComponent.moveUp();
+            }
+
+            @Override
+            protected void onActionEnd() {
+                isMoveUpKeyPressed = false;
+                if (!isMoveDownKeyPressed) {
+                    playerComponent.stopY();
+                }
+            }
+        }, KeyCode.Z);
+    }
+
+
+
+
     @Override
     protected void initPhysics() {
 
         FXGL.getPhysicsWorld().setGravity(0, 0);
 
+        CustomCollisionHandler.init();
+
         // order of types on the right is the same as on the left
-        onCollisionBegin(GameTypes.PLAYER, GameTypes.COIN, (player, coin) -> {
-            coin.removeFromWorld();
-
-        });
-
-        onCollisionBegin(GameTypes.PLAYER, WALL, (player, boundary) -> {
-            /*Point2D center = boundary.getCenter();        //this is the function to have collisions
-            double dx = center.getX() - player.getX();
-            double dy = center.getY() - player.getY();
-            System.out.println(dx);
-            System.out.println(dy);
-            if (dx > 395) {
-                //set center.X to something else
-                player.translateX(15);
-
-            }
-            else if ( dy > 395) {
-                //set center.Y to something else
-                player.translateY(15);
-            }
-            else if ( dx > -395 && dx < -370) {
-                player.translateX(-15);
-            }
-            else if (dy > -395 && dy < -370) {
-                player.translateY(-15);
-
-            }
-            */
-            player.getComponent(PhysicsComponent.class).setVelocityY(0);
-            player.getComponent(PhysicsComponent.class).setVelocityX(0);
-
-        });
 
     }
-    private void initScreenBounds(){
-        Entity walls = entityBuilder()
-                .type(WALL)
-                .collidable()
-                .with(new CollidableComponent(true))
-                .buildScreenBounds(40);
 
-        getGameWorld().addEntity(walls);
-    }
 
 
     public static void main(String[] args) {

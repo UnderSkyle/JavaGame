@@ -8,11 +8,12 @@ import com.almasb.fxgl.entity.components.CollidableComponent;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyDef;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
+import com.example.demo.components.PlayerComponent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
-import static com.almasb.fxgl.dsl.FXGL.entityBuilder;
+import static com.almasb.fxgl.dsl.FXGL.*;
 import static com.example.demo.BasicGameApp.CELL_SIZE;
 import static com.example.demo.GameTypes.*;
 
@@ -29,9 +30,10 @@ public class GameFactory implements EntityFactory {
 
         return  entityBuilder(data)
                 .type(PLAYER)
-                .at(0,0)
+                .at(getAppWidth() /2.0, getAppHeight() /2.0)
                 .viewWithBBox(new Rectangle(CELL_SIZE, CELL_SIZE, Color.BLUE))
                 .with(physics)
+                .with(new PlayerComponent())
                 .collidable()
                 .buildAndAttach();
     }
@@ -42,17 +44,31 @@ public class GameFactory implements EntityFactory {
                 .type(COIN)
                 .at(500, 200)
                 .viewWithBBox(new Circle(20, 20, 15,Color.YELLOW))
-                .with(new CollidableComponent(true))
+                .collidable()
                 .buildAndAttach();
     }
 
     @Spawns("wall")
     public Entity spawnWall(SpawnData data) {
+        int width = data.get("width");
+        int height = data.get("height");
+
         return  entityBuilder(data)
                 .type(WALL)
-                .at(200, 200)
-                .viewWithBBox(new Rectangle(20, 20, Color.BLACK))
-                .with(new CollidableComponent(true))
+                .at(data.getX(), data.getY())
+                .viewWithBBox(new Rectangle(width, height, Color.DEEPSKYBLUE))
+                .collidable()
                 .buildAndAttach();
+    }
+
+    @Spawns("trigger")
+    public Entity spawnWorld(SpawnData data) {
+        return  entityBuilder(data)
+                .type(WARPZONE)
+                .at(data.getX(), data.getY()) // Set the position directly
+                .viewWithBBox(new Rectangle(10, 10, Color.TRANSPARENT))
+                .collidable()
+                .buildAndAttach();
+
     }
 }
