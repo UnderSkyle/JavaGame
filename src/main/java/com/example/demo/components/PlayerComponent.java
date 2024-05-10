@@ -7,12 +7,27 @@ import com.almasb.fxgl.physics.PhysicsComponent;
 import javafx.geometry.Point2D;
 
 public class PlayerComponent extends Component {
+    public void setCanMoveRight(boolean canMoveRight) {
+        this.canMoveRight = canMoveRight;
+    }
+
+    public void setCanMoveLeft(boolean canMoveLeft) {
+        this.canMoveLeft = canMoveLeft;
+    }
+
+    public void setCanMoveUp(boolean canMoveUp) {
+        this.canMoveUp = canMoveUp;
+    }
+
+    public void setCanMoveDown(boolean canMoveDown) {
+        this.canMoveDown = canMoveDown;
+    }
 
     PhysicsComponent physics;
-    public boolean canMoveRight = true;
-    public boolean canMoveLeft = true;
-    public boolean canMoveUp = true;
-    public boolean canMoveDown = true;
+    private boolean canMoveRight = true;
+    private boolean canMoveLeft = true;
+    private boolean canMoveUp = true;
+    private boolean canMoveDown = true;
     private final int SPEED = 200;
     @Override
     public void onAdded() {

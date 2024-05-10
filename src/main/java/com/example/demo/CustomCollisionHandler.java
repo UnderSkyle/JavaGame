@@ -20,39 +20,23 @@ public class CustomCollisionHandler {
             protected void onCollisionBegin(Entity player, Entity wall) {
                 PlayerComponent playerComponent = player.getComponent(PlayerComponent.class);
 
-                // Get the position of the wall
-                Point2D wallPosition = wall.getPosition();
 
-                // Get the position of the player
-                Point2D playerPosition = player.getPosition();
-
-                // Calculate the difference in position
-                double deltaX = wallPosition.getX() - playerPosition.getX();
-                double deltaY = wallPosition.getY() - playerPosition.getY();
-
-                System.out.println(deltaX + " "+ deltaY );
-                // Determine which side of the wall the player is colliding with
-                if (FXGLMath.abs(deltaX) < FXGLMath.abs(deltaY)) {
+                if (player.getX() < wall.getX()) {
+                    playerComponent.setCanMoveRight(false);
                     playerComponent.stopX();
-                    // Horizontal collision
-                    if (deltaX < 0) {
-                        // Wall is on the left side
-                        playerComponent.canMoveLeft = false;
-                    } else {
-                        // Wall is on the right side
-                        playerComponent.canMoveRight = false;
-                    }
-                } else {
-                    playerComponent.stopY();
-                    // Vertical collision
-                    if (deltaY < 0) {
-                        // Wall is on the top side
-                        playerComponent.canMoveUp = false;
-                    } else {
-                        // Wall is on the bottom side
-                        playerComponent.canMoveDown = false;
-                    }
+                } else if (player.getX() > wall.getX()) {
+                    playerComponent.setCanMoveLeft(false);
+                    playerComponent.stopX();
                 }
+
+                if (player.getY() < wall.getY()) {
+                    playerComponent.setCanMoveDown(false);
+                    playerComponent.stopY();
+                } else if (player.getY() > wall.getY()) {
+                    playerComponent.setCanMoveUp(false);
+                    playerComponent.stopY();
+                }
+
             }
 
             @Override
@@ -60,41 +44,18 @@ public class CustomCollisionHandler {
                 PlayerComponent playerComponent = player.getComponent(PlayerComponent.class);
 
                 // Get the position of the wall
-                Point2D wallPosition = wall.getPosition();
-
-                // Get the position of the player
-                Point2D playerPosition = player.getPosition();
-
-                // Calculate the difference in position
-                double deltaX = wallPosition.getX() - playerPosition.getX();
-                double deltaY = wallPosition.getY() - playerPosition.getY();
-
-                System.out.println(deltaX + " "+ deltaY );
-                // Determine which side of the wall the player is colliding with
-                if (FXGLMath.abs(deltaX) < FXGLMath.abs(deltaY)) {
-
-                    // Horizontal collision
-                    if (deltaX < 0) {
-                        // Wall is on the left side
-                        playerComponent.canMoveLeft = true;
-                    } else {
-                        // Wall is on the right side
-                        playerComponent.canMoveRight = true;
-                        System.out.println("canMoveRight");
-                    }
-                } else {
-                    System.out.println("you souldnt see that");
-
-                    // Vertical collision
-                    if (deltaY < 0) {
-                        // Wall is on the top side
-                        playerComponent.canMoveUp = true;
-                    } else {
-                        // Wall is on the bottom side
-                        playerComponent.canMoveDown = true;
-                    }
+                if (player.getX() < wall.getX()) {
+                    playerComponent.setCanMoveRight(true);
+                } else if (player.getX() > wall.getX()) {
+                    playerComponent.setCanMoveLeft(true);
                 }
 
+                if (player.getY() < wall.getY()) {
+                    playerComponent.setCanMoveDown(true);
+
+                } else if (player.getY() > wall.getY()) {
+                    playerComponent.setCanMoveUp(true);
+                }
 
             }
         });
@@ -120,14 +81,4 @@ public class CustomCollisionHandler {
 
     }
 
-    private static Point2D getNormal(Entity entityA, Entity entityB) {
-        Point2D positionA = entityA.getPosition();
-        Point2D positionB = entityB.getPosition();
-
-        // Calculate the vector from entityA to entityB
-        Point2D vector = positionB.subtract(positionA);
-
-        // Normalize the vector to get the collision normal
-        return vector.normalize();
-    }
 }
