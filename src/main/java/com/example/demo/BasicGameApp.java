@@ -70,13 +70,8 @@ public class BasicGameApp extends GameApplication {
     protected void initGame() {
         getGameWorld().addEntityFactory(new GameFactory());
 
-        getGameScene().setBackgroundColor(Color.BLACK);
-        Entity world = entityBuilder()
-                .type(WORLD)
-                .at(100,100)
-                .viewWithBBox(new Rectangle(getAppWidth(), getAppHeight(), Color.BEIGE))
-                .zIndex(-1)
-                .buildAndAttach();
+        getGameScene().setBackgroundColor(Color.HOTPINK);
+        Entity world = spawn("world");
 
 
         grid = AStarGrid.fromWorld(getGameWorld(), 40, 40, CELL_SIZE, CELL_SIZE, type -> CellState.WALKABLE);

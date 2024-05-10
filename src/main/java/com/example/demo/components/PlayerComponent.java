@@ -28,7 +28,7 @@ public class PlayerComponent extends Component {
     private boolean canMoveLeft = true;
     private boolean canMoveUp = true;
     private boolean canMoveDown = true;
-    private final int SPEED = 200;
+    private final int SPEED = 300;
     @Override
     public void onAdded() {
         physics = entity.getComponent(PhysicsComponent.class);

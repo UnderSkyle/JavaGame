@@ -62,7 +62,7 @@ public class GameFactory implements EntityFactory {
     }
 
     @Spawns("trigger")
-    public Entity spawnWorld(SpawnData data) {
+    public Entity spawnTrigger(SpawnData data) {
         return  entityBuilder(data)
                 .type(WARPZONE)
                 .at(data.getX(), data.getY()) // Set the position directly
@@ -70,5 +70,15 @@ public class GameFactory implements EntityFactory {
                 .collidable()
                 .buildAndAttach();
 
+    }
+
+    @Spawns("world")
+    public Entity spawnWorld(SpawnData data) {
+        return entityBuilder()
+                .type(WORLD)
+                .at(0,0)
+                .viewWithBBox(new Rectangle(getAppWidth(), getAppHeight(), Color.BEIGE))
+                .zIndex(-1)
+                .buildAndAttach();
     }
 }
