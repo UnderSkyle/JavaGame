@@ -4,9 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="450a246a-b8c4-4045-9d6d-b0c01123dc97" name="Changes" comment="collision not 100% fixed but acceptable">
+    <list default="true" id="450a246a-b8c4-4045-9d6d-b0c01123dc97" name="Changes" comment="fixed speed and added the &quot;world in the factory&quot;">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/BasicGameApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/BasicGameApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/CustomCollisionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/CustomCollisionHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/GameFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/GameFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/components/PlayerComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/components/PlayerComponent.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -144,7 +147,9 @@
       <workItem from="1714483502293" duration="2426000" />
       <workItem from="1714631842035" duration="11152000" />
       <workItem from="1715345214409" duration="1079000" />
-      <workItem from="1715346471428" duration="9032000" />
+      <workItem from="1715346471428" duration="9657000" />
+      <workItem from="1715432379956" duration="344000" />
+      <workItem from="1715433077952" duration="726000" />
     </task>
     <task id="LOCAL-00001" summary="setup">
       <option name="closed" value="true" />
@@ -202,7 +207,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715355374697</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="fixed speed and added the &quot;world in the factory&quot;">
+      <option name="closed" value="true" />
+      <created>1715355616012</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1715355616012</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -214,7 +227,8 @@
     <MESSAGE value="Cleaned up code into different files" />
     <MESSAGE value="changed a lot but possition still doesnt work" />
     <MESSAGE value="collision not 100% fixed but acceptable" />
-    <option name="LAST_COMMIT_MESSAGE" value="collision not 100% fixed but acceptable" />
+    <MESSAGE value="fixed speed and added the &quot;world in the factory&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed speed and added the &quot;world in the factory&quot;" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

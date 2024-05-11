@@ -65,15 +65,15 @@ public class GameFactory implements EntityFactory {
     public Entity spawnTrigger(SpawnData data) {
         return  entityBuilder(data)
                 .type(WARPZONE)
-                .at(data.getX(), data.getY()) // Set the position directly
-                .viewWithBBox(new Rectangle(10, 10, Color.TRANSPARENT))
+                .at(data.getX(), data.getY()) // Set the position using the arguments
+                .viewWithBBox(new Rectangle(10, 10, Color.RED))
                 .collidable()
                 .buildAndAttach();
 
     }
 
     @Spawns("world")
-    public Entity spawnWorld(SpawnData data) {
+    public Entity spawnWorld(SpawnData data) { //TODO: REPLACE THAT WITH MAP WHEN FINISHED
         return entityBuilder()
                 .type(WORLD)
                 .at(0,0)

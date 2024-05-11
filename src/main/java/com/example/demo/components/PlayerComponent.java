@@ -7,6 +7,43 @@ import com.almasb.fxgl.physics.PhysicsComponent;
 import javafx.geometry.Point2D;
 
 public class PlayerComponent extends Component {
+
+    PhysicsComponent physics;
+    private boolean canMoveRight = true;
+    private boolean canMoveLeft = true;
+    private boolean canMoveUp = true;
+    private boolean canMoveDown = true;
+    private final int SPEED = 300;
+    private int maxHealth = 100;
+    private int currentHealth = 0;
+
+
+    @Override
+    public void onAdded() {
+        physics = entity.getComponent(PhysicsComponent.class);
+
+        if(physics == null) {
+            System.out.println("Error: No physics component");
+        }
+        currentHealth = maxHealth;
+    }
+
+    public void setMaxHealth(int health) {
+        this.maxHealth = health;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public void setCurrentHealth(int health) {
+        this.currentHealth = health;
+    }
+
+    public int getCurrentHealth() {
+        return currentHealth;
+    }
+
     public void setCanMoveRight(boolean canMoveRight) {
         this.canMoveRight = canMoveRight;
     }
@@ -22,22 +59,6 @@ public class PlayerComponent extends Component {
     public void setCanMoveDown(boolean canMoveDown) {
         this.canMoveDown = canMoveDown;
     }
-
-    PhysicsComponent physics;
-    private boolean canMoveRight = true;
-    private boolean canMoveLeft = true;
-    private boolean canMoveUp = true;
-    private boolean canMoveDown = true;
-    private final int SPEED = 300;
-    @Override
-    public void onAdded() {
-        physics = entity.getComponent(PhysicsComponent.class);
-
-        if(physics == null) {
-            System.out.println("Error: No physics component");
-        }
-    }
-
 
 
     public void moveRight() {

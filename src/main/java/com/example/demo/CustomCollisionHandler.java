@@ -8,7 +8,7 @@ import com.almasb.fxgl.physics.PhysicsComponent;
 import com.example.demo.components.PlayerComponent;
 import javafx.geometry.Point2D;
 
-import static com.almasb.fxgl.dsl.FXGLForKtKt.getDialogService;
+import static com.almasb.fxgl.dsl.FXGLForKtKt.*;
 
 public class CustomCollisionHandler {
 
@@ -20,23 +20,24 @@ public class CustomCollisionHandler {
             protected void onCollisionBegin(Entity player, Entity wall) {
                 PlayerComponent playerComponent = player.getComponent(PlayerComponent.class);
 
-
-                if (player.getX() < wall.getX()) {
-                    playerComponent.setCanMoveRight(false);
-                    playerComponent.stopX();
-                } else if (player.getX() > wall.getX()) {
-                    playerComponent.setCanMoveLeft(false);
-                    playerComponent.stopX();
+                if( wall.getWidth() <= wall.getHeight()) {
+                    if (player.getX() < wall.getX()) {
+                        playerComponent.setCanMoveRight(false);
+                        playerComponent.stopX();
+                    } else if (player.getX() > wall.getX()) {
+                        playerComponent.setCanMoveLeft(false);
+                        playerComponent.stopX();
+                    }
                 }
-
-                if (player.getY() < wall.getY()) {
-                    playerComponent.setCanMoveDown(false);
-                    playerComponent.stopY();
-                } else if (player.getY() > wall.getY()) {
-                    playerComponent.setCanMoveUp(false);
-                    playerComponent.stopY();
+                if( wall.getWidth() >= wall.getHeight()) {
+                    if (player.getY() < wall.getY()) {
+                        playerComponent.setCanMoveDown(false);
+                        playerComponent.stopY();
+                    } else if (player.getY() > wall.getY()) {
+                        playerComponent.setCanMoveUp(false);
+                        playerComponent.stopY();
+                    }
                 }
-
             }
 
             @Override
@@ -74,7 +75,7 @@ public class CustomCollisionHandler {
                 System.out.println("hello");
                 player.getComponent(PlayerComponent.class).stopX();
                 player.getComponent(PlayerComponent.class).stopY();
-                player.getComponent(PhysicsComponent.class).overwritePosition(new Point2D(10,10));
+                player.getComponent(PhysicsComponent.class).overwritePosition(new Point2D(getAppWidth()/2.0,getAppHeight()/2.0));
 
             }
         });

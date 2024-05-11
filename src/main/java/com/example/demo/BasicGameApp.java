@@ -17,6 +17,7 @@ import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.pathfinding.CellState;
 import com.almasb.fxgl.pathfinding.astar.AStarGrid;
 import com.almasb.fxgl.physics.PhysicsComponent;
+import com.almasb.fxgl.ui.ProgressBar;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -39,7 +40,7 @@ public class BasicGameApp extends GameApplication {
     public static final int SPEED = 200;
     Entity player;
     private AStarGrid grid;
-
+    private ProgressBar healthBar;
     private PlayerComponent playerComponent;
     private boolean isMoveDownKeyPressed = false;
     private boolean isMoveLeftKeyPressed = false;
@@ -65,12 +66,29 @@ public class BasicGameApp extends GameApplication {
     }
 
 
+    @Override
+    protected void initUI() {
+        healthBar = new ProgressBar(false);
+        healthBar.setMaxValue(playerComponent.getMaxHealth());
+        healthBar.setCurrentValue(playerComponent.getCurrentHealth());
+        healthBar.setLabelVisible(false);
+        healthBar.setTranslateX(50);
+        healthBar.setTranslateY(50);
+        healthBar.setBackgroundFill(Color.RED);
+        healthBar.setFill(Color.GREEN);
+        healthBar.setWidth(playerComponent.getMaxHealth());
+        healthBar.setHeight(30);
+
+
+        // Add health bar to UI
+        getGameScene().addUINode(healthBar);
+    }
 
     @Override
     protected void initGame() {
         getGameWorld().addEntityFactory(new GameFactory());
 
-        getGameScene().setBackgroundColor(Color.HOTPINK);
+        getGameScene().setBackgroundColor(Color.THISTLE);
         Entity world = spawn("world");
 
 
@@ -178,6 +196,15 @@ public class BasicGameApp extends GameApplication {
                 }
             }
         }, KeyCode.Z);
+
+        onKeyUp( KeyCode.T, () -> {
+            playerComponent.setCurrentHealth(playerComponent.getCurrentHealth()-5);
+        });
+
+        onKeyUp( KeyCode.R, () -> {
+            playerComponent.setMaxHealth(playerComponent.getMaxHealth()+5);
+        });
+
     }
 
 
@@ -194,7 +221,13 @@ public class BasicGameApp extends GameApplication {
 
     }
 
+    @Override
+    protected void onUpdate(double tpf) {
+        healthBar.setCurrentValue(playerComponent.getCurrentHealth());
+        healthBar.setMaxValue(playerComponent.getMaxHealth());
+        healthBar.setWidth(playerComponent.getMaxHealth());
 
+    }
 
     public static void main(String[] args) {
         launch(args);
