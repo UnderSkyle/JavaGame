@@ -4,7 +4,6 @@ package com.example.demo;
  * Copyright (c) AlmasB (almaslvl@gmail.com).
  * See LICENSE for details.
  */
-import com.almasb.fxgl.app.ApplicationMode;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.app.scene.SceneFactory;
@@ -12,31 +11,20 @@ import com.almasb.fxgl.app.scene.Viewport;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
-import com.almasb.fxgl.entity.components.CollidableComponent;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.pathfinding.CellState;
 import com.almasb.fxgl.pathfinding.astar.AStarGrid;
-import com.almasb.fxgl.physics.PhysicsComponent;
-import com.almasb.fxgl.ui.FXGLScrollPane;
-import com.almasb.fxgl.ui.InGamePanel;
 import com.almasb.fxgl.ui.ProgressBar;
-import javafx.geometry.HorizontalDirection;
-import javafx.geometry.VerticalDirection;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import com.example.demo.components.PlayerComponent;
 
-import com.almasb.fxgl.entity.level.Level;
-import java.util.Map;
-
 import static com.almasb.fxgl.dsl.FXGL.*;
 import static com.example.demo.GameTypes.*;
-import javafx.scene.media.Media;
 
 
 /**
@@ -46,7 +34,6 @@ public class BasicGameApp extends GameApplication {
 
     public static final int CELL_SIZE = 30;
     Entity player;
-    private AStarGrid grid;
     private ProgressBar healthBar;
 
     private PlayerComponent playerComponent;
@@ -55,9 +42,6 @@ public class BasicGameApp extends GameApplication {
     private boolean isInventoryOpen = false;
 
 
-    public AStarGrid getGrid() {
-        return grid;
-    }
 
     @Override
     protected void initSettings(GameSettings settings) {
@@ -116,10 +100,7 @@ public class BasicGameApp extends GameApplication {
 
         getGameScene().setBackgroundColor(Color.THISTLE);
         Entity world = spawn("world");
-
-
-        grid = AStarGrid.fromWorld(getGameWorld(), 40, 40, CELL_SIZE, CELL_SIZE, type -> CellState.WALKABLE);
-
+        
         spawn("coin");
 
         player = spawn("player");
@@ -159,22 +140,12 @@ public class BasicGameApp extends GameApplication {
     protected void initInput() {
 
         // Track key presses and releases
-        onKey(KeyCode.Z, () -> {
-            playerComponent.moveUp();
-        });
-        onKey(KeyCode.Q, () -> {
-            playerComponent.moveLeft();
-        });
-        onKey(KeyCode.S, () -> {
-            playerComponent.moveDown();
-        });
-        onKey(KeyCode.D, () -> {
-            playerComponent.moveRight();
-        });
+        onKey(KeyCode.Z, () -> playerComponent.moveUp());
+        onKey(KeyCode.Q, () -> playerComponent.moveLeft());
+        onKey(KeyCode.S, () -> playerComponent.moveDown());
+        onKey(KeyCode.D, () -> playerComponent.moveRight());
 
-        onKeyUp( KeyCode.R, () -> {
-            playerComponent.setMaxHealth(playerComponent.getMaxHealth()+5);
-        });
+        onKeyUp( KeyCode.R, () -> playerComponent.setMaxHealth(playerComponent.getMaxHealth()+5));
 
 
         FXGL.getInput().addAction(new UserAction("Toggle Inventory") {

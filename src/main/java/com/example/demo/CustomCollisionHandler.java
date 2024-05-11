@@ -1,10 +1,7 @@
 package com.example.demo;
-import com.almasb.fxgl.core.math.FXGLMath;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
-import com.almasb.fxgl.entity.components.TransformComponent;
 import com.almasb.fxgl.physics.CollisionHandler;
-import com.almasb.fxgl.physics.PhysicsComponent;
 import com.example.demo.components.PlayerComponent;
 import javafx.geometry.Point2D;
 
