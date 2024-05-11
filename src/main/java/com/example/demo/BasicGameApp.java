@@ -11,14 +11,10 @@ import com.almasb.fxgl.app.scene.Viewport;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
-import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.ui.ProgressBar;
-import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import com.example.demo.components.PlayerComponent;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
@@ -36,15 +32,15 @@ public class BasicGameApp extends GameApplication {
 
     private PlayerComponent playerComponent;
 
-    VBox inventoryBox = new VBox();
-    private boolean isInventoryOpen = false;
+    private GridPane inventoryGrid;
+    private boolean inventoryVisible = true;
 
 
 
     @Override
     protected void initSettings(GameSettings settings) {
-        settings.setWidth(800);
-        settings.setHeight(800);
+        settings.setWidth(1080);
+        settings.setHeight(920);
         settings.setTitle("Potato Game");
         settings.setVersion("0.3");
         settings.setGameMenuEnabled(true);
@@ -55,42 +51,16 @@ public class BasicGameApp extends GameApplication {
 
     @Override
     protected void initUI() {
-        healthBar = new ProgressBar(false);
-        healthBar.setMaxValue(playerComponent.getMaxHealth());
-        healthBar.setCurrentValue(playerComponent.getCurrentHealth());
-        healthBar.setLabelVisible(false);
-        healthBar.setTranslateX(50);
-        healthBar.setTranslateY(50);
-        healthBar.setBackgroundFill(Color.RED);
-        healthBar.setFill(Color.GREEN);
-        healthBar.setWidth(playerComponent.getMaxHealth());
-        healthBar.setHeight(30);
 
         // Create black background for the inventory
-        Rectangle background = new Rectangle(100, 100, Color.BLACK);
-        background.setOpacity(0.5); // Set opacity to make it slightly transparent
 
-        // Create a VBox to hold inventory items
-        VBox inventoryBox = new VBox(10);
-        inventoryBox.setTranslateX(600);
-        inventoryBox.setTranslateY(50);
-        inventoryBox.setVisible(false); // Hide inventory initially
+        getGameScene().addUINode(playerComponent.getInventoryView());
 
-        // Add some sample items to the inventory
-        for (int i = 0; i < 5; i++) {
-            Label itemLabel = new Label("Item " + (i + 1));
-            inventoryBox.getChildren().add(itemLabel);
-        }
-
-        // StackPane to hold the background and inventory
-        StackPane inventoryPane = new StackPane();
-        inventoryPane.getChildren().addAll(background, inventoryBox);
-        FXGL.getGameScene().addUINode(inventoryPane);
+        getGameScene().addUINode(playerComponent.getHealthBar());
 
 
-
-        getGameScene().addUINode(healthBar);
     }
+
 
     @Override
     protected void initGame() {
@@ -143,16 +113,13 @@ public class BasicGameApp extends GameApplication {
         onKey(KeyCode.S, () -> playerComponent.moveDown());
         onKey(KeyCode.D, () -> playerComponent.moveRight());
 
+        onKeyDown(KeyCode.LEFT,() -> playerComponent.getInventoryView().selectCellToLeft());
+        onKeyDown(KeyCode.RIGHT,() -> playerComponent.getInventoryView().selectCellToRight());
+        onKeyDown(KeyCode.UP,() -> playerComponent.getInventoryView().selectCellAbove());
+        onKeyDown(KeyCode.DOWN,() -> playerComponent.getInventoryView().selectCellBelow());
+
         onKeyUp( KeyCode.R, () -> playerComponent.setMaxHealth(playerComponent.getMaxHealth()+5));
-
-
-        FXGL.getInput().addAction(new UserAction("Toggle Inventory") {
-            @Override
-            protected void onActionBegin() {
-                inventoryBox.setVisible(!isInventoryOpen);
-                isInventoryOpen = !isInventoryOpen;
-            }
-        }, KeyCode.E);
+        onKeyDown( KeyCode.T, () -> playerComponent.setCurrentHealth((playerComponent.getCurrentHealth()+5)));
 
     }
 
@@ -168,13 +135,6 @@ public class BasicGameApp extends GameApplication {
 
     }
 
-    @Override
-    protected void onUpdate(double tpf) {
-        healthBar.setCurrentValue(playerComponent.getCurrentHealth());
-        healthBar.setMaxValue(playerComponent.getMaxHealth());
-        healthBar.setWidth(playerComponent.getMaxHealth());
-
-    }
 
     public static void main(String[] args) {
         launch(args);

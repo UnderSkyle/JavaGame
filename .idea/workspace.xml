@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="450a246a-b8c4-4045-9d6d-b0c01123dc97" name="Changes" comment="fixed speed and added the &quot;world in the factory&quot;">
+    <list default="true" id="450a246a-b8c4-4045-9d6d-b0c01123dc97" name="Changes" comment="I cleaned up the code">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/PlayerInventoryView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/BasicGameApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/BasicGameApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/CustomCollisionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/CustomCollisionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/GameFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/GameFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/components/PlayerComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/components/PlayerComponent.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -91,8 +89,8 @@
     <option name="myCommands">
       <command value="mvn deploy" />
       <command value="mvn clean javafx:run" />
-      <command value="mvn clean package" />
       <command value="mvn clean" />
+      <command value="mvn clean package" />
     </option>
   </component>
   <component name="RunManager" selected="Application.BasicGameApp">
@@ -226,7 +224,31 @@
       <option name="project" value="LOCAL" />
       <updated>1715355616012</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Finaly i solved the movements ( i deleted physics and added a set tick speed)">
+      <option name="closed" value="true" />
+      <created>1715443889429</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1715443889429</updated>
+    </task>
+    <task id="LOCAL-00010" summary="I cleaned up the code">
+      <option name="closed" value="true" />
+      <created>1715444075954</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1715444075954</updated>
+    </task>
+    <task id="LOCAL-00011" summary="I cleaned up the code">
+      <option name="closed" value="true" />
+      <created>1715444103790</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1715444103790</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -250,7 +272,9 @@
     <MESSAGE value="changed a lot but possition still doesnt work" />
     <MESSAGE value="collision not 100% fixed but acceptable" />
     <MESSAGE value="fixed speed and added the &quot;world in the factory&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed speed and added the &quot;world in the factory&quot;" />
+    <MESSAGE value="Finaly i solved the movements ( i deleted physics and added a set tick speed)" />
+    <MESSAGE value="I cleaned up the code" />
+    <option name="LAST_COMMIT_MESSAGE" value="I cleaned up the code" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
