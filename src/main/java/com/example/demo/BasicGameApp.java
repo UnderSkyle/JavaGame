@@ -12,8 +12,6 @@ import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.input.UserAction;
-import com.almasb.fxgl.pathfinding.CellState;
-import com.almasb.fxgl.pathfinding.astar.AStarGrid;
 import com.almasb.fxgl.ui.ProgressBar;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
@@ -100,7 +98,7 @@ public class BasicGameApp extends GameApplication {
 
         getGameScene().setBackgroundColor(Color.THISTLE);
         Entity world = spawn("world");
-        
+
         spawn("coin");
 
         player = spawn("player");
