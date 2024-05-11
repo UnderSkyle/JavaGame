@@ -5,6 +5,8 @@ import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.Spawns;
 import com.almasb.fxgl.entity.components.CollidableComponent;
+import com.almasb.fxgl.physics.BoundingShape;
+import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyDef;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
@@ -21,18 +23,10 @@ public class GameFactory implements EntityFactory {
 
     @Spawns("player")
     public Entity spawnPlayer(SpawnData data) {
-        PhysicsComponent physics = new PhysicsComponent();
-        BodyDef bd = new BodyDef();
-        bd.setFixedRotation(true);
-        bd.setType(BodyType.DYNAMIC);
-        physics.setBodyDef(bd);
-
-
         return  entityBuilder(data)
                 .type(PLAYER)
                 .at(getAppWidth() /2.0, getAppHeight() /2.0)
                 .viewWithBBox(new Rectangle(CELL_SIZE, CELL_SIZE, Color.BLUE))
-                .with(physics)
                 .with(new PlayerComponent())
                 .collidable()
                 .buildAndAttach();
@@ -81,4 +75,6 @@ public class GameFactory implements EntityFactory {
                 .zIndex(-1)
                 .buildAndAttach();
     }
+
+    //TODO: DO THE INVENTORY BEFORE PLAYING WITH THE ITEMS
 }

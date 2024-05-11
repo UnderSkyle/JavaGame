@@ -17,8 +17,16 @@ import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.pathfinding.CellState;
 import com.almasb.fxgl.pathfinding.astar.AStarGrid;
 import com.almasb.fxgl.physics.PhysicsComponent;
+import com.almasb.fxgl.ui.FXGLScrollPane;
+import com.almasb.fxgl.ui.InGamePanel;
 import com.almasb.fxgl.ui.ProgressBar;
+import javafx.geometry.HorizontalDirection;
+import javafx.geometry.VerticalDirection;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import com.example.demo.components.PlayerComponent;
@@ -37,15 +45,14 @@ import javafx.scene.media.Media;
 public class BasicGameApp extends GameApplication {
 
     public static final int CELL_SIZE = 30;
-    public static final int SPEED = 200;
     Entity player;
     private AStarGrid grid;
     private ProgressBar healthBar;
+
     private PlayerComponent playerComponent;
-    private boolean isMoveDownKeyPressed = false;
-    private boolean isMoveLeftKeyPressed = false;
-    private boolean isMoveRightKeyPressed = false;
-    private boolean isMoveUpKeyPressed = false;
+
+    VBox inventoryBox = new VBox();
+    private boolean isInventoryOpen = false;
 
 
     public AStarGrid getGrid() {
@@ -60,9 +67,7 @@ public class BasicGameApp extends GameApplication {
         settings.setVersion("0.3");
         settings.setGameMenuEnabled(true);
         settings.setSceneFactory(new SceneFactory());
-        settings.setDeveloperMenuEnabled(true);
-        settings.setApplicationMode(ApplicationMode.DEVELOPER);
-
+        settings.setTicksPerSecond(120);
     }
 
 
@@ -79,8 +84,29 @@ public class BasicGameApp extends GameApplication {
         healthBar.setWidth(playerComponent.getMaxHealth());
         healthBar.setHeight(30);
 
+        // Create black background for the inventory
+        Rectangle background = new Rectangle(100, 100, Color.BLACK);
+        background.setOpacity(0.5); // Set opacity to make it slightly transparent
 
-        // Add health bar to UI
+        // Create a VBox to hold inventory items
+        VBox inventoryBox = new VBox(10);
+        inventoryBox.setTranslateX(600);
+        inventoryBox.setTranslateY(50);
+        inventoryBox.setVisible(false); // Hide inventory initially
+
+        // Add some sample items to the inventory
+        for (int i = 0; i < 5; i++) {
+            Label itemLabel = new Label("Item " + (i + 1));
+            inventoryBox.getChildren().add(itemLabel);
+        }
+
+        // StackPane to hold the background and inventory
+        StackPane inventoryPane = new StackPane();
+        inventoryPane.getChildren().addAll(background, inventoryBox);
+        FXGL.getGameScene().addUINode(inventoryPane);
+
+
+
         getGameScene().addUINode(healthBar);
     }
 
@@ -133,77 +159,31 @@ public class BasicGameApp extends GameApplication {
     protected void initInput() {
 
         // Track key presses and releases
-        FXGL.getInput().addAction(new UserAction("Move Down") {
-            @Override
-            protected void onActionBegin() {
-                isMoveDownKeyPressed = true;
-                playerComponent.moveDown();
-            }
-
-            @Override
-            protected void onActionEnd() {
-                isMoveDownKeyPressed = false;
-                if (!isMoveUpKeyPressed) {
-                    playerComponent.stopY();
-                }
-            }
-        }, KeyCode.S);
-
-        FXGL.getInput().addAction(new UserAction("Move Left") {
-            @Override
-            protected void onActionBegin() {
-                isMoveLeftKeyPressed = true;
-                playerComponent.moveLeft();
-            }
-
-            @Override
-            protected void onActionEnd() {
-                isMoveLeftKeyPressed = false;
-                if (!isMoveRightKeyPressed) {
-                    playerComponent.stopX();
-                }
-            }
-        }, KeyCode.Q);
-
-        FXGL.getInput().addAction(new UserAction("Move Right") {
-            @Override
-            protected void onActionBegin() {
-                isMoveRightKeyPressed = true;
-                playerComponent.moveRight();
-            }
-
-            @Override
-            protected void onActionEnd() {
-                isMoveRightKeyPressed = false;
-                if (!isMoveLeftKeyPressed) {
-                    playerComponent.stopX();
-                }
-            }
-        }, KeyCode.D);
-
-        FXGL.getInput().addAction(new UserAction("Move UP") {
-            @Override
-            protected void onActionBegin() {
-                isMoveUpKeyPressed = true;
-                playerComponent.moveUp();
-            }
-
-            @Override
-            protected void onActionEnd() {
-                isMoveUpKeyPressed = false;
-                if (!isMoveDownKeyPressed) {
-                    playerComponent.stopY();
-                }
-            }
-        }, KeyCode.Z);
-
-        onKeyUp( KeyCode.T, () -> {
-            playerComponent.setCurrentHealth(playerComponent.getCurrentHealth()-5);
+        onKey(KeyCode.Z, () -> {
+            playerComponent.moveUp();
+        });
+        onKey(KeyCode.Q, () -> {
+            playerComponent.moveLeft();
+        });
+        onKey(KeyCode.S, () -> {
+            playerComponent.moveDown();
+        });
+        onKey(KeyCode.D, () -> {
+            playerComponent.moveRight();
         });
 
         onKeyUp( KeyCode.R, () -> {
             playerComponent.setMaxHealth(playerComponent.getMaxHealth()+5);
         });
+
+
+        FXGL.getInput().addAction(new UserAction("Toggle Inventory") {
+            @Override
+            protected void onActionBegin() {
+                inventoryBox.setVisible(!isInventoryOpen);
+                isInventoryOpen = !isInventoryOpen;
+            }
+        }, KeyCode.E);
 
     }
 
@@ -212,8 +192,6 @@ public class BasicGameApp extends GameApplication {
 
     @Override
     protected void initPhysics() {
-
-        FXGL.getPhysicsWorld().setGravity(0, 0);
 
         CustomCollisionHandler.init();
 

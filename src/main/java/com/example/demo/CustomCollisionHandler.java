@@ -17,45 +17,24 @@ public class CustomCollisionHandler {
         // Register collision handlers
         FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(GameTypes.PLAYER, GameTypes.WALL) {
             @Override
-            protected void onCollisionBegin(Entity player, Entity wall) {
+            protected void onCollision(Entity player, Entity wall) {
                 PlayerComponent playerComponent = player.getComponent(PlayerComponent.class);
-
                 if( wall.getWidth() <= wall.getHeight()) {
                     if (player.getX() < wall.getX()) {
-                        playerComponent.setCanMoveRight(false);
-                        playerComponent.stopX();
+
+                        playerComponent.moveLeft();
                     } else if (player.getX() > wall.getX()) {
-                        playerComponent.setCanMoveLeft(false);
-                        playerComponent.stopX();
+
+                        playerComponent.moveRight();
                     }
                 }
                 if( wall.getWidth() >= wall.getHeight()) {
                     if (player.getY() < wall.getY()) {
-                        playerComponent.setCanMoveDown(false);
-                        playerComponent.stopY();
+                        playerComponent.moveUp();
                     } else if (player.getY() > wall.getY()) {
-                        playerComponent.setCanMoveUp(false);
-                        playerComponent.stopY();
+
+                        playerComponent.moveDown();
                     }
-                }
-            }
-
-            @Override
-            protected void onCollisionEnd(Entity player, Entity wall) {
-                PlayerComponent playerComponent = player.getComponent(PlayerComponent.class);
-
-                // Get the position of the wall
-                if (player.getX() < wall.getX()) {
-                    playerComponent.setCanMoveRight(true);
-                } else if (player.getX() > wall.getX()) {
-                    playerComponent.setCanMoveLeft(true);
-                }
-
-                if (player.getY() < wall.getY()) {
-                    playerComponent.setCanMoveDown(true);
-
-                } else if (player.getY() > wall.getY()) {
-                    playerComponent.setCanMoveUp(true);
                 }
 
             }
@@ -65,7 +44,8 @@ public class CustomCollisionHandler {
 
             @Override
             protected void onCollision(Entity player, Entity coin) {
-                getDialogService().showMessageBox("COIN ++", coin::removeFromWorld);
+                System.out.println("hey");
+                coin.removeFromWorld();
             }
         });
 
@@ -73,9 +53,7 @@ public class CustomCollisionHandler {
             @Override
             protected void onCollisionBegin(Entity player, Entity warpzone) {
                 System.out.println("hello");
-                player.getComponent(PlayerComponent.class).stopX();
-                player.getComponent(PlayerComponent.class).stopY();
-                player.getComponent(PhysicsComponent.class).overwritePosition(new Point2D(getAppWidth()/2.0,getAppHeight()/2.0));
+                player.getComponent(PlayerComponent.class).yeet(new Point2D(getAppWidth()/2.0,getAppHeight()/2.0));
 
             }
         });
