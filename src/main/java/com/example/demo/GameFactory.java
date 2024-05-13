@@ -4,7 +4,11 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.Spawns;
+import com.almasb.fxgl.physics.BoundingShape;
+import com.almasb.fxgl.physics.HitBox;
 import com.example.demo.components.PlayerComponent;
+import javafx.geometry.BoundingBox;
+import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -20,7 +24,7 @@ public class GameFactory implements EntityFactory {
         return  entityBuilder(data)
                 .type(PLAYER)
                 .at(getAppWidth() /2.0, getAppHeight() /2.0)
-                .viewWithBBox(new Rectangle(CELL_SIZE, CELL_SIZE, Color.BLUE))
+                .bbox(new HitBox(new Point2D(-8, -8), BoundingShape.box(30, 30)))
                 .with(new PlayerComponent())
                 .collidable()
                 .buildAndAttach();

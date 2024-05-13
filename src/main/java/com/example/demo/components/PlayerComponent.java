@@ -1,11 +1,17 @@
 package com.example.demo.components;
 
+import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.entity.components.TransformComponent;
+import com.almasb.fxgl.texture.AnimatedTexture;
+import com.almasb.fxgl.texture.AnimationChannel;
 import com.almasb.fxgl.ui.ProgressBar;
 import com.example.demo.PlayerInventoryView;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
+
+import static com.almasb.fxgl.dsl.FXGLForKtKt.texture;
 
 public class PlayerComponent extends Component {
 
@@ -13,8 +19,12 @@ public class PlayerComponent extends Component {
     private final double SPEED = 3;
     private int maxHealth = 100;
     private int currentHealth = 0;
-    private PlayerInventoryView inventoryView = new PlayerInventoryView(getEntity());
-    private ProgressBar healthBar = new ProgressBar(false);
+    private final PlayerInventoryView inventoryView = new PlayerInventoryView(getEntity());
+    private final ProgressBar healthBar = new ProgressBar(false);
+    private AnimationChannel animWalkRight, animWalkLeft, animWalkUp, animWalkDown;
+
+    private AnimatedTexture texture = texture("Player/DownWalk.png").toAnimatedTexture(4, Duration.seconds(2));
+    private String currentDirection = "idleDown";
 
     public PlayerInventoryView getInventoryView() {
         return inventoryView;
@@ -37,6 +47,18 @@ public class PlayerComponent extends Component {
         healthBar.setFill(Color.GREEN);
         healthBar.setWidth(getMaxHealth());
         healthBar.setHeight(30);
+
+        animWalkRight = new AnimationChannel(FXGL.image("Player/RightWalk.png"), Duration.millis(400) , 4);
+        animWalkDown = new AnimationChannel(FXGL.image("Player/DownWalk.png"), Duration.millis(400) , 4);
+        animWalkLeft = new AnimationChannel(FXGL.image("Player/LeftWalk.png"), Duration.millis(400) , 4);
+        animWalkUp = new AnimationChannel(FXGL.image("Player/UpWalk.png"), Duration.millis(400) , 4);
+
+
+        texture.setScaleX(2);
+        texture.setScaleY(2);
+
+        entity.getViewComponent().addChild(texture.loop());
+
     }
 
     @Override
@@ -45,6 +67,20 @@ public class PlayerComponent extends Component {
         healthBar.setCurrentValue(getCurrentHealth());
         healthBar.setMaxValue(getMaxHealth());
         healthBar.setWidth(getMaxHealth());
+
+        if(currentDirection.equals("right")){
+            texture.loopNoOverride(animWalkRight);
+        }
+        else if(currentDirection.equals("left")){
+            texture.loopNoOverride(animWalkLeft);
+        }
+        else if(currentDirection.equals("up")){
+            texture.loopNoOverride(animWalkUp);
+        }
+        else if(currentDirection.equals("down")){
+            texture.loopNoOverride(animWalkDown);
+        }
+
 
     }
 
@@ -88,4 +124,14 @@ public class PlayerComponent extends Component {
     }
 
 
+    public void setCurrentDirection(String right) {
+        this.currentDirection = right;
+    }
+    public String getCurrentDirection() {
+        return currentDirection;
+    }
+
+    public void stopAnim() {
+        texture.stop();
+    }
 }

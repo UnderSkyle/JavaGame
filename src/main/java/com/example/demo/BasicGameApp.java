@@ -11,6 +11,7 @@ import com.almasb.fxgl.app.scene.Viewport;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
+import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.ui.ProgressBar;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
@@ -18,7 +19,6 @@ import javafx.scene.paint.Color;
 import com.example.demo.components.PlayerComponent;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
-import static com.example.demo.GameTypes.*;
 
 
 /**
@@ -45,7 +45,7 @@ public class BasicGameApp extends GameApplication {
         settings.setVersion("0.3");
         settings.setGameMenuEnabled(true);
         settings.setSceneFactory(new SceneFactory());
-        settings.setTicksPerSecond(120);
+        settings.setTicksPerSecond(60);
     }
 
 
@@ -107,11 +107,85 @@ public class BasicGameApp extends GameApplication {
     @Override
     protected void initInput() {
 
-        // Track key presses and releases
-        onKey(KeyCode.Z, () -> playerComponent.moveUp());
-        onKey(KeyCode.Q, () -> playerComponent.moveLeft());
-        onKey(KeyCode.S, () -> playerComponent.moveDown());
-        onKey(KeyCode.D, () -> playerComponent.moveRight());
+
+        FXGL.getInput().addAction(new UserAction("Right") {
+            @Override
+            protected void onAction() {
+                player.getComponent(PlayerComponent.class).moveRight();
+            }
+
+            @Override
+            protected void onActionBegin() {
+                player.getComponent(PlayerComponent.class).setCurrentDirection("right");
+            }
+
+            @Override
+            protected void onActionEnd() {
+                if (player.getComponent(PlayerComponent.class).getCurrentDirection() == "right"){
+                    player.getComponent(PlayerComponent.class).stopAnim();
+                }
+            }
+        }, KeyCode.D);
+
+        FXGL.getInput().addAction(new UserAction("Left") {
+            @Override
+            protected void onAction() {
+                player.getComponent(PlayerComponent.class).moveLeft();
+            }
+
+            @Override
+            protected void onActionBegin() {
+                player.getComponent(PlayerComponent.class).setCurrentDirection("left");
+            }
+
+            @Override
+            protected void onActionEnd() {
+                if (player.getComponent(PlayerComponent.class).getCurrentDirection() == "left"){
+                    player.getComponent(PlayerComponent.class).stopAnim();
+                }
+            }
+
+        }, KeyCode.Q);
+
+        FXGL.getInput().addAction(new UserAction("Up") {
+            @Override
+            protected void onAction() {
+                player.getComponent(PlayerComponent.class).moveUp();
+            }
+
+            @Override
+            protected void onActionBegin() {
+                player.getComponent(PlayerComponent.class).setCurrentDirection("up");
+            }
+
+            @Override
+            protected void onActionEnd() {
+                if (player.getComponent(PlayerComponent.class).getCurrentDirection() == "up"){
+                    player.getComponent(PlayerComponent.class).stopAnim();
+                }
+            }
+        }, KeyCode.Z);
+
+        FXGL.getInput().addAction(new UserAction("Down") {
+            @Override
+            protected void onAction() {
+                player.getComponent(PlayerComponent.class).moveDown();
+            }
+
+            @Override
+            protected void onActionBegin() {
+                player.getComponent(PlayerComponent.class).setCurrentDirection("down");
+            }
+
+            @Override
+            protected void onActionEnd() {
+                if (player.getComponent(PlayerComponent.class).getCurrentDirection() == "down"){
+                    player.getComponent(PlayerComponent.class).stopAnim();
+                }
+            }
+
+        }, KeyCode.S);
+
 
         onKeyDown(KeyCode.LEFT,() -> playerComponent.getInventoryView().selectCellToLeft());
         onKeyDown(KeyCode.RIGHT,() -> playerComponent.getInventoryView().selectCellToRight());
