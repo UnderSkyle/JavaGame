@@ -16,8 +16,9 @@ public abstract class ItemComponent extends Component {
     private final Map<String, Object> data = new HashMap<>();
 
     public void onPickup(Entity entity) {
-        if(entity.getComponent(InventoryComponent.class).isFull(this.entity)){
+        if(!entity.getComponent(InventoryComponent.class).isFull()){
             entity.getComponent(InventoryComponent.class).add(this.entity);
+            this.entity.removeFromWorld();
         };
     }
 

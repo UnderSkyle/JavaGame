@@ -9,6 +9,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+import java.util.Map;
+
 import static com.almasb.fxgl.dsl.FXGL.getAppHeight;
 import static com.almasb.fxgl.dsl.FXGL.getAppWidth;
 import static com.example.demo.BasicGameApp.CELL_SIZE;
@@ -26,7 +28,7 @@ public class PlayerInventoryView extends GridPane{
                 Rectangle cell = new Rectangle(gridSize, gridSize, Color.BLACK);
                 cell.setOpacity(0.5);
 
-                Text text = new Text("Item " + (row * 5 + col + 1));
+                Text text = new Text("" + (row * 5 + col + 1));
                 text.setFill(Color.WHITE);
                 text.setFont(Font.font(10));
                 int cellID = row * 5 + col + 1;
@@ -174,4 +176,12 @@ public class PlayerInventoryView extends GridPane{
     }
 
 
+    public void update(Map<Entity, Integer> inventory) {
+        for (Map.Entry<Entity, Integer> entry : inventory.entrySet()) {
+            Entity entity = entry.getKey();
+            int quantity = entry.getValue();
+
+            System.out.println(entity + " " + quantity);
+        }
+    }
 }

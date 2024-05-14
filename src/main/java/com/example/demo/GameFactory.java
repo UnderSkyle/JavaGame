@@ -6,7 +6,9 @@ import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.Spawns;
 import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.HitBox;
+import com.example.demo.components.InventoryComponent;
 import com.example.demo.components.PlayerComponent;
+import com.example.demo.components.UsableItemComponent;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
@@ -26,6 +28,7 @@ public class GameFactory implements EntityFactory {
                 .at(getAppWidth() /2.0, getAppHeight() /2.0)
                 .bbox(new HitBox(new Point2D(-8, -8), BoundingShape.box(30, 30)))
                 .with(new PlayerComponent())
+                .with(new InventoryComponent())
                 .collidable()
                 .buildAndAttach();
     }
@@ -74,5 +77,24 @@ public class GameFactory implements EntityFactory {
                 .buildAndAttach();
     }
 
+    @Spawns("heal_potion")
+    public Entity spawnItem(SpawnData data) {
+        Runnable onUse = new Runnable() {
+            final Entity player = getGameWorld().getSingleton(PLAYER);
+
+            @Override
+            public void run() {
+                player.getComponent(PlayerComponent.class).setCurrentHealth(player.getComponent(PlayerComponent.class).getCurrentHealth()+5);
+            }
+        };
+
+        return  entityBuilder(data)
+               .type(ITEM)
+               .at(data.getX(), data.getY())
+               .viewWithBBox(new Rectangle(CELL_SIZE/2.0, CELL_SIZE/2.0, Color.RED))
+                .with(new UsableItemComponent(onUse))
+               .collidable()
+               .buildAndAttach();
+    }
     //TODO: DO THE INVENTORY BEFORE PLAYING WITH THE ITEMS
 }

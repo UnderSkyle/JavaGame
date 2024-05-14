@@ -78,6 +78,10 @@ public class BasicGameApp extends GameApplication {
 
         spawn("trigger", 200, 200);
 
+        spawn("heal_potion", 200, 300);
+        spawn("heal_potion", 300, 300);
+        spawn("heal_potion", 400, 400);
+
         SpawnData wallSpawn = new SpawnData(0 ,0);
         wallSpawn.put("width", CELL_SIZE);
         wallSpawn.put("height", (int)world.getHeight());
