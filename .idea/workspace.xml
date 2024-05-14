@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="demo:jar" />
+    </artifacts-to-build>
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="450a246a-b8c4-4045-9d6d-b0c01123dc97" name="Changes" comment="Added a bit more structure and started trying to make pickup working">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/textures/Items/Empty.png" afterDir="false" />
+    <list default="true" id="450a246a-b8c4-4045-9d6d-b0c01123dc97" name="Changes" comment="added animated character">
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/demo_jar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ninja Adventure - Asset Pack/Items/Potion/EmptyPot.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/textures/Items/EmptyPot.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ninja Adventure - Asset Pack/Items/Potion/Medipack.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/textures/Items/health potion.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/BasicGameApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/BasicGameApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/GameFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/GameFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/PlayerInventoryView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/PlayerInventoryView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/components/EquipableItemComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/components/EquipableItemComponent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/components/InventoryComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/components/InventoryComponent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/components/ItemComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/components/ItemComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/components/UsableItemComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/components/UsableItemComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/MANIFEST.MF" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,12 +45,12 @@
     &quot;assignee&quot;: &quot;UnderSkyle&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/UnderSkyle/JavaGame.git&quot;,
-    &quot;accountId&quot;: &quot;868be4df-b09e-4d44-ac0d-42ce3ebedf2e&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/UnderSkyle/JavaGame",
+    "accountId": "e1042283-646b-4fda-b9d3-a6f02e4f0bf3"
   }
-}</component>
+}]]></component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -80,15 +82,15 @@
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/cytech/documents/JavaProj/src/main/resources/assets/textures/Items",
+    "last_opened_file_path": "C:/Users/silan/IdeaProjects/demo",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
+    "project.structure.last.edited": "Artifacts",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
@@ -99,8 +101,6 @@
       <recent name="C:\Users\silan\IdeaProjects\demo\src\main\resources\assets\textures" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/main/resources/assets/textures/Items" />
-      <recent name="$PROJECT_DIR$/src/main/resources/assets/textures" />
       <recent name="C:\Users\silan\IdeaProjects\demo\src\main\resources\assets\textures\Player" />
       <recent name="C:\Users\silan\IdeaProjects\demo\src\main\resources\assets\textures" />
       <recent name="C:\Users\silan\IdeaProjects\demo\src\main\resources\assets\music" />
@@ -151,8 +151,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9f38398b9061-18abd8497189-intellij.indexing.shared.core-IU-241.14494.240" />
-        <option value="bundled-js-predefined-1d06a55b98c1-74d2a5396914-JavaScript-IU-241.14494.240" />
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.15989.150" />
+        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-IU-241.15989.150" />
       </set>
     </attachedChunks>
   </component>
@@ -180,7 +180,7 @@
       <workItem from="1715346471428" duration="9657000" />
       <workItem from="1715432379956" duration="344000" />
       <workItem from="1715433077952" duration="726000" />
-      <workItem from="1715684487370" duration="1696000" />
+      <workItem from="1715692002728" duration="2442000" />
     </task>
     <task id="LOCAL-00001" summary="setup">
       <option name="closed" value="true" />
@@ -278,23 +278,7 @@
       <option name="project" value="LOCAL" />
       <updated>1715606978220</updated>
     </task>
-    <task id="LOCAL-00013" summary="Half fixed animation and added structure for items">
-      <option name="closed" value="true" />
-      <created>1715672526244</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1715672526244</updated>
-    </task>
-    <task id="LOCAL-00014" summary="Added a bit more structure and started trying to make pickup working">
-      <option name="closed" value="true" />
-      <created>1715677140382</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1715677140382</updated>
-    </task>
-    <option name="localTasksCounter" value="15" />
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -321,9 +305,7 @@
     <MESSAGE value="Finaly i solved the movements ( i deleted physics and added a set tick speed)" />
     <MESSAGE value="I cleaned up the code" />
     <MESSAGE value="found textures and shit" />
-    <MESSAGE value="Half fixed animation and added structure for items" />
-    <MESSAGE value="Added a bit more structure and started trying to make pickup working" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added a bit more structure and started trying to make pickup working" />
+    <option name="LAST_COMMIT_MESSAGE" value="found textures and shit" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

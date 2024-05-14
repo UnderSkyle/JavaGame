@@ -9,9 +9,9 @@ import java.util.Map;
 
 public class InventoryComponent extends Component {
 
-    Map<String, Integer> inventory = new HashMap<>();
+    private Map<String, Integer> inventory = new HashMap<>();
 
-    PlayerInventoryView inventoryView;
+    private PlayerInventoryView inventoryView;
 
     @Override
     public void onAdded() {
@@ -47,6 +47,15 @@ public class InventoryComponent extends Component {
         // Define your logic for determining if the inventory is full
         // For example, you can check the total number of items in the inventory
         return inventory.size() >= MAX_INVENTORY_SIZE;
+    }
+
+
+    public Map<String, Integer> getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(Map<String, Integer> inventory) {
+        this.inventory = inventory;
     }
 
     // Define the maximum size of the inventory

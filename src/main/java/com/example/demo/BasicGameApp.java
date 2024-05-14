@@ -198,12 +198,27 @@ public class BasicGameApp extends GameApplication {
         onKeyDown(KeyCode.ENTER, () -> {
 
             String nameOfItem = playerComponent.getInventoryView().getNameFromSelectedNode();
-            Entity item = spawn(nameOfItem, 1000, 1000);
-            item.getComponent(UsableItemComponent.class).onUse(player);
-            player.getComponent(InventoryComponent.class).remove(item.getComponent(UsableItemComponent.class).getName());
-            item.removeFromWorld();
 
+            if (nameOfItem != "Empty"){
+                Entity item = spawn(nameOfItem, 1000, 1000); // utilise in trick qui spawn l objet hors de l ecran pour l utiliser
+                item.getComponent(UsableItemComponent.class).onUse(player);
+                player.getComponent(InventoryComponent.class).remove(item.getComponent(UsableItemComponent.class).getName());
+                item.removeFromWorld();
 
+            }
+
+        });
+
+        onKeyDown(KeyCode.J, () ->{
+            String nameOfItem = playerComponent.getInventoryView().getNameFromSelectedNode();
+
+            if (nameOfItem != "Empty"){
+                Entity item = spawn(nameOfItem, 1000, 1000); // utilise in trick qui spawn l objet hors de l ecran pour l utiliser
+                item.getComponent(UsableItemComponent.class).onDrop(player.getPosition(), nameOfItem);
+                player.getComponent(InventoryComponent.class).remove(item.getComponent(UsableItemComponent.class).getName());
+                item.removeFromWorld();
+
+            }
         });
 
     }

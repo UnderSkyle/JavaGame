@@ -212,6 +212,7 @@ public class PlayerInventoryView extends GridPane{
 
             workingCell.setTexture(texture);
             workingCell.setNumberText("");
+            workingCell.setNameOfItem("Empty");
         }
     }
 
@@ -226,7 +227,7 @@ public class PlayerInventoryView extends GridPane{
     public class TextureWithNumberNode extends HBox {
         private Texture texture;
         private Text numberText;
-        private String nameOfItem = "";
+        private String nameOfItem = "Empty";
 
         public TextureWithNumberNode(Texture texture, String numberText) {
 

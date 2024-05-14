@@ -29,6 +29,7 @@ public class GameFactory implements EntityFactory {
     public Entity spawnPlayer(SpawnData data) {
         return  entityBuilder(data)
                 .type(PLAYER)
+                .zIndex(3)
                 .at(getAppWidth() /2.0, getAppHeight() /2.0)
                 .bbox(new HitBox(new Point2D(-8, -8), BoundingShape.box(30, 30)))
                 .with(new PlayerComponent())
@@ -82,13 +83,15 @@ public class GameFactory implements EntityFactory {
     }
 
     @Spawns("health potion")
-    public Entity spawnItem(SpawnData data) {
+    public Entity spawnHealthPotion(SpawnData data) {
         Runnable onUse = new Runnable() {
             final Entity player = getGameWorld().getSingleton(PLAYER);
 
             @Override
-            public void run() {
-                player.getComponent(PlayerComponent.class).setCurrentHealth(player.getComponent(PlayerComponent.class).getCurrentHealth()+5);
+            public void run(){
+                if(player.getComponent(PlayerComponent.class).getCurrentHealth() <= player.getComponent(PlayerComponent.class).getMaxHealth()-20) {
+                    player.getComponent(PlayerComponent.class).setCurrentHealth(player.getComponent(PlayerComponent.class).getCurrentHealth() + 20);
+                }
             }
         };
 
@@ -107,5 +110,6 @@ public class GameFactory implements EntityFactory {
                 .collidable()
                .buildAndAttach();
     }
-    //TODO: DO THE INVENTORY BEFORE PLAYING WITH THE ITEMS
+
+
 }
