@@ -8,6 +8,7 @@ import javafx.geometry.Point2D;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import static com.almasb.fxgl.dsl.FXGLForKtKt.spawn;
 
@@ -15,9 +16,18 @@ public abstract class ItemComponent extends Component {
 
     private final Map<String, Object> data = new HashMap<>();
 
+    public ItemComponent(Map<String, Object> data) {
+        this.data.putAll(data);
+    }
+
+    public String getName() {
+        return (String) data.get("name");
+    }
+
+
     public void onPickup(Entity entity) {
         if(!entity.getComponent(InventoryComponent.class).isFull()){
-            entity.getComponent(InventoryComponent.class).add(this.entity);
+            entity.getComponent(InventoryComponent.class).add(getName());
             this.entity.removeFromWorld();
         };
     }
@@ -26,13 +36,13 @@ public abstract class ItemComponent extends Component {
     
     
 
-    public void onDrop(Point2D position) {
+    public void onDrop(Point2D position, String Name) {
 
-        SpawnData wallSpawn = new SpawnData(0 ,0);
-        wallSpawn.put("itemData", this.data);
-        wallSpawn.put("position", position);
+        SpawnData itemSpawn = new SpawnData(position.getX() ,position.getY());
+        itemSpawn.put("itemData", this.data);
+        itemSpawn.put("position", position);
         
-        spawn("wall", wallSpawn);
+        spawn("wall", itemSpawn);
 
     }
         

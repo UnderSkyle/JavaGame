@@ -1,9 +1,17 @@
 package com.example.demo;
 
 import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.texture.Texture;
 import com.example.demo.components.PlayerComponent;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -11,8 +19,7 @@ import javafx.scene.text.Text;
 
 import java.util.Map;
 
-import static com.almasb.fxgl.dsl.FXGL.getAppHeight;
-import static com.almasb.fxgl.dsl.FXGL.getAppWidth;
+import static com.almasb.fxgl.dsl.FXGL.*;
 import static com.example.demo.BasicGameApp.CELL_SIZE;
 
 public class PlayerInventoryView extends GridPane{
@@ -28,15 +35,13 @@ public class PlayerInventoryView extends GridPane{
                 Rectangle cell = new Rectangle(gridSize, gridSize, Color.BLACK);
                 cell.setOpacity(0.5);
 
-                Text text = new Text("" + (row * 5 + col + 1));
-                text.setFill(Color.WHITE);
-                text.setFont(Font.font(10));
+                TextureWithNumberNode text = new TextureWithNumberNode( texture("Items/Empty.png"), "" );
+                text.getNumberText().setFill(Color.WHITE);
                 int cellID = row * 5 + col + 1;
                 cell.setId("Cell:"+cellID);
                 text.setId("Text:" + cellID);
 
-                addEventHandlers(cell, text);
-
+                addEventHandlers(cell, text.getNumberText());
 
                 this.add(cell, col, row);
                 this.add(text, col, row);
@@ -171,17 +176,104 @@ public class PlayerInventoryView extends GridPane{
         return (GridPane.getRowIndex(node) * 5 + GridPane.getColumnIndex(node))*2 ; // *2 because of the text
     }
 
+
     private Text getCellText(Node node) {
-        return (Text) this.getChildren().get(getCellIndex(node) + 1);
+        Node goodNode = this.getChildren().get(getCellIndex(node) + 1);// +1 because of the text
+        if (goodNode instanceof TextureWithNumberNode nextCell) {
+            return nextCell.getNumberText();
+        }
+        return new Text("");
     }
 
 
-    public void update(Map<Entity, Integer> inventory) {
-        for (Map.Entry<Entity, Integer> entry : inventory.entrySet()) {
-            Entity entity = entry.getKey();
-            int quantity = entry.getValue();
+    public void update(Map<String, Integer> inventory) {
+        int cellIndex = 1;
+        for (Map.Entry<String, Integer> entry : inventory.entrySet()) {
 
-            System.out.println(entity + " " + quantity);
+            Node cellText = this.getChildren().get(cellIndex);
+            int quantity = entry.getValue();
+            ((TextureWithNumberNode) cellText).getNumberText().setText(String.valueOf(quantity));
+
+            String name = entry.getKey();
+            Texture texture = texture("Items/" +name +".png");
+            texture.setScaleX(2);
+            texture.setScaleY(2);
+
+            ((TextureWithNumberNode) cellText).setNameOfItem(name);
+
+            ((TextureWithNumberNode) cellText).setTexture(texture);
+
+        }
+        for(int i = 1+ inventory.size()*2; i<=39; i=i+2){
+
+            TextureWithNumberNode workingCell = (TextureWithNumberNode) this.getChildren().get(i);
+
+            Texture texture = texture("Items/Empty.png");
+
+            workingCell.setTexture(texture);
+            workingCell.setNumberText("");
         }
     }
+
+    public String getNameFromSelectedNode() {
+
+        if (this.getChildren().get(getCellIndex(selectedCell)+1) instanceof TextureWithNumberNode cell) {
+            return cell.getNameOfItem();
+        }
+        else return "bad cell";
+    }
+
+    public class TextureWithNumberNode extends HBox {
+        private Texture texture;
+        private Text numberText;
+        private String nameOfItem = "";
+
+        public TextureWithNumberNode(Texture texture, String numberText) {
+
+            // Set spacing between the texture and the number
+            setSpacing(8); // Adjust as needed
+
+            // Add padding around the node
+            setPadding(new Insets(5)); // Adjust as needed
+
+            // Center the content horizontally and vertically
+            setAlignment(Pos.CENTER);
+
+
+            // Create an ImageView for the texture
+            this.texture = texture;
+            // Create a Text node for the number
+            Text text = new Text(numberText);
+            this.numberText= text;
+            text.setFont(Font.font("Arial", 16));
+
+
+            // Add the ImageView and Text to the StackPane
+            getChildren().addAll(this.texture, text);
+        }
+
+        public Texture getTexture() {
+            return texture;
+        }
+        public void setTexture(Texture texture) {
+            this.texture = texture;
+            getChildren().remove(0);
+            getChildren().add(0, texture);
+        }
+        public Text getNumberText() {
+            return numberText;
+        }
+        public void setNumberText(String numberText) {
+            this.numberText.setText(numberText);
+        }
+
+        public void setNameOfItem(String name) {
+            this.nameOfItem = name;
+        }
+
+        public String getNameOfItem(){
+            return this.nameOfItem;
+        }
+    }
+
 }

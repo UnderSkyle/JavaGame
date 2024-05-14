@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class InventoryComponent extends Component {
 
-    Map<Entity, Integer> inventory = new HashMap<>();
+    Map<String, Integer> inventory = new HashMap<>();
 
     PlayerInventoryView inventoryView;
 
@@ -20,24 +20,24 @@ public class InventoryComponent extends Component {
         inventoryView = entity.getComponent(PlayerComponent.class).getInventoryView();
     }
 
-    public void add(Entity item) {
+    public void add(String name) {
         // Check if the inventory is full
         if (!isFull()) {
             // Add the item to the inventory
-            inventory.merge(item, 1, Integer::sum);
+            inventory.merge(name, 1, Integer::sum);
             inventoryView.update(inventory);
         }
     }
 
-    public void remove(Entity item) {
+    public void remove(String name) {
         // Check if the inventory contains the item
-        if (inventory.containsKey(item)) {
+        if (inventory.containsKey(name)){
             // Remove the item from the inventory
-            int quantity = inventory.get(item);
+            int quantity = inventory.get(name);
             if (quantity > 1) {
-                inventory.put(item, quantity - 1);
+                inventory.put(name, quantity - 1);
             } else {
-                inventory.remove(item);
+                inventory.remove(name);
             }
             inventoryView.update(inventory);
         }

@@ -13,11 +13,14 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.ui.ProgressBar;
+import com.example.demo.components.InventoryComponent;
+import com.example.demo.components.UsableItemComponent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import com.example.demo.components.PlayerComponent;
 
+import java.util.List;
 import java.util.Objects;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
@@ -78,9 +81,9 @@ public class BasicGameApp extends GameApplication {
 
         spawn("trigger", 200, 200);
 
-        spawn("heal_potion", 200, 300);
-        spawn("heal_potion", 300, 300);
-        spawn("heal_potion", 400, 400);
+        spawn("health potion", 200, 300);
+        spawn("health potion", 300, 300);
+        spawn("health potion", 400, 400);
 
         SpawnData wallSpawn = new SpawnData(0 ,0);
         wallSpawn.put("width", CELL_SIZE);
@@ -191,6 +194,17 @@ public class BasicGameApp extends GameApplication {
 
         onKeyUp( KeyCode.R, () -> playerComponent.setMaxHealth(playerComponent.getMaxHealth()+5));
         onKeyDown( KeyCode.T, () -> playerComponent.setCurrentHealth((playerComponent.getCurrentHealth()+5)));
+
+        onKeyDown(KeyCode.ENTER, () -> {
+
+            String nameOfItem = playerComponent.getInventoryView().getNameFromSelectedNode();
+            Entity item = spawn(nameOfItem, 1000, 1000);
+            item.getComponent(UsableItemComponent.class).onUse(player);
+            player.getComponent(InventoryComponent.class).remove(item.getComponent(UsableItemComponent.class).getName());
+            item.removeFromWorld();
+
+
+        });
 
     }
 
