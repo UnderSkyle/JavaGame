@@ -2,6 +2,7 @@ package com.example.demo;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.physics.CollisionHandler;
+import com.example.demo.components.EquipedItemComponent;
 import com.example.demo.components.ItemComponent;
 import com.example.demo.components.PlayerComponent;
 import com.example.demo.components.UsableItemComponent;
@@ -56,10 +57,16 @@ public class CustomCollisionHandler {
             }
         });
 
-        FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(GameTypes.PLAYER, GameTypes.ITEM) {
+        FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(GameTypes.PLAYER, GameTypes.USABLE_ITEM) {
             @Override
             protected void onCollisionBegin(Entity player, Entity item){
                 item.getComponent(UsableItemComponent.class).onPickup(player);
+            }
+        });
+        FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(GameTypes.PLAYER, GameTypes.EQUIPPED_ITEM) {
+            @Override
+            protected void onCollisionBegin(Entity player, Entity item){
+                item.getComponent(EquipedItemComponent.class).onPickup(player);
             }
         });
 

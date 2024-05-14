@@ -24,6 +24,9 @@ public class InventoryComponent extends Component {
         // Check if the inventory is full
         if (!isFull()) {
             // Add the item to the inventory
+            if(entity.hasComponent(EquipedItemComponent.class)){
+                inventory.put(name, 0);
+            }
             inventory.merge(name, 1, Integer::sum);
             inventoryView.update(inventory);
         }

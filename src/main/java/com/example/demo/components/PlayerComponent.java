@@ -1,7 +1,6 @@
 package com.example.demo.components;
 
 import com.almasb.fxgl.dsl.FXGL;
-import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.entity.components.TransformComponent;
 import com.almasb.fxgl.texture.AnimatedTexture;
@@ -160,7 +159,7 @@ public class PlayerComponent extends Component {
         return currentDirection;
     }
 
-    public void equip(Entity entity) {
-        //TODO
+    public void updateStats(Object entity) {
+        System.out.println("reached");
     }
 }

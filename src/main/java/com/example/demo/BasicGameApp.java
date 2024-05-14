@@ -13,6 +13,7 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.ui.ProgressBar;
+import com.example.demo.components.EquipedItemComponent;
 import com.example.demo.components.InventoryComponent;
 import com.example.demo.components.UsableItemComponent;
 import javafx.scene.input.KeyCode;
@@ -84,6 +85,7 @@ public class BasicGameApp extends GameApplication {
         spawn("health potion", 200, 300);
         spawn("health potion", 300, 300);
         spawn("health potion", 400, 400);
+        spawn("sword", 400, 200);
 
         SpawnData wallSpawn = new SpawnData(0 ,0);
         wallSpawn.put("width", CELL_SIZE);
@@ -201,8 +203,11 @@ public class BasicGameApp extends GameApplication {
 
             if (nameOfItem != "Empty"){
                 Entity item = spawn(nameOfItem, 1000, 1000); // utilise in trick qui spawn l objet hors de l ecran pour l utiliser
-                item.getComponent(UsableItemComponent.class).onUse(player);
-                player.getComponent(InventoryComponent.class).remove(item.getComponent(UsableItemComponent.class).getName());
+                if(item.hasComponent(UsableItemComponent.class)){
+                    item.getComponent(UsableItemComponent.class).onUse(player);
+                    player.getComponent(InventoryComponent.class).remove(item.getComponent(UsableItemComponent.class).getName());
+
+                }
                 item.removeFromWorld();
 
             }
@@ -214,12 +219,21 @@ public class BasicGameApp extends GameApplication {
 
             if (nameOfItem != "Empty"){
                 Entity item = spawn(nameOfItem, 1000, 1000); // utilise in trick qui spawn l objet hors de l ecran pour l utiliser
-                item.getComponent(UsableItemComponent.class).onDrop(player.getPosition(), nameOfItem);
-                player.getComponent(InventoryComponent.class).remove(item.getComponent(UsableItemComponent.class).getName());
+                if(item.hasComponent(UsableItemComponent.class)){
+                    item.getComponent(UsableItemComponent.class).onDrop(player.getPosition(), nameOfItem);
+                    player.getComponent(InventoryComponent.class).remove(item.getComponent(UsableItemComponent.class).getName());
+                }
+                else{
+                    item.getComponent(EquipedItemComponent.class).onDrop(player.getPosition(), nameOfItem);
+                    player.getComponent(InventoryComponent.class).remove(item.getComponent(EquipedItemComponent.class).getName());
+
+                }
                 item.removeFromWorld();
 
             }
         });
+
+        onKeyDown(KeyCode.K, () -> System.out.println(player.getComponent(InventoryComponent.class).getInventory()));
 
     }
 

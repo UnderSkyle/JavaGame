@@ -1,6 +1,5 @@
 package com.example.demo.components;
 
-import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.component.Component;
@@ -11,14 +10,13 @@ import javafx.util.Duration;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 import static com.almasb.fxgl.dsl.FXGLForKtKt.spawn;
 import static com.example.demo.GameTypes.PLAYER;
 
 public abstract class ItemComponent extends Component {
 
-    private final Map<String, Object> data = new HashMap<>();
+    final Map<String, Object> data = new HashMap<>();
 
     public ItemComponent(Map<String, Object> data) {
         this.data.putAll(data);
@@ -26,11 +24,14 @@ public abstract class ItemComponent extends Component {
 
     public String getName() {
         return (String) data.get("name");
-    }
+    } //has to be the same as spawn
 
 
     public void onPickup(Entity entity) {
         if(!entity.getComponent(InventoryComponent.class).isFull()){
+            if (entity.hasComponent(EquipedItemComponent.class)) {
+                entity.getComponent(EquipedItemComponent.class).onUse(entity);
+            }
             entity.getComponent(InventoryComponent.class).add(getName());
             this.entity.removeFromWorld();
         };

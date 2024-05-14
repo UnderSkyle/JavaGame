@@ -1,5 +1,5 @@
 package com.example.demo;
 
 public enum GameTypes {
-        PLAYER, COIN, WALL, CollisionHandler,WORLD, WARPZONE, ITEM
+        PLAYER, COIN, WALL,WORLD, WARPZONE, USABLE_ITEM, EQUIPPED_ITEM
 }

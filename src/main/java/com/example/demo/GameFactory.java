@@ -7,6 +7,7 @@ import com.almasb.fxgl.entity.Spawns;
 import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.texture.Texture;
+import com.example.demo.components.EquipedItemComponent;
 import com.example.demo.components.InventoryComponent;
 import com.example.demo.components.PlayerComponent;
 import com.example.demo.components.UsableItemComponent;
@@ -16,6 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
+import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -103,12 +105,42 @@ public class GameFactory implements EntityFactory {
         texture.setScaleY(2);
 
         return  entityBuilder(data)
-               .type(ITEM)
+               .type(USABLE_ITEM)
                .at(data.getX(), data.getY())
                .viewWithBBox(texture)
                 .with(new UsableItemComponent(onUse, itemData))
                 .collidable()
                .buildAndAttach();
+    }
+
+    @Spawns("sword")
+    public Entity spawnSword(SpawnData data) {
+        Runnable onUse = new Runnable() {
+            final Entity player = getGameWorld().getSingleton(PLAYER);
+            final PlayerComponent playerComponent = player.getComponent(PlayerComponent.class);
+            @Override
+            public void run(){
+                System.out.println("heyo");
+            }
+        };
+
+        Map<String, Object> itemData = new HashMap<>();
+        itemData.put("name", "sword");
+        Map<String, Integer> statusChange = new HashMap<>();
+        statusChange.put("attack", 5);
+        itemData.put("changeStatus", statusChange);
+        Texture texture = texture("""
+                       Items/sword.png""");
+        texture.setScaleX(2);
+        texture.setScaleY(2);
+
+        return  entityBuilder(data)
+                .type(EQUIPPED_ITEM)
+                .at(data.getX(), data.getY())
+                .viewWithBBox(texture)
+                .with(new EquipedItemComponent(itemData, onUse))
+                .collidable()
+                .buildAndAttach();
     }
 
 

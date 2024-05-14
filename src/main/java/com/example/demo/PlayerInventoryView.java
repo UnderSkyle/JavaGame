@@ -202,7 +202,7 @@ public class PlayerInventoryView extends GridPane{
             ((TextureWithNumberNode) cellText).setNameOfItem(name);
 
             ((TextureWithNumberNode) cellText).setTexture(texture);
-
+            cellIndex = cellIndex + 2; // +2 because of the text
         }
         for(int i = 1+ inventory.size()*2; i<=39; i=i+2){
 
