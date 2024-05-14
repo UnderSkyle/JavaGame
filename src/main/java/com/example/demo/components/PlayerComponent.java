@@ -25,6 +25,7 @@ public class PlayerComponent extends Component {
 
     private AnimatedTexture texture = texture("Player/DownWalk.png").toAnimatedTexture(4, Duration.seconds(2));
     private String currentDirection = "idleDown";
+    private boolean isAnimationPlaying = true;
 
     public PlayerInventoryView getInventoryView() {
         return inventoryView;
@@ -68,17 +69,44 @@ public class PlayerComponent extends Component {
         healthBar.setMaxValue(getMaxHealth());
         healthBar.setWidth(getMaxHealth());
 
-        if(currentDirection.equals("right")){
-            texture.loopNoOverride(animWalkRight);
-        }
-        else if(currentDirection.equals("left")){
-            texture.loopNoOverride(animWalkLeft);
-        }
-        else if(currentDirection.equals("up")){
-            texture.loopNoOverride(animWalkUp);
-        }
-        else if(currentDirection.equals("down")){
-            texture.loopNoOverride(animWalkDown);
+
+        switch (currentDirection) {
+            case "right" -> {
+                if (isAnimationPlaying) {
+                    texture.loopNoOverride(animWalkRight);
+                } else {
+                    texture.loop();
+                    isAnimationPlaying = true;
+                }
+            }
+            case "left" -> {
+                if (isAnimationPlaying) {
+                    texture.loopNoOverride(animWalkLeft);
+                } else {
+                    texture.loop();
+                    isAnimationPlaying = true;
+                }
+            }
+            case "up" -> {
+                if (isAnimationPlaying) {
+                    texture.loopNoOverride(animWalkUp);
+                } else {
+                    texture.loop();
+                    isAnimationPlaying = true;
+                }
+            }
+            case "down" -> {
+                if (isAnimationPlaying) {
+                    texture.loopNoOverride(animWalkDown);
+                } else {
+                    texture.loop();
+                    isAnimationPlaying = true;
+                }
+            }
+            default -> {
+                texture.stop();
+                isAnimationPlaying = false;
+            }
         }
 
 
@@ -131,7 +159,4 @@ public class PlayerComponent extends Component {
         return currentDirection;
     }
 
-    public void stopAnim() {
-        texture.stop();
-    }
 }

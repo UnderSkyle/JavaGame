@@ -18,6 +18,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import com.example.demo.components.PlayerComponent;
 
+import java.util.Objects;
+
 import static com.almasb.fxgl.dsl.FXGL.*;
 
 
@@ -121,8 +123,8 @@ public class BasicGameApp extends GameApplication {
 
             @Override
             protected void onActionEnd() {
-                if (player.getComponent(PlayerComponent.class).getCurrentDirection() == "right"){
-                    player.getComponent(PlayerComponent.class).stopAnim();
+                if (Objects.equals(player.getComponent(PlayerComponent.class).getCurrentDirection(), "right")){
+                    player.getComponent(PlayerComponent.class).setCurrentDirection("stop");
                 }
             }
         }, KeyCode.D);
@@ -140,9 +142,7 @@ public class BasicGameApp extends GameApplication {
 
             @Override
             protected void onActionEnd() {
-                if (player.getComponent(PlayerComponent.class).getCurrentDirection() == "left"){
-                    player.getComponent(PlayerComponent.class).stopAnim();
-                }
+                player.getComponent(PlayerComponent.class).setCurrentDirection("stop");
             }
 
         }, KeyCode.Q);
@@ -151,18 +151,16 @@ public class BasicGameApp extends GameApplication {
             @Override
             protected void onAction() {
                 player.getComponent(PlayerComponent.class).moveUp();
+                player.getComponent(PlayerComponent.class).setCurrentDirection("up");
+
             }
 
-            @Override
-            protected void onActionBegin() {
-                player.getComponent(PlayerComponent.class).setCurrentDirection("up");
-            }
 
             @Override
             protected void onActionEnd() {
-                if (player.getComponent(PlayerComponent.class).getCurrentDirection() == "up"){
-                    player.getComponent(PlayerComponent.class).stopAnim();
-                }
+                player.getComponent(PlayerComponent.class).setCurrentDirection("stop");
+
+
             }
         }, KeyCode.Z);
 
@@ -170,18 +168,13 @@ public class BasicGameApp extends GameApplication {
             @Override
             protected void onAction() {
                 player.getComponent(PlayerComponent.class).moveDown();
-            }
-
-            @Override
-            protected void onActionBegin() {
                 player.getComponent(PlayerComponent.class).setCurrentDirection("down");
             }
 
+
             @Override
             protected void onActionEnd() {
-                if (player.getComponent(PlayerComponent.class).getCurrentDirection() == "down"){
-                    player.getComponent(PlayerComponent.class).stopAnim();
-                }
+                    playerComponent.setCurrentDirection("stop");
             }
 
         }, KeyCode.S);

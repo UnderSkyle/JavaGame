@@ -14,14 +14,12 @@ import static com.almasb.fxgl.dsl.FXGL.getAppWidth;
 import static com.example.demo.BasicGameApp.CELL_SIZE;
 
 public class PlayerInventoryView extends GridPane{
-    private Entity player;
     private PlayerComponent playerComponent;
     private Rectangle selectedCell;
 
 
     public PlayerInventoryView(Entity player) {
         super();
-        this.player = player;
         double gridSize = CELL_SIZE * 1.5;
         for (int row = 0; row < 4; row++) {
             for (int col = 0; col < 5; col++) {
