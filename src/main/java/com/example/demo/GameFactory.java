@@ -7,10 +7,7 @@ import com.almasb.fxgl.entity.Spawns;
 import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.texture.Texture;
-import com.example.demo.components.EquipedItemComponent;
-import com.example.demo.components.InventoryComponent;
-import com.example.demo.components.PlayerComponent;
-import com.example.demo.components.UsableItemComponent;
+import com.example.demo.components.*;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
@@ -84,6 +81,19 @@ public class GameFactory implements EntityFactory {
                 .buildAndAttach();
     }
 
+    @Spawns("removableWall")
+    public Entity spawnRemovableWall(SpawnData data) {
+        return  entityBuilder(data)
+               .type(WALL)
+               .at(data.getX(), data.getY())
+               .viewWithBBox(new Rectangle(CELL_SIZE*2, CELL_SIZE*2, Color.YELLOW))
+               .collidable()
+               .with(new RemovableObstacleComponent())
+               .buildAndAttach();
+    }
+
+
+
     @Spawns("health potion")
     public Entity spawnHealthPotion(SpawnData data) {
         Runnable onUse = new Runnable() {
@@ -93,6 +103,9 @@ public class GameFactory implements EntityFactory {
             public void run(){
                 if(player.getComponent(PlayerComponent.class).getCurrentHealth() <= player.getComponent(PlayerComponent.class).getMaxHealth()-20) {
                     player.getComponent(PlayerComponent.class).setCurrentHealth(player.getComponent(PlayerComponent.class).getCurrentHealth() + 20);
+                }
+                else{
+                    player.getComponent(PlayerComponent.class).setCurrentHealth(player.getComponent(PlayerComponent.class).getMaxHealth());
                 }
             }
         };
@@ -115,14 +128,6 @@ public class GameFactory implements EntityFactory {
 
     @Spawns("sword")
     public Entity spawnSword(SpawnData data) {
-        Runnable onUse = new Runnable() {
-            final Entity player = getGameWorld().getSingleton(PLAYER);
-            final PlayerComponent playerComponent = player.getComponent(PlayerComponent.class);
-            @Override
-            public void run(){
-                System.out.println("heyo");
-            }
-        };
 
         Map<String, Object> itemData = new HashMap<>();
         itemData.put("name", "sword");
@@ -134,11 +139,49 @@ public class GameFactory implements EntityFactory {
         texture.setScaleX(2);
         texture.setScaleY(2);
 
+        Runnable onUse = () -> {
+            // Get the player entity
+            Entity player = getGameWorld().getSingleton(PLAYER);
+            // Get the player component
+            PlayerComponent playerComponent = player.getComponent(PlayerComponent.class);
+            // Get the changeStatus data from the item
+            Map<String, Integer> changeStatus = (Map<String, Integer>)itemData.get("changeStatus");
+            // Update the player's stats
+            playerComponent.updateStats(changeStatus);
+        };
+
         return  entityBuilder(data)
                 .type(EQUIPPED_ITEM)
                 .at(data.getX(), data.getY())
                 .viewWithBBox(texture)
                 .with(new EquipedItemComponent(itemData, onUse))
+                .collidable()
+                .buildAndAttach();
+    }
+
+    @Spawns("life potion")
+    public Entity spawnLifePotion(SpawnData data) {
+        Runnable onUse = new Runnable() {
+            final Entity player = getGameWorld().getSingleton(PLAYER);
+
+            @Override
+            public void run(){
+                player.getComponent(PlayerComponent.class).setMaxHealth((player.getComponent(PlayerComponent.class).getMaxHealth() + 10));
+            }
+        };
+
+        Map<String, Object> itemData = new HashMap<>();
+        itemData.put("name", "life potion");
+        Texture texture = texture("""
+                       Items/life potion.png""");
+        texture.setScaleX(2);
+        texture.setScaleY(2);
+
+        return  entityBuilder(data)
+                .type(USABLE_ITEM)
+                .at(data.getX(), data.getY())
+                .viewWithBBox(texture)
+                .with(new UsableItemComponent(onUse, itemData))
                 .collidable()
                 .buildAndAttach();
     }

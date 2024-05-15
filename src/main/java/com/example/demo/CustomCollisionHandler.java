@@ -44,7 +44,6 @@ public class CustomCollisionHandler {
 
             @Override
             protected void onCollision(Entity player, Entity coin) {
-                System.out.println("hey");
                 coin.removeFromWorld();
             }
         });
@@ -67,6 +66,7 @@ public class CustomCollisionHandler {
             @Override
             protected void onCollisionBegin(Entity player, Entity item){
                 item.getComponent(EquipedItemComponent.class).onPickup(player);
+                item.getComponent(EquipedItemComponent.class).onUse(player);
             }
         });
 

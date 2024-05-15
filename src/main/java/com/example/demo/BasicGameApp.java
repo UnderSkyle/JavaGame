@@ -11,15 +11,15 @@ import com.almasb.fxgl.app.scene.Viewport;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
+import com.almasb.fxgl.entity.components.CollidableComponent;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.ui.ProgressBar;
-import com.example.demo.components.EquipedItemComponent;
-import com.example.demo.components.InventoryComponent;
-import com.example.demo.components.UsableItemComponent;
+import com.example.demo.components.*;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import com.example.demo.components.PlayerComponent;
+import javafx.scene.shape.Rectangle;
 
 import java.util.List;
 import java.util.Objects;
@@ -86,6 +86,10 @@ public class BasicGameApp extends GameApplication {
         spawn("health potion", 300, 300);
         spawn("health potion", 400, 400);
         spawn("sword", 400, 200);
+
+        spawn("life potion", 350 ,450);
+        spawn("removableWall", 350, 600);
+
 
         SpawnData wallSpawn = new SpawnData(0 ,0);
         wallSpawn.put("width", CELL_SIZE);
@@ -201,8 +205,8 @@ public class BasicGameApp extends GameApplication {
 
             String nameOfItem = playerComponent.getInventoryView().getNameFromSelectedNode();
 
-            if (nameOfItem != "Empty"){
-                Entity item = spawn(nameOfItem, 1000, 1000); // utilise in trick qui spawn l objet hors de l ecran pour l utiliser
+            if (!Objects.equals(nameOfItem, "Empty")){
+                Entity item = spawn(nameOfItem, 500, 500); // utilise in trick qui spawn l objet hors de l ecran pour l utiliser
                 if(item.hasComponent(UsableItemComponent.class)){
                     item.getComponent(UsableItemComponent.class).onUse(player);
                     player.getComponent(InventoryComponent.class).remove(item.getComponent(UsableItemComponent.class).getName());
@@ -234,7 +238,23 @@ public class BasicGameApp extends GameApplication {
         });
 
         onKeyDown(KeyCode.K, () -> System.out.println(player.getComponent(InventoryComponent.class).getInventory()));
+        onKeyDown(KeyCode.U, () -> {
+            Rectangle2D areaSelection = new Rectangle2D(player.getX()-player.getWidth()*2, player.getY()-player.getHeight()*2, player.getWidth()*4, player.getHeight()*4);
+            List<Entity> entityList = getGameWorld().getEntitiesInRange(areaSelection);
+            for(Entity entity : entityList){
+                if(entity.hasComponent(RemovableObstacleComponent.class)){
+                    if(entity.hasComponent(CollidableComponent.class)){
+                        entity.getComponent(RemovableObstacleComponent.class).RemoveObstacleComponent();
+                        entity.getViewComponent().setVisible(false);
+                    }
+                    else{
+                        entity.getComponent(RemovableObstacleComponent.class).AddObstacleComponent();
+                        entity.getViewComponent().setVisible(true);
+                    }
 
+                }
+            }
+        });
     }
 
 

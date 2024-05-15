@@ -11,6 +11,9 @@ import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static com.almasb.fxgl.dsl.FXGLForKtKt.texture;
 
 public class PlayerComponent extends Component {
@@ -34,6 +37,8 @@ public class PlayerComponent extends Component {
     public ProgressBar getHealthBar() {
         return healthBar;
     }
+
+    private Map<String, Integer> status = new HashMap<String, Integer>();
 
     @Override
     public void onAdded() {
@@ -159,7 +164,10 @@ public class PlayerComponent extends Component {
         return currentDirection;
     }
 
-    public void updateStats(Object entity) {
-        System.out.println("reached");
+    public void updateStats(Map<String,Integer> statusChanges) {
+        for(Map.Entry<String,Integer> entry : statusChanges.entrySet()){
+            status.merge(entry.getKey(), entry.getValue(), Integer::sum);
+        }
+        System.out.println(status);
     }
 }
