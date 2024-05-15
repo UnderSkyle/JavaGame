@@ -6,6 +6,7 @@ import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.Spawns;
 import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.HitBox;
+import com.almasb.fxgl.texture.AnimatedTexture;
 import com.almasb.fxgl.texture.Texture;
 import com.example.demo.components.*;
 import javafx.geometry.BoundingBox;
@@ -13,6 +14,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
 import java.lang.reflect.Array;
 import java.util.HashMap;
@@ -39,10 +41,14 @@ public class GameFactory implements EntityFactory {
 
     @Spawns("coin")
     public Entity spawnCoin(SpawnData data) {
+        AnimatedTexture tex = texture("Items/Coin2.png").toAnimatedTexture(4, Duration.millis(500));
+        tex.setScaleX(2);
+        tex.setScaleY(2);
+        tex.loop();
         return  entityBuilder(data)
                 .type(COIN)
                 .at(500, 200)
-                .viewWithBBox(new Circle(20, 20, 15,Color.YELLOW))
+                .viewWithBBox(tex)
                 .collidable()
                 .buildAndAttach();
     }
