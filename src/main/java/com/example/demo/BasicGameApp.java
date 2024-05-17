@@ -21,7 +21,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
@@ -52,6 +54,7 @@ public class BasicGameApp extends GameApplication {
         settings.setGameMenuEnabled(true);
         settings.setSceneFactory(new SceneFactory());
         settings.setTicksPerSecond(60);
+        settings.setMainMenuEnabled(true);
     }
 
 
@@ -211,7 +214,7 @@ public class BasicGameApp extends GameApplication {
                 Entity item = spawn(nameOfItem, 500, 500); // utilise in trick qui spawn l objet hors de l ecran pour l utiliser
                 if(item.hasComponent(UsableItemComponent.class)){
                     item.getComponent(UsableItemComponent.class).onUse(player);
-                    player.getComponent(InventoryComponent.class).remove(item.getComponent(UsableItemComponent.class).getName());
+                    player.getComponent(PlayerInventoryComponent.class).remove(item.getComponent(UsableItemComponent.class).getName());
 
                 }
                 item.removeFromWorld();
@@ -227,11 +230,11 @@ public class BasicGameApp extends GameApplication {
                 Entity item = spawn(nameOfItem, 1000, 1000); // utilise in trick qui spawn l objet hors de l ecran pour l utiliser
                 if(item.hasComponent(UsableItemComponent.class)){
                     item.getComponent(UsableItemComponent.class).onDrop(player.getPosition(), nameOfItem);
-                    player.getComponent(InventoryComponent.class).remove(item.getComponent(UsableItemComponent.class).getName());
+                    player.getComponent(PlayerInventoryComponent.class).remove(item.getComponent(UsableItemComponent.class).getName());
                 }
                 else{
                     item.getComponent(EquipedItemComponent.class).onDrop(player.getPosition(), nameOfItem);
-                    player.getComponent(InventoryComponent.class).remove(item.getComponent(EquipedItemComponent.class).getName());
+                    player.getComponent(PlayerInventoryComponent.class).remove(item.getComponent(EquipedItemComponent.class).getName());
 
                 }
                 item.removeFromWorld();
@@ -239,7 +242,7 @@ public class BasicGameApp extends GameApplication {
             }
         });
 
-        onKeyDown(KeyCode.K, () -> System.out.println(player.getComponent(InventoryComponent.class).getInventory()));
+        onKeyDown(KeyCode.K, () -> System.out.println(player.getComponent(PlayerInventoryComponent.class).getInventory()));
         onKeyDown(KeyCode.U, () -> {
             Rectangle2D areaSelection = new Rectangle2D(player.getX()-player.getWidth()*2, player.getY()-player.getHeight()*2, player.getWidth()*4, player.getHeight()*4);
             List<Entity> entityList = getGameWorld().getEntitiesInRange(areaSelection);
@@ -257,6 +260,27 @@ public class BasicGameApp extends GameApplication {
                 }
             }
         });
+
+        FXGL.getInput().addAction(new UserAction("SHOP") {
+
+
+
+            @Override
+            protected void onActionBegin() {
+                Map<String, ShopView.ItemDetails> inventory = new HashMap<>();
+
+                inventory.put("Item 1", new ShopView.ItemDetails(10, 5.99));
+                inventory.put("Item 2", new ShopView.ItemDetails(8, 7.49));
+                inventory.put("Item 3", new ShopView.ItemDetails(15, 3.99));
+                inventory.put("Item 4", new ShopView.ItemDetails(5, 9.99));
+                inventory.put("Item 5", new ShopView.ItemDetails(20, 2.49));
+                inventory.put("Item 6", new ShopView.ItemDetails(12, 4.99));
+
+                ShopView.show(600,400, inventory);
+            }
+
+        }, KeyCode.O);
+
     }
 
 

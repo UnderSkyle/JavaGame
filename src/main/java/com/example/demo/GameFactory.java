@@ -34,7 +34,7 @@ public class GameFactory implements EntityFactory {
                 .at(getAppWidth() /2.0, getAppHeight() /2.0)
                 .bbox(new HitBox(new Point2D(-8, -8), BoundingShape.box(30, 30)))
                 .with(new PlayerComponent())
-                .with(new InventoryComponent())
+                .with(new PlayerInventoryComponent())
                 .collidable()
                 .buildAndAttach();
     }
@@ -92,7 +92,7 @@ public class GameFactory implements EntityFactory {
         return  entityBuilder(data)
                .type(WALL)
                .at(data.getX(), data.getY())
-               .viewWithBBox(new Rectangle(CELL_SIZE*2, CELL_SIZE*2, Color.YELLOW))
+               .viewWithBBox(new Rectangle(CELL_SIZE*2+1, CELL_SIZE*2, Color.YELLOW))
                .collidable()
                .with(new RemovableObstacleComponent())
                .buildAndAttach();
