@@ -28,12 +28,12 @@ public abstract class ItemComponent extends Component {
 
 
     public void onPickup(Entity entity) {
-        if(!entity.getComponent(InventoryComponent.class).isFull()){
+        if(!entity.getComponent(PlayerInventoryComponent.class).isFull()){
             if (entity.hasComponent(EquipedItemComponent.class)) {
                 System.out.println("itShould");
                 entity.getComponent(EquipedItemComponent.class).onUse(entity);
             }
-            entity.getComponent(InventoryComponent.class).add(getName());
+            entity.getComponent(PlayerInventoryComponent.class).add(getName());
             this.entity.removeFromWorld();
         };
     }

@@ -7,7 +7,7 @@ import com.example.demo.PlayerInventoryView;
 import java.util.HashMap;
 import java.util.Map;
 
-public class InventoryComponent extends Component {
+public class PlayerInventoryComponent extends Component {
 
     private Map<String, Integer> inventory = new HashMap<>();
 
