@@ -90,6 +90,8 @@ public class BasicGameApp extends GameApplication {
         spawn("life potion", 350 ,450);
         spawn("removableWall", 350, 600);
 
+        spawn("npc", 100, 100);
+
 
         SpawnData wallSpawn = new SpawnData(0 ,0);
         wallSpawn.put("width", CELL_SIZE);

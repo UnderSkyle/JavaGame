@@ -2,10 +2,7 @@ package com.example.demo;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.physics.CollisionHandler;
-import com.example.demo.components.EquipedItemComponent;
-import com.example.demo.components.ItemComponent;
-import com.example.demo.components.PlayerComponent;
-import com.example.demo.components.UsableItemComponent;
+import com.example.demo.components.*;
 import javafx.geometry.Point2D;
 
 import static com.almasb.fxgl.dsl.FXGLForKtKt.*;
@@ -66,6 +63,13 @@ public class CustomCollisionHandler {
             protected void onCollisionBegin(Entity player, Entity item){
                 item.getComponent(EquipedItemComponent.class).onPickup(player);
                 item.getComponent(EquipedItemComponent.class).onUse(player);
+            }
+        });
+        FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(GameTypes.PLAYER, GameTypes.NPC) {
+            @Override
+            protected void onCollisionBegin(Entity player, Entity npc){
+                npc.getComponent(NPCComponent.class).interact();
+                player.setPosition(npc.getX(), npc.getY()+30);
             }
         });
 

@@ -98,6 +98,21 @@ public class GameFactory implements EntityFactory {
                .buildAndAttach();
     }
 
+    @Spawns("npc")
+    public Entity spawnNPC(SpawnData data) {
+        Texture texture = texture("NPCS/StandardNPC.png");
+        texture.setScaleX(2);
+        texture.setScaleY(2);
+        return  entityBuilder(data)
+               .type(NPC)
+               .at(data.getX(), data.getY())
+               .viewWithBBox(texture)
+               .collidable()
+               .with(new NPCComponent())
+               .buildAndAttach();
+    }
+
+
 
 
     @Spawns("health potion")
