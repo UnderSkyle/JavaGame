@@ -6,11 +6,13 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.Spawns;
+import com.almasb.fxgl.entity.components.CollidableComponent;
 import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.texture.AnimatedTexture;
 import com.almasb.fxgl.texture.Texture;
 import com.example.demo.components.*;
+import javafx.animation.PauseTransition;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
@@ -21,7 +23,9 @@ import javafx.util.Duration;
 
 import java.lang.reflect.Array;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 import static com.example.demo.BasicGameApp.CELL_SIZE;
@@ -171,6 +175,40 @@ public class GameFactory implements EntityFactory {
 
         return shopguy;
     }
+    @Spawns("quest npc")
+    public Entity spawnQuestNPC(SpawnData data) {
+        Texture texture = texture("NPCS/QuestNPC.png");
+        texture.setScaleX(2);
+        texture.setScaleY(2);
+
+        Entity npcQuestGuy =entityBuilder(data)
+                .type(NPC)
+                .at(data.getX(), data.getY())
+                .viewWithBBox(texture)
+                .with()
+                .collidable()
+                .buildAndAttach();
+
+
+        Runnable onInteract = new Runnable() {
+            @Override
+            public void run() {
+                final Entity player = getGameWorld().getSingleton(PLAYER);
+                if(player.getComponent(PlayerInventoryComponent.class).hasItem("porche")){
+                    npcQuestGuy.removeFromWorld();
+                    player.getComponent(PlayerInventoryComponent.class).remove("porche");
+                    player.getComponent(PlayerInventoryComponent.class).add("cle");
+                }
+
+            }
+        };
+        NPCComponent questGuyCompoenent = new NPCComponent("Si tu as une porche dans ton Inventaire je te donnerai une cle. -Aurelien", onInteract);
+
+        npcQuestGuy.addComponent(questGuyCompoenent);
+
+        return npcQuestGuy;
+
+    }
 
     @Spawns("rick")
     public Entity spawnRick(SpawnData data) {
@@ -319,13 +357,92 @@ public class GameFactory implements EntityFactory {
     @Spawns("enemy")
     public Entity spawnEnemy(SpawnData data) {
 
+        Map<String, Integer> inventory = new HashMap<String, Integer>();
+        inventory.put("sword", 1);
+        Map<String, Integer> stats = new HashMap<>();
+
 
         return  entityBuilder(data)
                .type(ENEMY)
                .at(data.getX(), data.getY())
                .viewWithBBox(new Rectangle(30, 30, Color.DARKVIOLET))
+               .with(new EnemyComponent(inventory, stats, data.get("health")))
                .collidable()
                .buildAndAttach();
+    }
+
+
+    @Spawns("bomb")
+    public Entity spawnBomb(SpawnData data) {
+
+        Texture tex = texture("Items/bomb.png");
+        tex.setScaleX(0.25);
+        tex.setScaleY(0.25);
+        Map<String, Object> itemData = new HashMap<>();
+        itemData.put("name", "bomb");
+        Entity bomb = entityBuilder(data)
+                .type(USABLE_ITEM)
+                .at(data.getX(), data.getY())
+                .viewWithBBox(tex)
+                .with()
+                .collidable()
+                .buildAndAttach();
+
+
+        Runnable onUse = () -> {
+
+            final Entity player = getGameWorld().getSingleton(PLAYER);
+            Entity floorbomb = spawn("bomb", player.getX(), player.getY());
+            floorbomb.getComponent(CollidableComponent.class).addIgnoredType(PLAYER);
+            Rectangle2D areaSelection = new Rectangle2D(floorbomb.getX()-floorbomb.getWidth()*2, floorbomb.getY()-floorbomb.getHeight()*2, floorbomb.getWidth()*4, floorbomb.getHeight()*4);
+            List<Entity> entityList = getGameWorld().getEntitiesInRange(areaSelection);
+
+            FXGL.getGameTimer().runOnceAfter(() -> {
+                // Reactivate the collide component after 2 seconds
+                for(Entity entity : entityList){
+                    if(entity.hasComponent(RemovableObstacleComponent.class)){
+                        if(entity.hasComponent(CollidableComponent.class)){
+                            entity.getComponent(RemovableObstacleComponent.class).RemoveObstacleComponent();
+                            entity.getViewComponent().setOpacity(0.5);
+                        }
+                    }
+                }
+                floorbomb.removeFromWorld();
+            }, Duration.seconds(2));
+
+
+
+
+        };
+
+        UsableItemComponent usableItemComponent  = new UsableItemComponent(onUse, itemData);
+        bomb.addComponent(usableItemComponent);
+        return bomb;
+    }
+
+    @Spawns("fire scroll")
+    public Entity spawnFireScroll(SpawnData data) {
+        Texture tex = texture("Items/fire scroll.png");
+        tex.setScaleX(2);
+        tex.setScaleY(2);
+        Map<String, Object> itemData = new HashMap<>();
+        itemData.put("name", "fire scroll");
+        Runnable onUse = new Runnable() {
+            final Entity player = getGameWorld().getSingleton(PLAYER);
+            @Override
+            public void run(){
+                player.getComponent(PlayerComponent.class).addTickDamage(10);
+            }
+        };
+        Entity fireScroll = entityBuilder(data)
+               .type(COMBAT_ITEM)
+               .at(data.getX(), data.getY())
+               .viewWithBBox(tex)
+               .with(new CombatItemComponent(onUse, itemData))
+               .collidable()
+               .buildAndAttach();
+
+        return fireScroll;
     }
 
 

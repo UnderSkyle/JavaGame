@@ -76,11 +76,22 @@ public class CustomCollisionHandler {
                 item.getComponent(EquipedItemComponent.class).onUse(player);
             }
         });
+        FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(GameTypes.PLAYER, GameTypes.COMBAT_ITEM) {
+            @Override
+            protected void onCollisionBegin(Entity player, Entity item){
+                item.getComponent(CombatItemComponent.class).onPickup(player);
+            }
+        });
         FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(GameTypes.PLAYER, GameTypes.NPC) {
             @Override
             protected void onCollisionBegin(Entity player, Entity npc){
                 npc.getComponent(NPCComponent.class).interact();
                 player.setPosition(npc.getX(), npc.getY()+30);
+            }
+        });
+        FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(GameTypes.PLAYER, GameTypes.ENEMY) {
+            protected void onCollisionBegin(Entity player, Entity enemy) {
+                new FightHandler(player, enemy).startCombat(player, enemy);
             }
         });
 

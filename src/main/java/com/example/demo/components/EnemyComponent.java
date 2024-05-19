@@ -14,13 +14,15 @@ import java.util.Map;
 import static com.almasb.fxgl.dsl.FXGLForKtKt.spawn;
 import static com.example.demo.GameTypes.PLAYER;
 
-public class EnnemyComponent extends Component {
+public class EnemyComponent extends Component {
     private Map<String, Integer> inventory = new HashMap<>();
     private Map<String, Integer> stats = new HashMap<>();
+    private int health = 100;
 
-    public EnnemyComponent( Map<String, Integer> inventory, Map<String, Integer> stats){
+    public EnemyComponent(Map<String, Integer> inventory, Map<String, Integer> stats, int health ) {
         this.inventory = inventory;
         this.stats = stats;
+        this.health = health;
     }
 
     public void onDeath(){
@@ -41,4 +43,12 @@ public class EnnemyComponent extends Component {
     }
 
 
+    public int getCurrentHealth() {
+        return health;
+    }
+
+
+    public Map<String, Integer> getStats(){
+        return stats;
+    }
 }

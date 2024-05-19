@@ -29,6 +29,7 @@ public class PlayerComponent extends Component {
     private AnimatedTexture texture = texture("Player/DownWalk.png").toAnimatedTexture(4, Duration.seconds(2));
     private String currentDirection = "idleDown";
     private boolean isAnimationPlaying = true;
+    private int tickDamage;
 
     public PlayerInventoryView getInventoryView() {
         return inventoryView;
@@ -156,6 +157,10 @@ public class PlayerComponent extends Component {
         getEntity().setPosition(coords);
     }
 
+    public void changeHealth(int health){
+        setCurrentHealth(getCurrentHealth()+health);
+    }
+
 
     public void setCurrentDirection(String right) {
         this.currentDirection = right;
@@ -169,5 +174,15 @@ public class PlayerComponent extends Component {
             status.merge(entry.getKey(), entry.getValue(), Integer::sum);
         }
         System.out.println(status);
+    }
+
+    public int getTickDamage() {
+        return tickDamage;
+    }
+    public void setTickDamage(int tickDamage) {
+        this.tickDamage = tickDamage;
+    }
+    public void addTickDamage(int i) {
+        this.tickDamage = this.tickDamage + i;
     }
 }

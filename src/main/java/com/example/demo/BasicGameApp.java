@@ -148,8 +148,10 @@ public class BasicGameApp extends GameApplication {
         spawn("door", 800 ,800);
         spawn("key", 350 ,350);
 
-        spawn("enemy", 700, 100);
+        spawn("quest npc", 400 , 500);
 
+        spawn("enemy", new SpawnData(500,100).put("health", 100));
+        spawn("bomb", 600, 600);
 
         SpawnData wallSpawn = new SpawnData(0 ,0);
         wallSpawn.put("width", CELL_SIZE);
@@ -321,128 +323,11 @@ public class BasicGameApp extends GameApplication {
     }
 
 
-    private Pane createCombatView(Entity player, Entity enemy) {
-        // Create the root VBox
-        VBox root = new VBox();
-        root.setPrefSize(getAppWidth(), getAppHeight());
-        root.setAlignment(Pos.CENTER);
-        root.setStyle("-fx-background-color: rgb(255,255,255,0.99 );");
-
-        // Create the top HBox
-        HBox topBox = new HBox();
-        topBox.setPrefSize(600, 300);
-        topBox.setAlignment(Pos.CENTER);
-        root.getChildren().add(topBox);
-
-        // Create the left player stats section
-        HBox playerStatsBox = new HBox();
-        playerStatsBox.setAlignment(Pos.CENTER);
-        playerStatsBox.setPadding(new Insets(0, 200, 0, 0)); // Adjust padding as needed
-        topBox.getChildren().add(playerStatsBox);
-
-        // Create the text node for player stats (replace with actual stats)
-        Text playerStatsText = new Text("Player Stats");
-        playerStatsBox.getChildren().add(playerStatsText);
-
-        // Create the right enemy stats section
-        HBox enemyStatsBox = new HBox();
-        enemyStatsBox.setAlignment(Pos.CENTER);
-        enemyStatsBox.setPadding(new Insets(0, 0, 0, 200)); // Adjust padding as needed
-        topBox.getChildren().add(enemyStatsBox);
-
-        // Create the text node for enemy stats (replace with actual stats)
-        Text enemyStatsText = new Text("Enemy Stats");
-        enemyStatsBox.getChildren().add(enemyStatsText);
-
-        // Create the bottom HBox for buttons
-        HBox buttonBox = new HBox(50);
-        buttonBox.setPrefSize(600, 243);
-        buttonBox.setAlignment(Pos.CENTER);
-        root.getChildren().add(buttonBox);
-
-        // Create buttons (adjust as needed)
-        Button attackButton = new Button("Attack");
-        Button itemButton = new Button("Items");
-        Button fleeButton = new Button("Flee");
-
-        attackButton.setOnAction(e -> attack());
-        itemButton.setOnAction(e -> useItem());
-        fleeButton.setOnAction(e -> flee());
-
-
-        // Set button properties (adjust as needed)
-        attackButton.setPrefSize(200, 100);
-        itemButton.setPrefSize(200, 100);
-        fleeButton.setPrefSize(200, 100);
-
-        // Add buttons to the button box
-        buttonBox.getChildren().addAll(attackButton, itemButton, fleeButton);
-
-        return new Pane(root);
-    }
-
-
-    private void attack() {
-        // Placeholder for attack logic
-        System.out.println("Attack!");
-    }
-
-    private void useItem() {
-        // Placeholder for item usage logic
-        System.out.println("Item used!");
-    }
-
-    private void flee() {
-        // Placeholder for flee logic
-        System.out.println("Flee!");
-    }
-
-    public void startCombat(Entity player, Entity enemy) {
-        FXGL.getAudioPlayer().stopMusic(backgroundMusic);
-        backgroundMusic = FXGL.getAssetLoader().loadMusic("17 - Fight.mp3");
-        FXGL.getAudioPlayer().loopMusic(backgroundMusic);
-
-        // Clear the game scene
-        Pane combatView = createCombatView(player, enemy);
-
-        SubScene combatSubScene = new SubScene() {
-            @Override
-            public void onCreate() {
-                getContentRoot().getChildren().add(combatView);
-            }
-        };
-
-
-
-        FXGL.getSceneService().pushSubScene(combatSubScene);
-
-
-
-
-
-        // Store player and enemy for later reference
-        this.player = player;
-        this.enemy = enemy;
-
-    }
-
-    private void endCombat(Entity player, Entity enemy) {
-        // Clear the game scene
-        player.getComponent(TransformComponent.class).resume();
-
-    }
-
-
     @Override
     protected void initPhysics() {
 
         CustomCollisionHandler.init();
 
-        FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(GameTypes.PLAYER, GameTypes.ENEMY) {
-            protected void onCollisionBegin(Entity player, Entity enemy) {
-                startCombat(player, enemy);
-            }
-        });
 
     }
 

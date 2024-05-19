@@ -196,8 +196,15 @@ public class PlayerInventoryView extends GridPane{
 
             String name = entry.getKey();
             Texture texture = texture("Items/" +name +".png");
-            texture.setScaleX(2);
-            texture.setScaleY(2);
+            if(name == "bomb"){
+                texture.setFitHeight(16);
+                texture.setFitWidth(16);
+            }
+            else{
+                texture.setScaleX(2);
+                texture.setScaleY(2);
+            }
+
 
             ((TextureWithNumberNode) cellText).setNameOfItem(name);
 

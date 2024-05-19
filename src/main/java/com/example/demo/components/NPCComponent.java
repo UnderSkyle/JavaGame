@@ -24,7 +24,6 @@ public class NPCComponent extends Component {
     }
 
     public void interact(){
-        System.out.println(onInteract);
         getDialogService().showMessageBox(message, onInteract);
     }
 
