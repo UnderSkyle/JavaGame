@@ -2,6 +2,8 @@ package com.example.demo;
 
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.scene.SubScene;
+import com.example.demo.components.PlayerComponent;
+import com.example.demo.components.PlayerInventoryComponent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -10,6 +12,9 @@ import javafx.scene.layout.VBox;
 
 import java.util.Map;
 
+import static com.almasb.fxgl.dsl.FXGLForKtKt.getGameWorld;
+import static com.example.demo.GameTypes.PLAYER;
+
 
 public class ShopView {
     private static SubScene shopSubScene;
@@ -17,12 +22,13 @@ public class ShopView {
 
 
 
-    public static void show(double x, double y, Map<String, ItemDetails> inventory) {
+    public void show(double x, double y, Map<String, ItemDetails> inventory) {
         if (shopSubScene != null) {
             FXGL.getSceneService().pushSubScene(shopSubScene);
             return;
         }
 
+        this.inventory = inventory;
         VBox shopLayout = new VBox(10);
         shopLayout.setStyle("-fx-padding: 20; -fx-background-color: #222; -fx-border-color: #fff;");
 
@@ -75,9 +81,18 @@ public class ShopView {
     private static void buyItem(String itemName, Label itemQuantityLabel) {
         ItemDetails details = inventory.get(itemName);
         if (details != null && details.getQuantity() > 0) {
-            details.setQuantity(details.getQuantity() - 1);
-            itemQuantityLabel.setText("Quantity: " + details.getQuantity());
-            FXGL.getNotificationService().pushNotification("Bought " + itemName);
+            double currentCoin = FXGL.geti("coin");
+            if( currentCoin >= details.getPrice()){
+                details.setQuantity(details.getQuantity() - 1);
+                int newCoin = (int) (currentCoin- details.getPrice());
+                FXGL.set("coin",newCoin);
+                itemQuantityLabel.setText("Quantity: " + details.getQuantity());
+                PlayerInventoryComponent playerComponent = getGameWorld().getSingleton(PLAYER).getComponent(PlayerInventoryComponent.class);
+                playerComponent.add(itemName);
+            }
+            else{
+                FXGL.getNotificationService().pushNotification("Not enough coin");
+            }
         } else {
             FXGL.getNotificationService().pushNotification(itemName + " is out of stock");
         }

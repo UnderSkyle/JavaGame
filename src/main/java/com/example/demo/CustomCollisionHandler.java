@@ -14,6 +14,16 @@ public class CustomCollisionHandler {
         // Register collision handlers
         FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(GameTypes.PLAYER, GameTypes.WALL) {
             @Override
+            protected void onCollisionBegin(Entity player, Entity wall) {
+                if (wall.hasComponent(DoorComponent.class)){
+                    if(player.getComponent(PlayerInventoryComponent.class).hasItem("key")){
+                        wall.getComponent(DoorComponent.class).openDoor();
+                        player.getComponent(PlayerInventoryComponent.class).remove("key");
+                    }
+                }
+            }
+
+            @Override
             protected void onCollision(Entity player, Entity wall) {
                 PlayerComponent playerComponent = player.getComponent(PlayerComponent.class);
                 if( wall.getWidth() <= wall.getHeight()) {
@@ -41,6 +51,7 @@ public class CustomCollisionHandler {
             @Override
             protected void onCollision(Entity player, Entity coin) {
                 coin.removeFromWorld();
+                FXGL.inc("coin", +5);
             }
         });
 
@@ -72,6 +83,7 @@ public class CustomCollisionHandler {
                 player.setPosition(npc.getX(), npc.getY()+30);
             }
         });
+
 
     }
 

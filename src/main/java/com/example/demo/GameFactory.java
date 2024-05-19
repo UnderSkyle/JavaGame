@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import com.almasb.fxgl.audio.Music;
+import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.entity.SpawnData;
@@ -11,6 +13,7 @@ import com.almasb.fxgl.texture.Texture;
 import com.example.demo.components.*;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Point2D;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -98,20 +101,103 @@ public class GameFactory implements EntityFactory {
                .buildAndAttach();
     }
 
+    @Spawns("door")
+    public Entity spawnDoor(SpawnData data) {
+
+        Texture doorTexture = texture("Door.png", 32, 16);
+        Texture closedTexture = doorTexture.subTexture(new Rectangle2D(0, 0, 16, 16));
+        Texture openTexture = doorTexture.subTexture(new Rectangle2D(16, 0, 16, 16));
+        closedTexture.setScaleX(2);
+        closedTexture.setScaleY(2);
+        openTexture.setScaleX(2);
+        openTexture.setScaleY(2);
+
+        return  entityBuilder(data)
+                .type(WALL)
+                .at(data.getX(), data.getY())
+                .view(closedTexture)
+                .bbox(new HitBox(new Point2D(-1, -1), BoundingShape.box(17, 16)))
+                .collidable()
+                .with(new DoorComponent(closedTexture, openTexture))
+                .buildAndAttach();
+    }
+
     @Spawns("npc")
     public Entity spawnNPC(SpawnData data) {
         Texture texture = texture("NPCS/StandardNPC.png");
         texture.setScaleX(2);
         texture.setScaleY(2);
+        NPCComponent ncpComponent;
+        if(data.hasKey("onInteract")){
+            ncpComponent = new NPCComponent(data.get("text"), data.get("onInteract"));
+        }
+        else{
+            ncpComponent = new NPCComponent(data.get("text"));
+        }
+
+
         return  entityBuilder(data)
                .type(NPC)
                .at(data.getX(), data.getY())
                .viewWithBBox(texture)
                .collidable()
-               .with(new NPCComponent())
+               .with(ncpComponent)
                .buildAndAttach();
     }
 
+    @Spawns("shop npc")
+    public Entity spawnShopNPC(SpawnData data) {
+        Texture texture = texture("NPCS/ShopNPC.png");
+        texture.setScaleX(2);
+        texture.setScaleY(2);
+        ShopComponent shop = new ShopComponent();
+
+        Entity shopguy = entityBuilder(data)
+                .type(NPC)
+                .at(data.getX(), data.getY())
+                .viewWithBBox(texture)
+                .collidable()
+                .with(shop)
+                .buildAndAttach();
+
+        Runnable onInteract = new Runnable() {
+            @Override
+            public void run() {
+                shopguy.getComponent(ShopComponent.class).show();
+            }
+        };
+
+        shopguy.addComponent(new NPCComponent("Hey! Welcome to my shop!", onInteract));
+
+        return shopguy;
+    }
+
+    @Spawns("rick")
+    public Entity spawnRick(SpawnData data) {
+        Texture texture = texture("NPCS/StandardNPC.png");
+        texture.setScaleX(2);
+        texture.setScaleY(2);
+
+        Runnable onInteract = () -> {
+            getAudioPlayer().pauseAllMusic();
+            getAudioPlayer().playMusic(FXGL.getAssetLoader().loadMusic("Inconspicuous.mp3"));
+            Duration duration = Duration.seconds(19);
+            FXGL.getGameTimer().runOnceAfter(() -> {
+                getAudioPlayer().stopAllMusic();
+                Music backgroundMusic = FXGL.getAssetLoader().loadMusic("5 - Peaceful.mp3");;
+                getAudioPlayer().loopMusic(backgroundMusic);
+            }, duration);
+        };
+        NPCComponent rickNPC = new NPCComponent("You thought i was a random NPC.... BUT IT WAS ME, RICK!!!", onInteract);
+
+        return entityBuilder(data)
+                .type(NPC)
+                .at(data.getX(), data.getY())
+                .viewWithBBox(texture)
+                .collidable()
+                .with(rickNPC)
+                .buildAndAttach();
+    }
 
 
 
@@ -206,6 +292,43 @@ public class GameFactory implements EntityFactory {
                 .collidable()
                 .buildAndAttach();
     }
+
+    @Spawns("key")
+    public Entity spawnKey(SpawnData data) {
+
+        Map<String, Object> itemData = new HashMap<>();
+        itemData.put("name", "key");
+        Texture texture = texture("""
+                       Items/key.png""");
+        texture.setScaleX(2);
+        texture.setScaleY(2);
+
+        Runnable onUse = () -> {
+
+        };
+
+        return  entityBuilder(data)
+                .type(EQUIPPED_ITEM)
+                .at(data.getX(), data.getY())
+                .viewWithBBox(texture)
+                .with(new EquipedItemComponent(itemData, onUse))
+                .collidable()
+                .buildAndAttach();
+    }
+
+    @Spawns("enemy")
+    public Entity spawnEnemy(SpawnData data) {
+
+
+        return  entityBuilder(data)
+               .type(ENEMY)
+               .at(data.getX(), data.getY())
+               .viewWithBBox(new Rectangle(30, 30, Color.DARKVIOLET))
+               .collidable()
+               .buildAndAttach();
+    }
+
+
 
 
 }

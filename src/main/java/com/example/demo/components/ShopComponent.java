@@ -8,20 +8,17 @@ import java.util.Map;
 
 public class ShopComponent extends Component {
     private final Map<String, ShopView.ItemDetails> inventory = new HashMap<>();
+    private final ShopView newShopView;
 
     public ShopComponent() {
         // Initialize the inventory with some items
-        inventory.put("Item 1", new ShopView.ItemDetails(10, 5.99));
-        inventory.put("Item 2", new ShopView.ItemDetails(8, 7.49));
-        inventory.put("Item 3", new ShopView.ItemDetails(15, 3.99));
-        inventory.put("Item 4", new ShopView.ItemDetails(5, 9.99));
-        inventory.put("Item 5", new ShopView.ItemDetails(20, 2.49));
-        inventory.put("Item 6", new ShopView.ItemDetails(12, 4.99));
+        inventory.put("health potion", new ShopView.ItemDetails(10, 3));
+        newShopView = new ShopView();
 
     }
 
     public void show() {
-        ShopView.show(entity.getX(), entity.getY()-100, inventory);
+        newShopView.show(entity.getX(), entity.getY()-100, inventory);
     }
 
     public Map<String, ShopView.ItemDetails> getInventory() {

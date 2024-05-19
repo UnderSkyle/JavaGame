@@ -64,4 +64,7 @@ public class PlayerInventoryComponent extends Component {
     // Define the maximum size of the inventory
     private static final int MAX_INVENTORY_SIZE = 20;
 
+    public boolean hasItem(String key) {
+        return inventory.containsKey(key);
+    }
 }
