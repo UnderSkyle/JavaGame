@@ -2,14 +2,9 @@ package com.example.demo;
 
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.texture.Texture;
-import com.example.demo.components.PlayerComponent;
 import javafx.scene.Node;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.paint.Color;
@@ -18,12 +13,13 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.util.Map;
+import java.util.Objects;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 import static com.example.demo.BasicGameApp.CELL_SIZE;
 
 public class PlayerInventoryView extends GridPane{
-    private PlayerComponent playerComponent;
+
     private Rectangle selectedCell;
 
 
@@ -59,9 +55,7 @@ public class PlayerInventoryView extends GridPane{
     }
 
     private void addEventHandlers(Rectangle cell, Text text) {
-        cell.setOnMouseClicked(event -> {
-            selectCell(cell);
-        });
+        cell.setOnMouseClicked(event -> selectCell(cell));
 
         text.setOnMouseClicked(event -> {
             selectCell(cell); // Select the corresponding cell when text is clicked
@@ -78,7 +72,6 @@ public class PlayerInventoryView extends GridPane{
         selectedCell.setFill(Color.LIGHTGRAY); // Highlight the selected cell
         getCellText(selectedCell).setFill(Color.BLACK);
 
-        String cellId = cell.getId();
 
     }
 
@@ -196,7 +189,7 @@ public class PlayerInventoryView extends GridPane{
 
             String name = entry.getKey();
             Texture texture = texture("Items/" +name +".png");
-            if(name == "bomb"){
+            if(Objects.equals(name, "bomb")){
                 texture.setFitHeight(16);
                 texture.setFitWidth(16);
             }

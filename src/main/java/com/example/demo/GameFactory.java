@@ -7,26 +7,20 @@ import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.Spawns;
 import com.almasb.fxgl.entity.components.CollidableComponent;
-import com.almasb.fxgl.entity.components.IDComponent;
 import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.texture.AnimatedTexture;
 import com.almasb.fxgl.texture.Texture;
 import com.example.demo.components.*;
-import javafx.animation.PauseTransition;
-import javafx.geometry.BoundingBox;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
-import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 import static com.example.demo.BasicGameApp.CELL_SIZE;
@@ -67,19 +61,13 @@ public class GameFactory implements EntityFactory {
         int height = data.get("height");
 
 
-
-
-        Entity wall = entityBuilder(data)
+        return entityBuilder(data)
                 .type(WALL)
                 .at(data.getX(), data.getY())
                 .viewWithBBox(new Rectangle(width, height, Color.TRANSPARENT))
                 .collidable()
                 .zIndex(3)
                 .build();
-
-
-
-        return wall;
     }
 
     @Spawns("trigger")
@@ -90,18 +78,8 @@ public class GameFactory implements EntityFactory {
         return  entityBuilder(data)
                 .type(WARPZONE)
                 .at(data.getX(), data.getY()) // Set the position using the arguments
-                .viewWithBBox(new Rectangle(width, height, Color.RED))
+                .viewWithBBox(new Rectangle(width, height, Color.TRANSPARENT))
                 .collidable()
-                .build();
-    }
-
-    @Spawns("world")
-    public Entity spawnWorld(SpawnData data) { //TODO: REPLACE THAT WITH MAP WHEN FINISHED
-        return entityBuilder()
-                .type(WORLD)
-                .at(0,0)
-                .viewWithBBox(new Rectangle(getAppWidth(), getAppHeight(), Color.BEIGE))
-                .zIndex(-1)
                 .build();
     }
 
@@ -129,7 +107,7 @@ public class GameFactory implements EntityFactory {
                 .view(closedTexture)
                 .bbox(new HitBox(new Point2D(-1, -1), BoundingShape.box(17, 16)))
                 .collidable()
-                .with(new DoorComponent(closedTexture, openTexture))
+                .with(new DoorComponent(openTexture))
                 .build();
     }
 
@@ -167,12 +145,7 @@ public class GameFactory implements EntityFactory {
                 .with(shop)
                 .build();
 
-        Runnable onInteract = new Runnable() {
-            @Override
-            public void run() {
-                shopguy.getComponent(ShopComponent.class).show();
-            }
-        };
+        Runnable onInteract = () -> shopguy.getComponent(ShopComponent.class).show();
 
         shopguy.addComponent(new NPCComponent("Hey! Welcome to my shop!", onInteract));
 
@@ -180,7 +153,7 @@ public class GameFactory implements EntityFactory {
     }
     @Spawns("quest npc")
     public Entity spawnQuestNPC(SpawnData data) {
-        Entity player = getGameWorld().getSingleton(PLAYER);;
+        Entity player = getGameWorld().getSingleton(PLAYER);
         Texture texture = texture("NPCS/QuestNPC.png");
 
         Entity npcQuestGuy =entityBuilder(data)
@@ -192,16 +165,13 @@ public class GameFactory implements EntityFactory {
                 .build();
 
 
-        Runnable onInteract = new Runnable() {
-            @Override
-            public void run() {;
-                if(player.getComponent(PlayerInventoryComponent.class).hasItem("porche")){
-                    npcQuestGuy.removeFromWorld();
-                    player.getComponent(PlayerInventoryComponent.class).remove("porche");
-                    player.getComponent(PlayerInventoryComponent.class).add("cle");
-                }
-
+        Runnable onInteract = () -> {
+            if(player.getComponent(PlayerInventoryComponent.class).hasItem("porche")){
+                npcQuestGuy.removeFromWorld();
+                player.getComponent(PlayerInventoryComponent.class).remove("porche");
+                player.getComponent(PlayerInventoryComponent.class).add("cle");
             }
+
         };
         NPCComponent questGuyCompoenent = new NPCComponent("Si tu as une porche dans ton Inventaire je te donnerai une cle. -Aurelien", onInteract);
 
@@ -221,7 +191,7 @@ public class GameFactory implements EntityFactory {
             Duration duration = Duration.seconds(19);
             FXGL.getGameTimer().runOnceAfter(() -> {
                 getAudioPlayer().stopAllMusic();
-                Music backgroundMusic = FXGL.getAssetLoader().loadMusic("5 - Peaceful.mp3");;
+                Music backgroundMusic = FXGL.getAssetLoader().loadMusic("5 - Peaceful.mp3");
                 getAudioPlayer().loopMusic(backgroundMusic);
             }, duration);
         };
@@ -241,7 +211,7 @@ public class GameFactory implements EntityFactory {
     @Spawns("health potion")
     public Entity spawnHealthPotion(SpawnData data) {
         Runnable onUse = new Runnable() {
-            final Entity player = getGameWorld().getSingleton(PLAYER);;
+            final Entity player = getGameWorld().getSingleton(PLAYER);
 
             @Override
             public void run(){
@@ -281,7 +251,7 @@ public class GameFactory implements EntityFactory {
 
         Runnable onUse = () -> {
             // Get the player entity
-            Entity player = getGameWorld().getSingleton(PLAYER);;
+            Entity player = getGameWorld().getSingleton(PLAYER);
             // Get the player component
             PlayerComponent playerComponent = player.getComponent(PlayerComponent.class);
             // Get the changeStatus data from the item
@@ -302,7 +272,7 @@ public class GameFactory implements EntityFactory {
     @Spawns("life potion")
     public Entity spawnLifePotion(SpawnData data) {
         Runnable onUse = new Runnable() {
-            final Entity player = getGameWorld().getSingleton(PLAYER);;
+            final Entity player = getGameWorld().getSingleton(PLAYER);
 
             @Override
             public void run(){
@@ -348,7 +318,7 @@ public class GameFactory implements EntityFactory {
     @Spawns("enemy")
     public Entity spawnEnemy(SpawnData data) {
 
-        Map<String, Integer> inventory = new HashMap<String, Integer>();
+        Map<String, Integer> inventory = new HashMap<>();
         inventory.put("sword", 1);
         Map<String, Integer> stats = new HashMap<>();
 
@@ -382,7 +352,7 @@ public class GameFactory implements EntityFactory {
 
         Runnable onUse = () -> {
 
-            final Entity player = getGameWorld().getSingleton(PLAYER);;
+            final Entity player = getGameWorld().getSingleton(PLAYER);
             Entity floorbomb = spawn("bomb", player.getX(), player.getY());
             floorbomb.getComponent(CollidableComponent.class).addIgnoredType(PLAYER);
             Rectangle2D areaSelection = new Rectangle2D(floorbomb.getX()-floorbomb.getWidth()*2, floorbomb.getY()-floorbomb.getHeight()*2, floorbomb.getWidth()*4, floorbomb.getHeight()*4);
@@ -419,21 +389,21 @@ public class GameFactory implements EntityFactory {
         Map<String, Object> itemData = new HashMap<>();
         itemData.put("name", "fire scroll");
         Runnable onUse = new Runnable() {
-            final Entity player = getGameWorld().getSingleton(PLAYER);;
+            final Entity player = getGameWorld().getSingleton(PLAYER);
+
             @Override
             public void run(){
                 player.getComponent(PlayerComponent.class).addTickDamage(10);
             }
         };
-        Entity fireScroll = entityBuilder(data)
+
+        return entityBuilder(data)
                .type(COMBAT_ITEM)
                .at(data.getX(), data.getY())
                .viewWithBBox(tex)
                .with(new CombatItemComponent(onUse, itemData))
                .collidable()
                .build();
-
-        return fireScroll;
     }
 
 }

@@ -5,7 +5,7 @@ import com.almasb.fxgl.physics.CollisionHandler;
 import com.example.demo.components.*;
 import javafx.geometry.Point2D;
 
-import static com.almasb.fxgl.dsl.FXGLForKtKt.*;
+
 
 public class CustomCollisionHandler {
 

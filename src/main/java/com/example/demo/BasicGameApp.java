@@ -11,16 +11,12 @@ import com.almasb.fxgl.app.scene.Viewport;
 import com.almasb.fxgl.audio.Music;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
-import com.almasb.fxgl.entity.SpawnData;
-import com.almasb.fxgl.entity.components.CollidableComponent;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.texture.AnimatedTexture;
 import com.almasb.fxgl.ui.ProgressBar;
 import com.example.demo.components.*;
 import javafx.geometry.Pos;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -43,7 +39,7 @@ public class BasicGameApp extends GameApplication {
     private PlayerComponent playerComponent;
 
     private GridPane inventoryGrid;
-    private boolean inventoryVisible = true;
+    private final boolean inventoryVisible = true;
 
     private Text coinText;
     private HBox coinCounterBox;
@@ -227,7 +223,7 @@ public class BasicGameApp extends GameApplication {
         onKeyDown(KeyCode.J, () ->{
             String nameOfItem = playerComponent.getInventoryView().getNameFromSelectedNode();
 
-            if (nameOfItem != "Empty"){
+            if (!Objects.equals(nameOfItem, "Empty")){
                 Entity item = spawn(nameOfItem, 1000, 1000); // utilise in trick qui spawn l objet hors de l ecran pour l utiliser
                 if(item.hasComponent(UsableItemComponent.class)){
                     item.getComponent(UsableItemComponent.class).onDrop(player.getPosition(), nameOfItem);

@@ -17,16 +17,14 @@ public class EquipedItemComponent extends ItemComponent{
     public EquipedItemComponent(Map<String, Object> data, Runnable onUse) {
         super(data);
         this.onUse = onUse;
-        this.onDrop = new Runnable() {
-            public void run() {
+        this.onDrop = () -> {
 
-            }
         };
 
     }
 
-    private Runnable onUse;
-    private Runnable onDrop;
+    private final Runnable onUse;
+    private final Runnable onDrop;
 
     @Override
     public void onDrop(Point2D position, String Name) {

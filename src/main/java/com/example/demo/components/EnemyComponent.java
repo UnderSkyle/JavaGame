@@ -16,8 +16,8 @@ import static com.almasb.fxgl.dsl.FXGLForKtKt.spawn;
 import static com.example.demo.GameTypes.PLAYER;
 
 public class EnemyComponent extends Component {
-    private Map<String, Integer> inventory = new HashMap<>();
-    private Map<String, Integer> stats = new HashMap<>();
+    private Map<String, Integer> inventory;
+    private Map<String, Integer> stats;
     private int health = 100;
 
     public EnemyComponent(Map<String, Integer> inventory, Map<String, Integer> stats, int health ) {

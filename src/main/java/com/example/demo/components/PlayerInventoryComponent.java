@@ -1,6 +1,5 @@
 package com.example.demo.components;
 
-import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.component.Component;
 import com.example.demo.PlayerInventoryView;
 

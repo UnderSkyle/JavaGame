@@ -12,7 +12,7 @@ public class NPCComponent extends Component {
         public void run() {
         }
     };
-    private String message;
+    private final String message;
 
     public NPCComponent(String message, Runnable onInteract) {
         this.onInteract = onInteract;

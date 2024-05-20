@@ -2,7 +2,6 @@ package com.example.demo;
 
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.scene.SubScene;
-import com.example.demo.components.PlayerComponent;
 import com.example.demo.components.PlayerInventoryComponent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

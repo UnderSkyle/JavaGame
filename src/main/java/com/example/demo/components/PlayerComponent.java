@@ -26,7 +26,7 @@ public class PlayerComponent extends Component {
     private final ProgressBar healthBar = new ProgressBar(false);
     private AnimationChannel animWalkRight, animWalkLeft, animWalkUp, animWalkDown;
 
-    private AnimatedTexture texture = texture("Player/DownWalk.png").toAnimatedTexture(4, Duration.seconds(2));
+    private final AnimatedTexture texture = texture("Player/DownWalk.png").toAnimatedTexture(4, Duration.seconds(2));
     private String currentDirection = "idleDown";
     private boolean isAnimationPlaying = true;
     private int tickDamage;
@@ -39,7 +39,7 @@ public class PlayerComponent extends Component {
         return healthBar;
     }
 
-    private Map<String, Integer> status = new HashMap<String, Integer>();
+    private final Map<String, Integer> status = new HashMap<>();
 
     @Override
     public void onAdded() {

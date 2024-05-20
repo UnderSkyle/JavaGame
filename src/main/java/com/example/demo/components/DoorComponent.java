@@ -4,13 +4,11 @@ import com.almasb.fxgl.texture.Texture;
 
 public class DoorComponent extends RemovableObstacleComponent{
 
-    private Texture closedTexture;
-    private Texture openTexture;
+    private final Texture openTexture;
 
 
-    public DoorComponent(Texture closedTexture, Texture openTexture) {
+    public DoorComponent(Texture openTexture) {
         super();
-        this.closedTexture = closedTexture;
         this.openTexture = openTexture;
     }
 

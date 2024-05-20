@@ -34,7 +34,7 @@ public abstract class ItemComponent extends Component {
             }
             entity.getComponent(PlayerInventoryComponent.class).add(getName());
             this.entity.removeFromWorld();
-        };
+        }
     }
 
     public abstract void onUse(Entity entity);
