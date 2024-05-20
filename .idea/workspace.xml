@@ -9,19 +9,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="450a246a-b8c4-4045-9d6d-b0c01123dc97" name="Changes" comment="Added map support (no support for items that interact with the plauer tho)">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="450a246a-b8c4-4045-9d6d-b0c01123dc97" name="Changes" comment="removed a lot of warnings (if it breaks go back to here)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/BasicGameApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/BasicGameApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/GameFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/GameFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/components/DoorComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/components/DoorComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/components/EnemyComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/components/EnemyComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/components/EquipedItemComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/components/EquipedItemComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/components/ItemComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/components/ItemComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/components/NPCComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/components/NPCComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/components/PlayerComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/components/PlayerComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/components/PlayerInventoryComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/components/PlayerInventoryComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/Tilesets/Interior/Elements.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/Tilesets/Pipes.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/Tilesets/TilesetDesert.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/Tilesets/TilesetDungeon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/Tilesets/TilesetField.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/Tilesets/TilesetFloorB.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/Tilesets/TilesetFloorDetail.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/Tilesets/TilesetHole.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/Tilesets/TilesetHouse.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/Tilesets/TilesetLogic.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/Tilesets/TilesetRelief.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/Tilesets/TilesetReliefDetail.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/Tilesets/TilesetVillageAbandoned.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/Tilesets/TilesetWater.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -203,7 +208,7 @@
       <workItem from="1716103761955" duration="22687000" />
       <workItem from="1716142327872" duration="2437000" />
       <workItem from="1716156981422" duration="1346000" />
-      <workItem from="1716194031458" duration="15136000" />
+      <workItem from="1716194031458" duration="16341000" />
     </task>
     <task id="LOCAL-00001" summary="setup">
       <option name="closed" value="true" />
@@ -357,7 +362,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716214843770</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="removed a lot of warnings (if it breaks go back to here)">
+      <option name="closed" value="true" />
+      <created>1716215732005</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1716215732005</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -391,7 +404,8 @@
     <MESSAGE value="End of day One. See milanote for the rest that is needed" />
     <MESSAGE value="Start of day 2 changed bombs and Starting to work on the combat (ill make it simple so i can finish it fast)" />
     <MESSAGE value="Added map support (no support for items that interact with the plauer tho)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added map support (no support for items that interact with the plauer tho)" />
+    <MESSAGE value="removed a lot of warnings (if it breaks go back to here)" />
+    <option name="LAST_COMMIT_MESSAGE" value="removed a lot of warnings (if it breaks go back to here)" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

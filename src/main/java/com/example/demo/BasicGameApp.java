@@ -239,6 +239,11 @@ public class BasicGameApp extends GameApplication {
             }
         });
 
+        onKeyDown(KeyCode.K, () -> {
+            setLevelFromMap("house.tmx");
+            player.setPosition(75, 130);
+        });
+
 
 
     }
