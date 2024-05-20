@@ -19,7 +19,7 @@ import static com.almasb.fxgl.dsl.FXGLForKtKt.texture;
 public class PlayerComponent extends Component {
 
     TransformComponent transformComponent;
-    private final double SPEED = 3;
+    private final double SPEED = 2;
     private int maxHealth = 100;
     private int currentHealth = 0;
     private final PlayerInventoryView inventoryView = new PlayerInventoryView(getEntity());
@@ -60,9 +60,6 @@ public class PlayerComponent extends Component {
         animWalkLeft = new AnimationChannel(FXGL.image("Player/LeftWalk.png"), Duration.millis(400) , 4);
         animWalkUp = new AnimationChannel(FXGL.image("Player/UpWalk.png"), Duration.millis(400) , 4);
 
-
-        texture.setScaleX(2);
-        texture.setScaleY(2);
 
         entity.getViewComponent().addChild(texture.loop());
 

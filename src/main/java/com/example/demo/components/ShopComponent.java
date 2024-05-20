@@ -12,13 +12,14 @@ public class ShopComponent extends Component {
 
     public ShopComponent() {
         // Initialize the inventory with some items
-        inventory.put("bomb", new ShopView.ItemDetails(10, 3));
+        inventory.put("health potion", new ShopView.ItemDetails(1, 1));
+        inventory.put("life potion", new ShopView.ItemDetails(10, 2));
         newShopView = new ShopView();
 
     }
 
     public void show() {
-        newShopView.show(entity.getX(), entity.getY()-100, inventory);
+        newShopView.show(entity.getX(), entity.getY()-10, inventory);
     }
 
     public Map<String, ShopView.ItemDetails> getInventory() {

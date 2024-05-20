@@ -8,39 +8,25 @@ import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.app.scene.SceneFactory;
 import com.almasb.fxgl.app.scene.Viewport;
-import com.almasb.fxgl.audio.Audio;
 import com.almasb.fxgl.audio.Music;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.components.CollidableComponent;
-import com.almasb.fxgl.entity.components.TransformComponent;
 import com.almasb.fxgl.input.UserAction;
-import com.almasb.fxgl.physics.CollisionHandler;
 import com.almasb.fxgl.texture.AnimatedTexture;
 import com.almasb.fxgl.ui.ProgressBar;
-import com.almasb.fxgl.scene.SubScene;
 import com.example.demo.components.*;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.HPos;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 
@@ -50,7 +36,7 @@ import static com.almasb.fxgl.dsl.FXGL.*;
  */
 public class BasicGameApp extends GameApplication {
 
-    public static final int CELL_SIZE = 30;
+    public static final int CELL_SIZE = 16;
     Entity player;
     private ProgressBar healthBar;
 
@@ -109,7 +95,6 @@ public class BasicGameApp extends GameApplication {
 
     protected void initGameVars(Map<String, Object> vars) {
         vars.put("coin", 0);
-        vars.put("combatActive", false);
 
     }
 
@@ -117,66 +102,27 @@ public class BasicGameApp extends GameApplication {
 
     @Override
     protected void initGame() {
-        getGameWorld().addEntityFactory(new GameFactory());
+        GameFactory gameFactory = new GameFactory();
+        getGameWorld().addEntityFactory(gameFactory);
+        setLevelFromMap("startLevel.tmx");
+
+        // Loading the level from the TMX map
+
+        player = spawn("player");
+        getGameWorld().addEntity(player);
+        System.out.println(player);
+
+        getGameScene().setBackgroundColor(Color.THISTLE);
+
         backgroundMusic = FXGL.getAssetLoader().loadMusic("5 - Peaceful.mp3");
         FXGL.getAudioPlayer().loopMusic(backgroundMusic);
 
-        getGameScene().setBackgroundColor(Color.THISTLE);
-        Entity world = spawn("world");
-
-        spawn("coin");
-
-        player = spawn("player");
         playerComponent = player.getComponent(PlayerComponent.class);
-
-        spawn("trigger", 200, 200);
-
-        spawn("health potion", 200, 300);
-        spawn("health potion", 300, 300);
-        spawn("health potion", 400, 400);
-        spawn("sword", 400, 200);
-
-        spawn("life potion", 350 ,450);
-        spawn("removableWall", 350, 600);
-
-        spawn("rick", 100, 100);
-        SpawnData npcSpawn2 = new SpawnData(140 ,100);
-        npcSpawn2.put("text", "BAKA");
-        spawn("npc", npcSpawn2);
-        spawn("shop npc", 200, 500);
-
-        spawn("door", 800 ,800);
-        spawn("key", 350 ,350);
-
-        spawn("quest npc", 400 , 500);
-
-        spawn("enemy", new SpawnData(500,100).put("health", 100));
-        spawn("bomb", 600, 600);
-        spawn("fire scroll", 900, 400);
-
-        SpawnData wallSpawn = new SpawnData(0 ,0);
-        wallSpawn.put("width", CELL_SIZE);
-        wallSpawn.put("height", (int)world.getHeight());
-        spawn("wall", wallSpawn);
-
-        SpawnData wallSpawn2 = new SpawnData(0 ,0);
-        wallSpawn2.put("width", (int)world.getWidth());
-        wallSpawn2.put("height", CELL_SIZE);
-        spawn("wall", wallSpawn2);
-
-        SpawnData wallSpawn3 = new SpawnData((int)world.getWidth()-CELL_SIZE  ,0);
-        wallSpawn3.put("width", CELL_SIZE);
-        wallSpawn3.put("height", (int)world.getHeight());
-        spawn("wall", wallSpawn3);
-
-        SpawnData wallSpawn4 = new SpawnData(0 , (int)world.getHeight() - CELL_SIZE );
-        wallSpawn4.put("width", (int)world.getWidth());
-        wallSpawn4.put("height", CELL_SIZE);
-        spawn("wall", wallSpawn4);
 
         Viewport viewport = FXGL.getGameScene().getViewport();
         viewport.bindToEntity(player, getAppWidth() / 2.0, getAppHeight() / 2.0);
-        viewport.setBounds(0, 0, (int) world.getWidth()*2, (int) world.getHeight()*2);
+        viewport.setZoom(2.5);
+        //viewport.setBounds(0, 0, (int) world.getWidth()*2, (int) world.getHeight()*2);
         viewport.setLazy(true);
 
     }
@@ -184,6 +130,7 @@ public class BasicGameApp extends GameApplication {
 
     @Override
     protected void initInput() {
+
 
 
         FXGL.getInput().addAction(new UserAction("Right") {
@@ -255,15 +202,10 @@ public class BasicGameApp extends GameApplication {
 
         }, KeyCode.S);
 
-        onKeyDown(KeyCode.B, () -> {getDialogService().showMessageBox("You Win!", () -> getGameController().gotoMainMenu());});
-
         onKeyDown(KeyCode.LEFT,() -> playerComponent.getInventoryView().selectCellToLeft());
         onKeyDown(KeyCode.RIGHT,() -> playerComponent.getInventoryView().selectCellToRight());
         onKeyDown(KeyCode.UP,() -> playerComponent.getInventoryView().selectCellAbove());
         onKeyDown(KeyCode.DOWN,() -> playerComponent.getInventoryView().selectCellBelow());
-
-        onKeyUp( KeyCode.R, () -> playerComponent.setMaxHealth(playerComponent.getMaxHealth()+5));
-        onKeyDown( KeyCode.T, () -> playerComponent.setCurrentHealth((playerComponent.getCurrentHealth()+5)));
 
         onKeyDown(KeyCode.ENTER, () -> {
 
@@ -301,24 +243,6 @@ public class BasicGameApp extends GameApplication {
             }
         });
 
-        onKeyDown(KeyCode.K, () -> System.out.println(player.getComponent(PlayerInventoryComponent.class).getInventory()));
-        onKeyDown(KeyCode.U, () -> {
-            Rectangle2D areaSelection = new Rectangle2D(player.getX()-player.getWidth()*2, player.getY()-player.getHeight()*2, player.getWidth()*4, player.getHeight()*4);
-            List<Entity> entityList = getGameWorld().getEntitiesInRange(areaSelection);
-            for(Entity entity : entityList){
-                if(entity.hasComponent(RemovableObstacleComponent.class)){
-                    if(entity.hasComponent(CollidableComponent.class)){
-                        entity.getComponent(RemovableObstacleComponent.class).RemoveObstacleComponent();
-                        entity.getViewComponent().setVisible(false);
-                    }
-                    else{
-                        entity.getComponent(RemovableObstacleComponent.class).AddObstacleComponent();
-                        entity.getViewComponent().setVisible(true);
-                    }
-
-                }
-            }
-        });
 
 
     }
@@ -331,6 +255,7 @@ public class BasicGameApp extends GameApplication {
 
 
     }
+
 
 
     public static void main(String[] args) {

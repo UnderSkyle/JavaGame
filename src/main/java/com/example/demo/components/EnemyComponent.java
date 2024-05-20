@@ -1,6 +1,7 @@
 package com.example.demo.components;
 
 import com.almasb.fxgl.core.math.FXGLMath;
+import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.component.Component;
@@ -41,6 +42,16 @@ public class EnemyComponent extends Component {
             }
         }
         entity.removeFromWorld();
+    }
+
+    public void useItem(String itemName){
+        if(inventory.containsKey(itemName)){
+            Entity item = FXGL.spawn(itemName, 500, 500);
+            if(item.hasComponent(CombatItemComponent.class)){
+                item.getComponent(CombatItemComponent.class).onUse(item);
+            }
+            item.removeFromWorld();
+        }
     }
 
 

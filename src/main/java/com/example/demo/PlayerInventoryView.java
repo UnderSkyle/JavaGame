@@ -29,7 +29,7 @@ public class PlayerInventoryView extends GridPane{
 
     public PlayerInventoryView(Entity player) {
         super();
-        double gridSize = CELL_SIZE * 1.5;
+        double gridSize = CELL_SIZE * 2;
         for (int row = 0; row < 4; row++) {
             for (int col = 0; col < 5; col++) {
                 Rectangle cell = new Rectangle(gridSize, gridSize, Color.BLACK);
@@ -50,10 +50,10 @@ public class PlayerInventoryView extends GridPane{
 
             }
         }
-        this.setTranslateX(getAppWidth()- gridSize *5 - 20);
+        this.setTranslateX(getAppWidth()- gridSize *5 - 30);
         this.setTranslateY(getAppHeight()- gridSize *4 - 20);
-        this.setHgap(1.5);
-        this.setVgap(3);
+        this.setHgap(2);
+        this.setVgap(4);
 
 
     }
@@ -200,10 +200,7 @@ public class PlayerInventoryView extends GridPane{
                 texture.setFitHeight(16);
                 texture.setFitWidth(16);
             }
-            else{
-                texture.setScaleX(2);
-                texture.setScaleY(2);
-            }
+
 
 
             ((TextureWithNumberNode) cellText).setNameOfItem(name);
@@ -216,6 +213,8 @@ public class PlayerInventoryView extends GridPane{
             TextureWithNumberNode workingCell = (TextureWithNumberNode) this.getChildren().get(i);
 
             Texture texture = texture("Items/Empty.png");
+            texture.setFitHeight(16);
+            texture.setFitWidth(16);
 
             workingCell.setTexture(texture);
             workingCell.setNumberText("");
@@ -239,10 +238,10 @@ public class PlayerInventoryView extends GridPane{
         public TextureWithNumberNode(Texture texture, String numberText) {
 
             // Set spacing between the texture and the number
-            setSpacing(8); // Adjust as needed
+            setSpacing(2); // Adjust as needed
 
             // Add padding around the node
-            setPadding(new Insets(5)); // Adjust as needed
+            setPadding(new Insets(2)); // Adjust as needed
 
             // Center the content horizontally and vertically
             setAlignment(Pos.CENTER);

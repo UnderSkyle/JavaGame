@@ -92,7 +92,7 @@ public class FightHandler {
         Button fleeButton = new Button("Flee");
 
         attackButton.setOnAction(e -> attack());
-        itemButton.setOnAction(e -> useItem());
+        itemButton.setOnAction(e -> useItem(player, enemy));
         fleeButton.setOnAction(e -> flee());
 
         // Set button properties (adjust as needed)
@@ -115,7 +115,7 @@ public class FightHandler {
         enemyComponent.onDeath();
     }
 
-    private void useItem() {
+    private void useItem(Entity player, Entity enemy) {
         // Placeholder for item usage logic
     }
 

@@ -7,6 +7,7 @@ import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.Spawns;
 import com.almasb.fxgl.entity.components.CollidableComponent;
+import com.almasb.fxgl.entity.components.IDComponent;
 import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.texture.AnimatedTexture;
@@ -33,31 +34,31 @@ import static com.example.demo.GameTypes.*;
 
 public class GameFactory implements EntityFactory {
 
+    
+
     @Spawns("player")
     public Entity spawnPlayer(SpawnData data) {
-        return  entityBuilder(data)
-                .type(PLAYER)
-                .zIndex(3)
-                .at(getAppWidth() /2.0, getAppHeight() /2.0)
-                .bbox(new HitBox(new Point2D(-8, -8), BoundingShape.box(30, 30)))
-                .with(new PlayerComponent())
-                .with(new PlayerInventoryComponent())
-                .collidable()
-                .buildAndAttach();
+        return entityBuilder(data)
+               .type(PLAYER)
+               .zIndex(3)
+               .at(250, 250)
+               .bbox(new HitBox(new Point2D(0, 0), BoundingShape.box(13, 13)))
+               .with(new PlayerComponent())
+               .with(new PlayerInventoryComponent())
+               .collidable()
+               .build();
     }
 
     @Spawns("coin")
     public Entity spawnCoin(SpawnData data) {
         AnimatedTexture tex = texture("Items/Coin2.png").toAnimatedTexture(4, Duration.millis(500));
-        tex.setScaleX(2);
-        tex.setScaleY(2);
         tex.loop();
         return  entityBuilder(data)
                 .type(COIN)
-                .at(500, 200)
+                .at(200, 200)
                 .viewWithBBox(tex)
                 .collidable()
-                .buildAndAttach();
+                .build();
     }
 
     @Spawns("wall")
@@ -65,23 +66,33 @@ public class GameFactory implements EntityFactory {
         int width = data.get("width");
         int height = data.get("height");
 
-        return  entityBuilder(data)
+
+
+
+        Entity wall = entityBuilder(data)
                 .type(WALL)
                 .at(data.getX(), data.getY())
-                .viewWithBBox(new Rectangle(width, height, Color.DEEPSKYBLUE))
+                .viewWithBBox(new Rectangle(width, height, Color.TRANSPARENT))
                 .collidable()
-                .buildAndAttach();
+                .zIndex(3)
+                .build();
+
+
+
+        return wall;
     }
 
     @Spawns("trigger")
     public Entity spawnTrigger(SpawnData data) {
+        int width = data.get("width");
+        int height = data.get("height");
+
         return  entityBuilder(data)
                 .type(WARPZONE)
                 .at(data.getX(), data.getY()) // Set the position using the arguments
-                .viewWithBBox(new Rectangle(10, 10, Color.RED))
+                .viewWithBBox(new Rectangle(width, height, Color.RED))
                 .collidable()
-                .buildAndAttach();
-
+                .build();
     }
 
     @Spawns("world")
@@ -91,7 +102,7 @@ public class GameFactory implements EntityFactory {
                 .at(0,0)
                 .viewWithBBox(new Rectangle(getAppWidth(), getAppHeight(), Color.BEIGE))
                 .zIndex(-1)
-                .buildAndAttach();
+                .build();
     }
 
     @Spawns("removableWall")
@@ -102,7 +113,7 @@ public class GameFactory implements EntityFactory {
                .viewWithBBox(new Rectangle(CELL_SIZE*2+1, CELL_SIZE*2, Color.YELLOW))
                .collidable()
                .with(new RemovableObstacleComponent())
-               .buildAndAttach();
+               .build();
     }
 
     @Spawns("door")
@@ -111,10 +122,6 @@ public class GameFactory implements EntityFactory {
         Texture doorTexture = texture("Door.png", 32, 16);
         Texture closedTexture = doorTexture.subTexture(new Rectangle2D(0, 0, 16, 16));
         Texture openTexture = doorTexture.subTexture(new Rectangle2D(16, 0, 16, 16));
-        closedTexture.setScaleX(2);
-        closedTexture.setScaleY(2);
-        openTexture.setScaleX(2);
-        openTexture.setScaleY(2);
 
         return  entityBuilder(data)
                 .type(WALL)
@@ -123,14 +130,12 @@ public class GameFactory implements EntityFactory {
                 .bbox(new HitBox(new Point2D(-1, -1), BoundingShape.box(17, 16)))
                 .collidable()
                 .with(new DoorComponent(closedTexture, openTexture))
-                .buildAndAttach();
+                .build();
     }
 
     @Spawns("npc")
     public Entity spawnNPC(SpawnData data) {
         Texture texture = texture("NPCS/StandardNPC.png");
-        texture.setScaleX(2);
-        texture.setScaleY(2);
         NPCComponent ncpComponent;
         if(data.hasKey("onInteract")){
             ncpComponent = new NPCComponent(data.get("text"), data.get("onInteract"));
@@ -146,14 +151,12 @@ public class GameFactory implements EntityFactory {
                .viewWithBBox(texture)
                .collidable()
                .with(ncpComponent)
-               .buildAndAttach();
+               .build();
     }
 
     @Spawns("shop npc")
     public Entity spawnShopNPC(SpawnData data) {
         Texture texture = texture("NPCS/ShopNPC.png");
-        texture.setScaleX(2);
-        texture.setScaleY(2);
         ShopComponent shop = new ShopComponent();
 
         Entity shopguy = entityBuilder(data)
@@ -162,7 +165,7 @@ public class GameFactory implements EntityFactory {
                 .viewWithBBox(texture)
                 .collidable()
                 .with(shop)
-                .buildAndAttach();
+                .build();
 
         Runnable onInteract = new Runnable() {
             @Override
@@ -177,9 +180,8 @@ public class GameFactory implements EntityFactory {
     }
     @Spawns("quest npc")
     public Entity spawnQuestNPC(SpawnData data) {
+        Entity player = getGameWorld().getSingleton(PLAYER);;
         Texture texture = texture("NPCS/QuestNPC.png");
-        texture.setScaleX(2);
-        texture.setScaleY(2);
 
         Entity npcQuestGuy =entityBuilder(data)
                 .type(NPC)
@@ -187,13 +189,12 @@ public class GameFactory implements EntityFactory {
                 .viewWithBBox(texture)
                 .with()
                 .collidable()
-                .buildAndAttach();
+                .build();
 
 
         Runnable onInteract = new Runnable() {
             @Override
-            public void run() {
-                final Entity player = getGameWorld().getSingleton(PLAYER);
+            public void run() {;
                 if(player.getComponent(PlayerInventoryComponent.class).hasItem("porche")){
                     npcQuestGuy.removeFromWorld();
                     player.getComponent(PlayerInventoryComponent.class).remove("porche");
@@ -213,8 +214,6 @@ public class GameFactory implements EntityFactory {
     @Spawns("rick")
     public Entity spawnRick(SpawnData data) {
         Texture texture = texture("NPCS/StandardNPC.png");
-        texture.setScaleX(2);
-        texture.setScaleY(2);
 
         Runnable onInteract = () -> {
             getAudioPlayer().pauseAllMusic();
@@ -234,7 +233,7 @@ public class GameFactory implements EntityFactory {
                 .viewWithBBox(texture)
                 .collidable()
                 .with(rickNPC)
-                .buildAndAttach();
+                .build();
     }
 
 
@@ -242,7 +241,7 @@ public class GameFactory implements EntityFactory {
     @Spawns("health potion")
     public Entity spawnHealthPotion(SpawnData data) {
         Runnable onUse = new Runnable() {
-            final Entity player = getGameWorld().getSingleton(PLAYER);
+            final Entity player = getGameWorld().getSingleton(PLAYER);;
 
             @Override
             public void run(){
@@ -259,8 +258,6 @@ public class GameFactory implements EntityFactory {
         itemData.put("name", "health potion");
         Texture texture = texture("""
                        Items/health potion.png""");
-        texture.setScaleX(2);
-        texture.setScaleY(2);
 
         return  entityBuilder(data)
                .type(USABLE_ITEM)
@@ -268,7 +265,7 @@ public class GameFactory implements EntityFactory {
                .viewWithBBox(texture)
                 .with(new UsableItemComponent(onUse, itemData))
                 .collidable()
-               .buildAndAttach();
+               .build();
     }
 
     @Spawns("sword")
@@ -281,12 +278,10 @@ public class GameFactory implements EntityFactory {
         itemData.put("changeStatus", statusChange);
         Texture texture = texture("""
                        Items/sword.png""");
-        texture.setScaleX(2);
-        texture.setScaleY(2);
 
         Runnable onUse = () -> {
             // Get the player entity
-            Entity player = getGameWorld().getSingleton(PLAYER);
+            Entity player = getGameWorld().getSingleton(PLAYER);;
             // Get the player component
             PlayerComponent playerComponent = player.getComponent(PlayerComponent.class);
             // Get the changeStatus data from the item
@@ -301,13 +296,13 @@ public class GameFactory implements EntityFactory {
                 .viewWithBBox(texture)
                 .with(new EquipedItemComponent(itemData, onUse))
                 .collidable()
-                .buildAndAttach();
+                .build();
     }
 
     @Spawns("life potion")
     public Entity spawnLifePotion(SpawnData data) {
         Runnable onUse = new Runnable() {
-            final Entity player = getGameWorld().getSingleton(PLAYER);
+            final Entity player = getGameWorld().getSingleton(PLAYER);;
 
             @Override
             public void run(){
@@ -319,8 +314,6 @@ public class GameFactory implements EntityFactory {
         itemData.put("name", "life potion");
         Texture texture = texture("""
                        Items/life potion.png""");
-        texture.setScaleX(2);
-        texture.setScaleY(2);
 
         return  entityBuilder(data)
                 .type(USABLE_ITEM)
@@ -328,7 +321,7 @@ public class GameFactory implements EntityFactory {
                 .viewWithBBox(texture)
                 .with(new UsableItemComponent(onUse, itemData))
                 .collidable()
-                .buildAndAttach();
+                .build();
     }
 
     @Spawns("key")
@@ -338,8 +331,6 @@ public class GameFactory implements EntityFactory {
         itemData.put("name", "key");
         Texture texture = texture("""
                        Items/key.png""");
-        texture.setScaleX(2);
-        texture.setScaleY(2);
 
         Runnable onUse = () -> {
 
@@ -351,7 +342,7 @@ public class GameFactory implements EntityFactory {
                 .viewWithBBox(texture)
                 .with(new EquipedItemComponent(itemData, onUse))
                 .collidable()
-                .buildAndAttach();
+                .build();
     }
 
     @Spawns("enemy")
@@ -368,7 +359,7 @@ public class GameFactory implements EntityFactory {
                .viewWithBBox(new Rectangle(30, 30, Color.DARKVIOLET))
                .with(new EnemyComponent(inventory, stats, data.get("health")))
                .collidable()
-               .buildAndAttach();
+               .build();
     }
 
 
@@ -376,8 +367,8 @@ public class GameFactory implements EntityFactory {
     public Entity spawnBomb(SpawnData data) {
 
         Texture tex = texture("Items/bomb.png");
-        tex.setScaleX(0.25);
-        tex.setScaleY(0.25);
+        tex.setScaleX(0.12);
+        tex.setScaleY(0.12);
         Map<String, Object> itemData = new HashMap<>();
         itemData.put("name", "bomb");
         Entity bomb = entityBuilder(data)
@@ -386,12 +377,12 @@ public class GameFactory implements EntityFactory {
                 .viewWithBBox(tex)
                 .with()
                 .collidable()
-                .buildAndAttach();
+                .build();
 
 
         Runnable onUse = () -> {
 
-            final Entity player = getGameWorld().getSingleton(PLAYER);
+            final Entity player = getGameWorld().getSingleton(PLAYER);;
             Entity floorbomb = spawn("bomb", player.getX(), player.getY());
             floorbomb.getComponent(CollidableComponent.class).addIgnoredType(PLAYER);
             Rectangle2D areaSelection = new Rectangle2D(floorbomb.getX()-floorbomb.getWidth()*2, floorbomb.getY()-floorbomb.getHeight()*2, floorbomb.getWidth()*4, floorbomb.getHeight()*4);
@@ -428,7 +419,7 @@ public class GameFactory implements EntityFactory {
         Map<String, Object> itemData = new HashMap<>();
         itemData.put("name", "fire scroll");
         Runnable onUse = new Runnable() {
-            final Entity player = getGameWorld().getSingleton(PLAYER);
+            final Entity player = getGameWorld().getSingleton(PLAYER);;
             @Override
             public void run(){
                 player.getComponent(PlayerComponent.class).addTickDamage(10);
@@ -440,12 +431,9 @@ public class GameFactory implements EntityFactory {
                .viewWithBBox(tex)
                .with(new CombatItemComponent(onUse, itemData))
                .collidable()
-               .buildAndAttach();
+               .build();
 
         return fireScroll;
     }
-
-
-
 
 }

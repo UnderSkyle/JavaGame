@@ -58,7 +58,7 @@ public class CustomCollisionHandler {
         FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(GameTypes.PLAYER, GameTypes.WARPZONE) {
             @Override
             protected void onCollisionBegin(Entity player, Entity warpzone) {
-                player.getComponent(PlayerComponent.class).yeet(new Point2D(getAppWidth()/2.0,getAppHeight()/2.0));
+                player.getComponent(PlayerComponent.class).yeet(new Point2D(100, 200));
 
             }
         });
