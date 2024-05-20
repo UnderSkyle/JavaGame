@@ -12,7 +12,7 @@ public class ShopComponent extends Component {
 
     public ShopComponent() {
         // Initialize the inventory with some items
-        inventory.put("health potion", new ShopView.ItemDetails(10, 3));
+        inventory.put("bomb", new ShopView.ItemDetails(10, 3));
         newShopView = new ShopView();
 
     }

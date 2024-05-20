@@ -32,6 +32,7 @@ public class EnemyComponent extends Component {
                 SpawnData spanwPos = new SpawnData(entity.getX()+randomInt, entity.getY()+randomInt);
                 Entity item = spawn(entry.getKey(),spanwPos);
                 PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                item.getComponent(CollidableComponent.class).addIgnoredType(PLAYER);
                 pause.setOnFinished(event -> {
                     // Reactivate the collide component after 2 seconds
                     item.getComponent(CollidableComponent.class).removeIgnoredType(PLAYER);
@@ -39,7 +40,7 @@ public class EnemyComponent extends Component {
                 pause.play();
             }
         }
-
+        entity.removeFromWorld();
     }
 
 

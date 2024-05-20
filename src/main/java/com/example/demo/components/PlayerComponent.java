@@ -135,10 +135,10 @@ public class PlayerComponent extends Component {
     }
 
 
-
     public void moveRight() {
-            getEntity().translateX(SPEED); // Adjust velocity as needed
+        getEntity().translateX(SPEED); // Adjust velocity as needed
     }
+
 
     public void moveLeft() {
         getEntity().translateX(-SPEED); // Adjust velocity as needed

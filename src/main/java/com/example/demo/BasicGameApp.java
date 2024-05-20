@@ -152,6 +152,7 @@ public class BasicGameApp extends GameApplication {
 
         spawn("enemy", new SpawnData(500,100).put("health", 100));
         spawn("bomb", 600, 600);
+        spawn("fire scroll", 900, 400);
 
         SpawnData wallSpawn = new SpawnData(0 ,0);
         wallSpawn.put("width", CELL_SIZE);

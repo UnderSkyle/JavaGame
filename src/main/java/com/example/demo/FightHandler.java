@@ -111,6 +111,8 @@ public class FightHandler {
     private void attack() {
         // Placeholder for attack logic
         System.out.println("Attack!");
+        FXGL.getSceneService().popSubScene();
+        enemyComponent.onDeath();
     }
 
     private void useItem() {
