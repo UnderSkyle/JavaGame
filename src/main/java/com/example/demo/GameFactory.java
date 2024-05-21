@@ -323,6 +323,8 @@ public class GameFactory implements EntityFactory {
         Map<String, Integer> inventory = new HashMap<>();
         inventory.put("sword", 1);
         Map<String, Integer> stats = new HashMap<>();
+        stats.put("attack", 20);
+        stats.put("defense", 5);
 
 
         return  entityBuilder(data)

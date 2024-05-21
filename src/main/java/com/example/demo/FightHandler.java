@@ -5,18 +5,24 @@ import com.almasb.fxgl.core.math.FXGLMath;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.scene.SubScene;
+import com.example.demo.components.CombatItemComponent;
 import com.example.demo.components.EnemyComponent;
+import com.example.demo.components.PlayerComponent;
 import com.example.demo.components.PlayerInventoryComponent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
+import java.util.Map;
+
 import static com.almasb.fxgl.dsl.FXGL.getAppHeight;
 import static com.almasb.fxgl.dsl.FXGL.getAppWidth;
+import static com.almasb.fxgl.dsl.FXGLForKtKt.spawn;
 
 public class FightHandler {
     private SubScene subScene;
@@ -24,16 +30,22 @@ public class FightHandler {
     private Entity enemy;
     private PlayerInventoryComponent playerInventory;
     private EnemyComponent enemyComponent;
-
+    private PlayerComponent playerComponent;
     //Here are the modifyable fields
     Text playerStatsText;
     Text enemyStatsText;
     Text centerText;
+    HBox buttonBox = new HBox(50);
+    Button attackButton = new Button("Attack");
+    Button itemButton = new Button("Items");
+    Button fleeButton = new Button("Flee");
+    Node itemBox;
 
     public FightHandler(Entity player, Entity enemy) {
         this.player = player;
         this.enemy = enemy;
         this.playerInventory = player.getComponent(PlayerInventoryComponent.class);
+        this.playerComponent = player.getComponent(PlayerComponent.class);
         this.enemyComponent = enemy.getComponent(EnemyComponent.class);
     }
 
@@ -57,7 +69,7 @@ public class FightHandler {
         topBox.getChildren().add(playerStatsBox);
 
         // Create the text node for player stats (replace with actual stats)
-        playerStatsText = new Text("Player Stats");
+        playerStatsText = new Text(playerComponent.getStatsText());
         playerStatsBox.getChildren().add(playerStatsText);
 
         // Create the center section that will contain what happens on each turn
@@ -77,19 +89,15 @@ public class FightHandler {
         topBox.getChildren().add(enemyStatsBox);
 
         // Create the text node for enemy stats (replace with actual stats)
-        enemyStatsText = new Text("Enemy Stats");
+        enemyStatsText = new Text(this.enemyComponent.getStatsText());
         enemyStatsBox.getChildren().add(enemyStatsText);
 
         // Create the bottom HBox for buttons
-        HBox buttonBox = new HBox(50);
         buttonBox.setPrefSize(600, 243);
         buttonBox.setAlignment(Pos.CENTER);
         root.getChildren().add(buttonBox);
 
         // Create buttons (adjust as needed)
-        Button attackButton = new Button("Attack");
-        Button itemButton = new Button("Items");
-        Button fleeButton = new Button("Flee");
 
         attackButton.setOnAction(e -> attack());
         itemButton.setOnAction(e -> useItem(player, enemy));
@@ -111,12 +119,98 @@ public class FightHandler {
     private void attack() {
         // Placeholder for attack logic
         System.out.println("Attack!");
-        FXGL.getSceneService().popSubScene();
-        enemyComponent.onDeath();
+        if (playerComponent.getAttack() - enemyComponent.getDefense() > 0){
+            enemyComponent.addHealth( -1 * (playerComponent.getAttack() - enemyComponent.getDefense()));
+            centerText.setText("Player dealt " + (playerComponent.getAttack() - enemyComponent.getDefense() + " damage to the enemy"));
+        }
+        else{
+            centerText.setText("Player dealt no damage ... maybe you should use an item");
+        }
+        checkIfCombatEnd();
+        updateStatsText();
+        enemyTurn();
+    }
+
+    private void updateStatsText() {
+        playerStatsText.setText(playerComponent.getStatsText());
+        enemyStatsText.setText(enemyComponent.getStatsText());
+    }
+
+    private void checkIfCombatEnd() {
+        if (enemyComponent.getCurrentHealth() <= 0){
+            endCombat();
+        }
+        else if (playerComponent.getCurrentHealth() <= 0){
+            endCombat();
+            //TODO make it so that the game end
+        }
+    }
+
+    private void enemyTurn() {
+
+        if(FXGLMath.random(0,10) > 2){
+            playerComponent.changeHealth(-1* (enemyComponent.getAttack() - playerComponent.getDefense()));
+        }
+        else{
+            Entity enemyItem = enemyComponent.getRandomItem();
+            if( enemyItem == null){
+                centerText.setText("Enemy failed it's attack");
+            }
+            else{
+                enemyItem.getComponent(CombatItemComponent.class).onUse(player);
+                enemyItem.removeFromWorld();
+            }
+
+        }
     }
 
     private void useItem(Entity player, Entity enemy) {
-        // Placeholder for item usage logic
+        itemBox = createItemSelectionSubscene(playerInventory);
+        buttonBox.getChildren().removeAll(attackButton, itemButton, fleeButton);
+        buttonBox.getChildren().add(itemBox);
+
+
+    }
+
+    private Node createItemSelectionSubscene(PlayerInventoryComponent playerInventory) {
+        Map<String, Integer> items = playerInventory.getCombatItems();
+
+        VBox vbox = new VBox(10);  // VBox with 10px spacing between elements
+        vbox.setStyle("-fx-padding: 10;");
+
+        for (Map.Entry<String, Integer> entry : items.entrySet()) {
+            HBox hbox = new HBox(10);  // HBox with 10px spacing between elements
+            Text itemName = new Text(entry.getKey());
+            Text itemQuantity = new Text("Quantity: " + entry.getValue());
+            Button useButton = new Button("Use");
+
+            useButton.setOnAction(e -> {
+                playerInventory.remove(itemName.getText());
+                Entity usableItem = spawn(itemName.getText(), 1000, 1000);
+                centerText.setText("You used " + itemName.getText());
+                usableItem.getComponent(CombatItemComponent.class).onUse(player);
+                usableItem.removeFromWorld();
+            });
+
+            hbox.getChildren().addAll(itemName, itemQuantity, useButton);
+            vbox.getChildren().add(hbox);
+        }
+
+        // Add Close/Go Back button at the bottom
+        Button closeButton = new Button("Close / Go Back");
+        closeButton.setOnAction(e -> goToMain());
+        vbox.getChildren().add(closeButton);
+
+        return vbox;
+
+    }
+
+    private void goToMain() {
+        System.out.println(buttonBox.getChildren());
+        buttonBox.getChildren().removeAll();
+        buttonBox.getChildren().addAll(attackButton, itemButton, fleeButton);
+
+
     }
 
     private void flee() {
@@ -124,6 +218,10 @@ public class FightHandler {
          if(FXGLMath.random(0,10) >4){
              System.out.println("Flee!");
              endCombat();
+         }
+         else{
+             centerText.setText("You failed to flee");
+             enemyTurn();
          }
     }
 
@@ -150,6 +248,10 @@ public class FightHandler {
     }
 
     private void endCombat() {
+        Music backgroundMusic = FXGL.getAssetLoader().loadMusic("17 - Fight.mp3");
+        FXGL.getAudioPlayer().stopMusic(backgroundMusic);
+        backgroundMusic = FXGL.getAssetLoader().loadMusic("5 - Peaceful.mp3");
+        FXGL.getAudioPlayer().loopMusic(backgroundMusic);
         FXGL.getSceneService().popSubScene();
         if(enemyComponent.getCurrentHealth() <= 0) {
             enemyComponent.onDeath();

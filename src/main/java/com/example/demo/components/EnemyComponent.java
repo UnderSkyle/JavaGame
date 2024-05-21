@@ -59,8 +59,44 @@ public class EnemyComponent extends Component {
         return health;
     }
 
+    public int getAttack(){
+        return stats.get("attack");
+    }
+
+    public void addHealth(int health){
+        this.health += health;
+    }
 
     public Map<String, Integer> getStats(){
         return stats;
+    }
+
+    public String getStatsText(){
+        StringBuilder statsText = new StringBuilder();
+        statsText.append("Enemy Stats :\n");
+        statsText.append("health : ").append(getCurrentHealth()).append("\n");
+        for(Map.Entry<String, Integer> entry : stats.entrySet()){
+            statsText.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
+        }
+        return statsText.toString();
+    }
+
+    public int getDefense() {
+        return stats.get("defense");
+    }
+
+    public Entity getRandomItem() {
+        int randomInt = FXGLMath.random(0, inventory.size()-1);
+        int i = 0;
+        for(Map.Entry<String, Integer> entry : inventory.entrySet()){
+            if(i == randomInt){
+                Entity item = FXGL.spawn(entry.getKey(), 500, 500);
+                if(item.hasComponent(CombatItemComponent.class)){
+                    return item;
+                }
+            }
+            i++;
+        }
+        return null;
     }
 }

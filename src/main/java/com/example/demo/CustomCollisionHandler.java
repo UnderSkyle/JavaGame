@@ -50,6 +50,7 @@ public class CustomCollisionHandler {
 
             @Override
             protected void onCollision(Entity player, Entity coin) {
+                player.getComponent(PlayerComponent.class).addCoin(1);
                 coin.removeFromWorld();
                 FXGL.inc("coin", +5);
             }

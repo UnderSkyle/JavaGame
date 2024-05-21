@@ -12,21 +12,12 @@
     <list default="true" id="450a246a-b8c4-4045-9d6d-b0c01123dc97" name="Changes" comment="removed a lot of warnings (if it breaks go back to here)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/BasicGameApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/BasicGameApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/CustomCollisionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/CustomCollisionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/FightHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/FightHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/GameFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/GameFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/Tilesets/Interior/Elements.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/Tilesets/Pipes.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/Tilesets/TilesetDesert.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/Tilesets/TilesetDungeon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/Tilesets/TilesetField.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/Tilesets/TilesetFloorB.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/Tilesets/TilesetFloorDetail.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/Tilesets/TilesetHole.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/Tilesets/TilesetHouse.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/Tilesets/TilesetLogic.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/Tilesets/TilesetRelief.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/Tilesets/TilesetReliefDetail.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/Tilesets/TilesetVillageAbandoned.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/Tilesets/TilesetWater.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/components/EnemyComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/components/EnemyComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/components/PlayerComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/components/PlayerComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/components/PlayerInventoryComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/components/PlayerInventoryComponent.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,8 +30,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Enum" />
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -60,9 +51,6 @@
     &quot;accountId&quot;: &quot;e1042283-646b-4fda-b9d3-a6f02e4f0bf3&quot;
   }
 }</component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/src/main/java/com/example/demo/components/ItemComponent.java" root0="FORCE_HIGHLIGHTING" />
-  </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -80,47 +68,43 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "Application.BasicGameApp.executor": "Run",
-    "Application.HelloApplication.executor": "Run",
-    "Maven.demo [clean,javafx:run].executor": "Run",
-    "Maven.demo [clean,package].executor": "Run",
-    "Maven.demo [clean].executor": "Run",
-    "Maven.demo [deploy].executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/silan/IdeaProjects/demo/src/main/resources/assets",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;Application.BasicGameApp.executor&quot;: &quot;Run&quot;,
+    &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.demo [clean,javafx:run].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.demo [clean,package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.demo [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.demo [deploy].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/silan/IdeaProjects/demo/src/main/resources/assets/textures/Items&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\silan\IdeaProjects\demo\src\main\resources\assets" />
-      <recent name="C:\Users\silan\IdeaProjects\demo\src\main\resources" />
-      <recent name="C:\Users\silan\IdeaProjects\demo\src\main\resources\assets\textures\Items" />
-      <recent name="C:\Users\silan\IdeaProjects\demo\src\main\resources\assets\music" />
-      <recent name="C:\Users\silan\IdeaProjects\demo\Ninja Adventure - Asset Pack\Backgrounds\Tilesets" />
+      <recent name="C:\Users\silan\IdeaProjects\demo\src\main\resources\assets\textures\Knight\Player" />
+      <recent name="C:\Users\silan\IdeaProjects\demo\src\main\resources\assets\textures" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\silan\IdeaProjects\demo\src\main\resources\assets\levels" />
-      <recent name="C:\Users\silan\IdeaProjects\demo\src\main\resources\assets" />
-      <recent name="C:\Users\silan\IdeaProjects\demo\src\main\resources" />
-      <recent name="C:\Users\silan\IdeaProjects\demo" />
       <recent name="C:\Users\silan\IdeaProjects\demo\src\main\resources\assets\textures\Items" />
+      <recent name="C:\Users\silan\IdeaProjects\demo\src\main\resources\assets\textures\Player" />
+      <recent name="C:\Users\silan\IdeaProjects\demo\src\main\resources\assets\textures" />
+      <recent name="C:\Users\silan\IdeaProjects\demo\src\main\resources\assets\music" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -198,17 +182,7 @@
       <workItem from="1715432379956" duration="344000" />
       <workItem from="1715433077952" duration="726000" />
       <workItem from="1715692002728" duration="2571000" />
-      <workItem from="1715705759705" duration="3551000" />
-      <workItem from="1715711838360" duration="13000" />
-      <workItem from="1715809957929" duration="150000" />
-      <workItem from="1715810979894" duration="333000" />
-      <workItem from="1715869980549" duration="1128000" />
-      <workItem from="1715958526853" duration="110000" />
-      <workItem from="1716038235863" duration="1643000" />
-      <workItem from="1716103761955" duration="22687000" />
-      <workItem from="1716142327872" duration="2437000" />
-      <workItem from="1716156981422" duration="1346000" />
-      <workItem from="1716194031458" duration="16341000" />
+      <workItem from="1715705759705" duration="3475000" />
     </task>
     <task id="LOCAL-00001" summary="setup">
       <option name="closed" value="true" />
@@ -314,63 +288,7 @@
       <option name="project" value="LOCAL" />
       <updated>1715694570731</updated>
     </task>
-    <task id="LOCAL-00014" summary="added EquipedItemSupport(still need to add the effects)">
-      <option name="closed" value="true" />
-      <created>1715709307416</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1715709307416</updated>
-    </task>
-    <task id="LOCAL-00015" summary="added npc ?">
-      <option name="closed" value="true" />
-      <created>1715958558849</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1715958558849</updated>
-    </task>
-    <task id="LOCAL-00016" summary="Day one of Sprint">
-      <option name="closed" value="true" />
-      <created>1716128956020</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1716128956020</updated>
-    </task>
-    <task id="LOCAL-00017" summary="End of day One. See milanote for the rest that is needed">
-      <option name="closed" value="true" />
-      <created>1716144755542</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1716144755542</updated>
-    </task>
-    <task id="LOCAL-00018" summary="Start of day 2 changed bombs and Starting to work on the combat (ill make it simple so i can finish it fast)">
-      <option name="closed" value="true" />
-      <created>1716194520404</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1716194520404</updated>
-    </task>
-    <task id="LOCAL-00019" summary="Added map support (no support for items that interact with the plauer tho)">
-      <option name="closed" value="true" />
-      <created>1716214843770</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1716214843770</updated>
-    </task>
-    <task id="LOCAL-00020" summary="removed a lot of warnings (if it breaks go back to here)">
-      <option name="closed" value="true" />
-      <created>1716215732005</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1716215732005</updated>
-    </task>
-    <option name="localTasksCounter" value="21" />
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -398,14 +316,7 @@
     <MESSAGE value="I cleaned up the code" />
     <MESSAGE value="found textures and shit" />
     <MESSAGE value="added Drop" />
-    <MESSAGE value="added EquipedItemSupport(still need to add the effects)" />
-    <MESSAGE value="added npc ?" />
-    <MESSAGE value="Day one of Sprint" />
-    <MESSAGE value="End of day One. See milanote for the rest that is needed" />
-    <MESSAGE value="Start of day 2 changed bombs and Starting to work on the combat (ill make it simple so i can finish it fast)" />
-    <MESSAGE value="Added map support (no support for items that interact with the plauer tho)" />
-    <MESSAGE value="removed a lot of warnings (if it breaks go back to here)" />
-    <option name="LAST_COMMIT_MESSAGE" value="removed a lot of warnings (if it breaks go back to here)" />
+    <option name="LAST_COMMIT_MESSAGE" value="added Drop" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

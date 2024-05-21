@@ -1,10 +1,13 @@
 package com.example.demo.components;
 
+import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.component.Component;
 import com.example.demo.PlayerInventoryView;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.almasb.fxgl.dsl.FXGLForKtKt.spawn;
 
 public class PlayerInventoryComponent extends Component {
 
@@ -65,5 +68,17 @@ public class PlayerInventoryComponent extends Component {
 
     public boolean hasItem(String key) {
         return inventory.containsKey(key);
+    }
+
+    public Map<String, Integer> getCombatItems() {
+        Map<String, Integer> combatItems = new HashMap<>();
+        for (Map.Entry<String, Integer> entry : inventory.entrySet()) {
+            Entity candidate = spawn(entry.getKey(), 1000, 1000);
+            if (candidate.hasComponent(CombatItemComponent.class)) {
+                combatItems.put(entry.getKey(), entry.getValue());
+            }
+            candidate.removeFromWorld();
+        }
+        return combatItems;
     }
 }

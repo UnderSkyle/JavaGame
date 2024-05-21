@@ -86,6 +86,8 @@ public class BasicGameApp extends GameApplication {
 
         getGameScene().addUINode(coinCounterBox);
 
+        getGameScene().addUINode(playerComponent.getCoinCount());
+
 
     }
 
