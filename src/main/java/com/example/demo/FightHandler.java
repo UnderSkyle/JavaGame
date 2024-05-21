@@ -207,7 +207,7 @@ public class FightHandler {
 
     private void goToMain() {
         System.out.println(buttonBox.getChildren());
-        buttonBox.getChildren().removeAll();
+        buttonBox.getChildren().removeAll(buttonBox.getChildren());
         buttonBox.getChildren().addAll(attackButton, itemButton, fleeButton);
 
 

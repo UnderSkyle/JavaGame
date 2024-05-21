@@ -341,14 +341,15 @@ public class GameFactory implements EntityFactory {
     public Entity spawnBomb(SpawnData data) {
 
         Texture tex = texture("Items/bomb.png");
-        tex.setScaleX(0.12);
-        tex.setScaleY(0.12);
+        tex.setScaleX(0.25);
+        tex.setScaleY(0.25);
         Map<String, Object> itemData = new HashMap<>();
         itemData.put("name", "bomb");
         Entity bomb = entityBuilder(data)
                 .type(USABLE_ITEM)
                 .at(data.getX(), data.getY())
-                .viewWithBBox(tex)
+                .view(tex)
+                .bbox(new HitBox(new Point2D(25, 20), BoundingShape.box(16, 16)))
                 .with()
                 .collidable()
                 .build();
@@ -357,7 +358,7 @@ public class GameFactory implements EntityFactory {
         Runnable onUse = () -> {
 
             final Entity player = getGameWorld().getSingleton(PLAYER);
-            Entity floorbomb = spawn("bomb", player.getX(), player.getY());
+            Entity floorbomb = spawn("bomb", player.getX()-25, player.getY()-20);
             floorbomb.getComponent(CollidableComponent.class).addIgnoredType(PLAYER);
             Rectangle2D areaSelection = new Rectangle2D(floorbomb.getX()-floorbomb.getWidth()*2, floorbomb.getY()-floorbomb.getHeight()*2, floorbomb.getWidth()*4, floorbomb.getHeight()*4);
             List<Entity> entityList = getGameWorld().getEntitiesInRange(areaSelection);

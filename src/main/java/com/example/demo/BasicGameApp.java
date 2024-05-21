@@ -4,6 +4,7 @@ package com.example.demo;
  * Copyright (c) AlmasB (almaslvl@gmail.com).
  * See LICENSE for details.
  */
+import com.almasb.fxgl.app.ApplicationMode;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.app.scene.SceneFactory;
@@ -58,6 +59,8 @@ public class BasicGameApp extends GameApplication {
         settings.setSceneFactory(new SceneFactory());
         settings.setTicksPerSecond(60);
         settings.setMainMenuEnabled(true);
+        settings.setDeveloperMenuEnabled(true);
+        settings.setApplicationMode(ApplicationMode.DEVELOPER);
     }
 
 
