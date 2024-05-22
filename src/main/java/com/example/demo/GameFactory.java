@@ -37,7 +37,7 @@ public class GameFactory implements EntityFactory {
                .type(PLAYER)
                .zIndex(3)
                .at(250, 250)
-               .bbox(new HitBox(new Point2D(0, 0), BoundingShape.box(13, 13)))
+               .bbox(new HitBox(new Point2D(0, 0), BoundingShape.box(16, 16)))
                .with(new PlayerComponent())
                .with(new PlayerInventoryComponent())
                 .with(new IrremovableComponent())
@@ -425,5 +425,34 @@ public class GameFactory implements EntityFactory {
                .collidable()
                .build();
     }
+
+    @Spawns("spawnpoint")
+    public Entity spawnSpawnPoint(SpawnData data) {
+
+        Entity spawnPoint = entityBuilder(data)
+                .type(SPAWNPOINT)
+                .at(data.getX(), data.getY())
+                .build();
+        spawnPoint.setProperty("Location", data.get("location"));
+        return spawnPoint;
+    }
+
+    @Spawns("world trigger")
+    public Entity spawnWorldTrigger(SpawnData data) {
+
+        int width = data.get("width");
+        int height = data.get("height");
+
+        Entity worldTrigger = entityBuilder(data)
+                .type(WORLD_TRIGGER)
+                .at(data.getX(), data.getY())
+                .bbox(new HitBox(new Point2D(0, 0), BoundingShape.box(width, height)))
+                .collidable()
+                .build();
+        worldTrigger.setProperty("to", data.get("to"));
+        worldTrigger.setProperty("spawn name", data.get("spawn name"));
+        return worldTrigger;
+    }
+
 
 }

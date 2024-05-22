@@ -16,8 +16,11 @@ import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.texture.AnimatedTexture;
 import com.almasb.fxgl.ui.ProgressBar;
 import com.example.demo.components.*;
+import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -105,13 +108,10 @@ public class BasicGameApp extends GameApplication {
     protected void initGame() {
         GameFactory gameFactory = new GameFactory();
         getGameWorld().addEntityFactory(gameFactory);
-        setLevelFromMap("startLevel.tmx");
-
-        // Loading the level from the TMX map
-
         player = spawn("player");
+        LevelChangeHandler.setLevelTo("house", player, "house");
+
         getGameWorld().addEntity(player);
-        System.out.println(player);
 
         getGameScene().setBackgroundColor(Color.THISTLE);
 
@@ -120,11 +120,6 @@ public class BasicGameApp extends GameApplication {
 
         playerComponent = player.getComponent(PlayerComponent.class);
 
-        Viewport viewport = FXGL.getGameScene().getViewport();
-        viewport.bindToEntity(player, getAppWidth() / 2.0, getAppHeight() / 2.0);
-        viewport.setZoom(2.5);
-        //viewport.setBounds(0, 0, (int) world.getWidth()*2, (int) world.getHeight()*2);
-        viewport.setLazy(true);
 
     }
 
@@ -249,6 +244,15 @@ public class BasicGameApp extends GameApplication {
             setLevelFromMap("house.tmx");
             player.setPosition(75, 130);
         });
+
+        FXGL.getInput().addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (event.getButton() == MouseButton.PRIMARY) {
+                Point2D clickPoint = new Point2D(event.getX(), event.getY());
+                System.out.println("Clicked at: " + clickPoint);
+            }
+        });
+
+
 
 
 

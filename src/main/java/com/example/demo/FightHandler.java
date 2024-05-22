@@ -4,6 +4,7 @@ import com.almasb.fxgl.audio.Music;
 import com.almasb.fxgl.core.math.FXGLMath;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.entity.components.CollidableComponent;
 import com.almasb.fxgl.scene.SubScene;
 import com.example.demo.components.*;
 import javafx.geometry.Insets;
@@ -14,11 +15,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 import java.util.Map;
 
-import static com.almasb.fxgl.dsl.FXGL.getAppHeight;
-import static com.almasb.fxgl.dsl.FXGL.getAppWidth;
+import static com.almasb.fxgl.dsl.FXGL.*;
 import static com.almasb.fxgl.dsl.FXGLForKtKt.spawn;
 
 public class FightHandler {
@@ -145,20 +146,25 @@ public class FightHandler {
 
     private void enemyTurn() {
 
+
         if(FXGLMath.random(0,10) > 2){
             playerComponent.changeHealth(-1* (enemyComponent.getAttack() - playerComponent.getDefense()));
+            centerText.setText(centerText.getText()+ "and enemy dealt " + (enemyComponent.getAttack() - playerComponent.getDefense() +" damage"));
+
         }
         else{
             Entity enemyItem = enemyComponent.getRandomItem();
             if( enemyItem == null){
-                centerText.setText("Enemy failed it's attack");
+                centerText.setText(centerText.getText()+ " and Enemy failed it's attack");
             }
             else{
                 enemyItem.getComponent(CombatItemComponent.class).onUse(player);
                 enemyItem.removeFromWorld();
+                centerText.setText(centerText.getText()+ " and Enemy used an item");
             }
 
         }
+        updateStatsText();
     }
 
     private void useItem(Entity player, Entity enemy) {

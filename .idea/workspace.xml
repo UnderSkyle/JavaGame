@@ -9,15 +9,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="450a246a-b8c4-4045-9d6d-b0c01123dc97" name="Changes" comment="removed a lot of warnings (if it breaks go back to here)">
+    <list default="true" id="450a246a-b8c4-4045-9d6d-b0c01123dc97" name="Changes" comment="finished map system 90%&#10;still combat and enemy to do">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/LevelChangeHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/BasicGameApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/BasicGameApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/CustomCollisionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/CustomCollisionHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/FightHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/FightHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/GameFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/GameFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/components/EnemyComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/components/EnemyComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/components/PlayerComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/components/PlayerComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/components/PlayerInventoryComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/components/PlayerInventoryComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/GameTypes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/GameTypes.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,8 +29,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -51,6 +50,9 @@
     &quot;accountId&quot;: &quot;e1042283-646b-4fda-b9d3-a6f02e4f0bf3&quot;
   }
 }</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/example/demo/components/ItemComponent.java" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -82,7 +84,7 @@
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/silan/IdeaProjects/demo/src/main/resources/assets/textures/Items&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/silan/IdeaProjects/demo/src/main/resources/assets&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -97,14 +99,18 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\silan\IdeaProjects\demo\src\main\resources\assets\textures\Knight\Player" />
-      <recent name="C:\Users\silan\IdeaProjects\demo\src\main\resources\assets\textures" />
+      <recent name="C:\Users\silan\IdeaProjects\demo\src\main\resources\assets" />
+      <recent name="C:\Users\silan\IdeaProjects\demo\src\main\resources" />
+      <recent name="C:\Users\silan\IdeaProjects\demo\src\main\resources\assets\textures\Items" />
+      <recent name="C:\Users\silan\IdeaProjects\demo\src\main\resources\assets\music" />
+      <recent name="C:\Users\silan\IdeaProjects\demo\Ninja Adventure - Asset Pack\Backgrounds\Tilesets" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\silan\IdeaProjects\demo\src\main\resources\assets\levels" />
+      <recent name="C:\Users\silan\IdeaProjects\demo\src\main\resources\assets" />
+      <recent name="C:\Users\silan\IdeaProjects\demo\src\main\resources" />
+      <recent name="C:\Users\silan\IdeaProjects\demo" />
       <recent name="C:\Users\silan\IdeaProjects\demo\src\main\resources\assets\textures\Items" />
-      <recent name="C:\Users\silan\IdeaProjects\demo\src\main\resources\assets\textures\Player" />
-      <recent name="C:\Users\silan\IdeaProjects\demo\src\main\resources\assets\textures" />
-      <recent name="C:\Users\silan\IdeaProjects\demo\src\main\resources\assets\music" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -182,7 +188,20 @@
       <workItem from="1715432379956" duration="344000" />
       <workItem from="1715433077952" duration="726000" />
       <workItem from="1715692002728" duration="2571000" />
-      <workItem from="1715705759705" duration="3475000" />
+      <workItem from="1715705759705" duration="3551000" />
+      <workItem from="1715711838360" duration="13000" />
+      <workItem from="1715809957929" duration="150000" />
+      <workItem from="1715810979894" duration="333000" />
+      <workItem from="1715869980549" duration="1128000" />
+      <workItem from="1715958526853" duration="110000" />
+      <workItem from="1716038235863" duration="1643000" />
+      <workItem from="1716103761955" duration="22687000" />
+      <workItem from="1716142327872" duration="2437000" />
+      <workItem from="1716156981422" duration="1346000" />
+      <workItem from="1716194031458" duration="16341000" />
+      <workItem from="1716329049788" duration="25000" />
+      <workItem from="1716330381477" duration="119000" />
+      <workItem from="1716379475088" duration="4557000" />
     </task>
     <task id="LOCAL-00001" summary="setup">
       <option name="closed" value="true" />
@@ -288,7 +307,63 @@
       <option name="project" value="LOCAL" />
       <updated>1715694570731</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="added EquipedItemSupport(still need to add the effects)">
+      <option name="closed" value="true" />
+      <created>1715709307416</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1715709307416</updated>
+    </task>
+    <task id="LOCAL-00015" summary="added npc ?">
+      <option name="closed" value="true" />
+      <created>1715958558849</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1715958558849</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Day one of Sprint">
+      <option name="closed" value="true" />
+      <created>1716128956020</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1716128956020</updated>
+    </task>
+    <task id="LOCAL-00017" summary="End of day One. See milanote for the rest that is needed">
+      <option name="closed" value="true" />
+      <created>1716144755542</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1716144755542</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Start of day 2 changed bombs and Starting to work on the combat (ill make it simple so i can finish it fast)">
+      <option name="closed" value="true" />
+      <created>1716194520404</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1716194520404</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Added map support (no support for items that interact with the plauer tho)">
+      <option name="closed" value="true" />
+      <created>1716214843770</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1716214843770</updated>
+    </task>
+    <task id="LOCAL-00020" summary="removed a lot of warnings (if it breaks go back to here)">
+      <option name="closed" value="true" />
+      <created>1716215732005</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1716215732005</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -316,7 +391,14 @@
     <MESSAGE value="I cleaned up the code" />
     <MESSAGE value="found textures and shit" />
     <MESSAGE value="added Drop" />
-    <option name="LAST_COMMIT_MESSAGE" value="added Drop" />
+    <MESSAGE value="added EquipedItemSupport(still need to add the effects)" />
+    <MESSAGE value="added npc ?" />
+    <MESSAGE value="Day one of Sprint" />
+    <MESSAGE value="End of day One. See milanote for the rest that is needed" />
+    <MESSAGE value="Start of day 2 changed bombs and Starting to work on the combat (ill make it simple so i can finish it fast)" />
+    <MESSAGE value="Added map support (no support for items that interact with the plauer tho)" />
+    <MESSAGE value="removed a lot of warnings (if it breaks go back to here)" />
+    <option name="LAST_COMMIT_MESSAGE" value="removed a lot of warnings (if it breaks go back to here)" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -95,6 +95,11 @@ public class CustomCollisionHandler {
                 new FightHandler(player, enemy).startCombat(player, enemy);
             }
         });
+        FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(GameTypes.PLAYER, GameTypes.WORLD_TRIGGER) {
+            protected void onCollisionBegin(Entity player, Entity trigger) {
+                LevelChangeHandler.setLevelTo(trigger.getString("to"), player, trigger.getString("spawn name"));
+            }
+        });
 
 
     }
