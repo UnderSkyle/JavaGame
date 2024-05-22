@@ -17,7 +17,7 @@ import javafx.util.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.almasb.fxgl.dsl.FXGLForKtKt.texture;
+import static com.almasb.fxgl.dsl.FXGLForKtKt.*;
 
 public class PlayerComponent extends Component {
 
@@ -211,6 +211,7 @@ public class PlayerComponent extends Component {
     public String getStatsText() {
         StringBuilder statsText = new StringBuilder();
         statsText.append("Player Stats :\n");
+        statsText.append("health : ").append(getCurrentHealth()).append("\n");
         for(Map.Entry<String, Integer> entry : status.entrySet()){
             statsText.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
         }
@@ -219,5 +220,11 @@ public class PlayerComponent extends Component {
 
     public int getDefense() {
         return status.get("defense");
+    }
+
+    public void onDeath() {
+        getDialogService().showMessageBox("Oh no you died... Game over i guess.");
+        getGameTimer().runOnceAfter( () -> FXGL.getGameController().gotoMainMenu(), Duration.millis(50));
+
     }
 }

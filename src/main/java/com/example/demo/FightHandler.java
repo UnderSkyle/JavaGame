@@ -5,10 +5,7 @@ import com.almasb.fxgl.core.math.FXGLMath;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.scene.SubScene;
-import com.example.demo.components.CombatItemComponent;
-import com.example.demo.components.EnemyComponent;
-import com.example.demo.components.PlayerComponent;
-import com.example.demo.components.PlayerInventoryComponent;
+import com.example.demo.components.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -142,7 +139,7 @@ public class FightHandler {
         }
         else if (playerComponent.getCurrentHealth() <= 0){
             endCombat();
-            //TODO make it so that the game end
+
         }
     }
 
@@ -168,8 +165,7 @@ public class FightHandler {
         itemBox = createItemSelectionSubscene(playerInventory);
         buttonBox.getChildren().removeAll(attackButton, itemButton, fleeButton);
         buttonBox.getChildren().add(itemBox);
-
-
+        checkIfCombatEnd();
     }
 
     private Node createItemSelectionSubscene(PlayerInventoryComponent playerInventory) {
@@ -189,7 +185,12 @@ public class FightHandler {
                 Entity usableItem = spawn(itemName.getText(), 1000, 1000);
                 centerText.setText("You used " + itemName.getText());
                 usableItem.getComponent(CombatItemComponent.class).onUse(player);
+                playerInventory.remove(itemName.getText());
                 usableItem.removeFromWorld();
+                enemyTurn();
+                updateStatsText();
+                checkIfCombatEnd();
+                goToMain();
             });
 
             hbox.getChildren().addAll(itemName, itemQuantity, useButton);
@@ -204,6 +205,8 @@ public class FightHandler {
         return vbox;
 
     }
+
+
 
     private void goToMain() {
         System.out.println(buttonBox.getChildren());
@@ -241,7 +244,9 @@ public class FightHandler {
             }
         };
 
+        //ADD in combat component to be able to get it from the items
 
+        enemy.addComponent(new InCombatComponent());
 
         FXGL.getSceneService().pushSubScene(combatSubScene);
 
@@ -254,7 +259,11 @@ public class FightHandler {
         FXGL.getAudioPlayer().loopMusic(backgroundMusic);
         FXGL.getSceneService().popSubScene();
         if(enemyComponent.getCurrentHealth() <= 0) {
+            FXGL.getNotificationService().pushNotification("Nice the enemy is dead");
             enemyComponent.onDeath();
+        }
+        else if (playerComponent.getCurrentHealth() <= 0) {
+            playerComponent.onDeath();
         }
     }
 

@@ -208,6 +208,7 @@ public class BasicGameApp extends GameApplication {
         onKeyDown(KeyCode.UP,() -> playerComponent.getInventoryView().selectCellAbove());
         onKeyDown(KeyCode.DOWN,() -> playerComponent.getInventoryView().selectCellBelow());
 
+        onKeyDown(KeyCode.SPACE, () -> System.out.println(playerComponent.getCurrentHealth()));
         onKeyDown(KeyCode.ENTER, () -> {
 
             String nameOfItem = playerComponent.getInventoryView().getNameFromSelectedNode();

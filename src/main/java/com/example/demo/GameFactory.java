@@ -319,6 +319,7 @@ public class GameFactory implements EntityFactory {
 
     @Spawns("enemy")
     public Entity spawnEnemy(SpawnData data) {
+        Texture tex = texture("Enemy/Octopus.png");
 
         Map<String, Integer> inventory = new HashMap<>();
         inventory.put("sword", 1);
@@ -330,7 +331,7 @@ public class GameFactory implements EntityFactory {
         return  entityBuilder(data)
                .type(ENEMY)
                .at(data.getX(), data.getY())
-               .viewWithBBox(new Rectangle(30, 30, Color.DARKVIOLET))
+               .viewWithBBox(tex)
                .with(new EnemyComponent(inventory, stats, data.get("health")))
                .collidable()
                .build();
@@ -381,8 +382,22 @@ public class GameFactory implements EntityFactory {
 
         };
 
+        Runnable onCombatUse = new Runnable(){
+
+            @Override
+            public void run() {
+                List<Entity> enemy = getGameWorld().getEntitiesByComponent(InCombatComponent.class); //Singloton
+
+                enemy.get(0).getComponent(EnemyComponent.class).addHealth(-1000);
+
+            }
+        };
+
+        CombatItemComponent combatItemComponent = new CombatItemComponent(onCombatUse, itemData);
+
         UsableItemComponent usableItemComponent  = new UsableItemComponent(onUse, itemData);
         bomb.addComponent(usableItemComponent);
+        bomb.addComponent(combatItemComponent);
         return bomb;
     }
 
