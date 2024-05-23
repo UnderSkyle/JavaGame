@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="16">
+ <tileset firstgid="1" name="TilesetInteriorFloor" tilewidth="16" tileheight="16" tilecount="374" columns="22">
+  <image source="TilesetInteriorFloor.png" width="352" height="272"/>
+ </tileset>
+ <tileset firstgid="375" name="TilesetWallSimple" tilewidth="16" tileheight="16" tilecount="110" columns="10">
+  <image source="TilesetWallSimple.png" width="160" height="176"/>
+ </tileset>
+ <layer id="1" name="Calque de Tuiles 1" width="10" height="10">
+  <data encoding="csv">
+380,383,383,383,383,383,383,383,383,384,
+390,137,200,200,200,200,200,200,140,394,
+390,158,156,156,156,156,156,156,158,394,
+390,158,156,156,156,156,156,156,158,394,
+390,158,156,156,156,156,156,156,158,394,
+390,158,156,156,156,156,156,156,158,394,
+390,158,156,156,156,156,156,156,158,394,
+390,158,156,156,156,156,156,156,158,394,
+390,203,200,200,200,200,200,200,206,394,
+420,423,423,421,433,433,422,423,423,424
+</data>
+ </layer>
+ <objectgroup id="2" name="Calque d'Objets 1">
+  <object id="1" type="wall" x="0.5" y="1" width="15" height="159.5"/>
+  <object id="2" type="wall" x="1" y="144.5" width="57.5" height="6"/>
+  <object id="3" type="wall" x="99" y="146" width="61.5" height="14"/>
+  <object id="4" type="wall" x="144.5" y="0.5" width="18.5" height="159.5"/>
+  <object id="7" type="wall" x="1" y="1" width="162" height="13"/>
+  <object id="8" type="wall" x="56" y="147" width="8" height="14"/>
+  <object id="9" type="wall" x="96.5" y="147" width="6" height="13.5"/>
+  <object id="10" type="world trigger" x="66" y="148.5" width="29" height="9.5">
+   <properties>
+    <property name="spawn name" value="house front"/>
+    <property name="to" value="startLevel"/>
+   </properties>
+  </object>
+  <object id="14" type="spawnpoint" x="77.6667" y="95.6667">
+   <properties>
+    <property name="location" value="house"/>
+   </properties>
+  </object>
+  <object id="15" type="npc" x="75.3333" y="39.6667">
+   <properties>
+    <property name="text" value="Hello Adventurer! Go on your journey. To finish the game you must get to the secret room and find the 404 sign"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>
