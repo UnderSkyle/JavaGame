@@ -20,6 +20,14 @@ public class CustomCollisionHandler {
                         wall.getComponent(DoorComponent.class).openDoor();
                         player.getComponent(PlayerInventoryComponent.class).remove("key");
                     }
+                } else if (wall.hasComponent(WaterComponent.class)){
+                    if(player.getComponent(PlayerInventoryComponent.class).hasItem("raft")){
+                        wall.getComponent(WaterComponent.class).RemoveObstacleComponent();
+                    }
+                    else{
+                        player.getComponent(PlayerComponent.class).onDeath();
+                    }
+                    
                 }
             }
 

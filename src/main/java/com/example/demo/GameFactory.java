@@ -85,12 +85,16 @@ public class GameFactory implements EntityFactory {
                 .build();
     }
 
-    @Spawns("removableWall")
+    @Spawns("removable wall")
     public Entity spawnRemovableWall(SpawnData data) {
+
+        int width = data.get("width");
+        int height = data.get("height");
+
         return  entityBuilder(data)
                .type(WALL)
                .at(data.getX(), data.getY())
-               .viewWithBBox(new Rectangle(CELL_SIZE*2+1, CELL_SIZE*2, Color.YELLOW))
+               .viewWithBBox(new Rectangle(width, height, Color.BROWN))
                .collidable()
                .with(new RemovableObstacleComponent())
                .build();
@@ -452,6 +456,21 @@ public class GameFactory implements EntityFactory {
         worldTrigger.setProperty("to", data.get("to"));
         worldTrigger.setProperty("spawn name", data.get("spawn name"));
         return worldTrigger;
+    }
+
+    @Spawns("water")
+    public Entity spawnWater(SpawnData data) {
+        int width = data.get("width");
+        int height = data.get("height");
+
+
+        return  entityBuilder(data)
+                .type(WALL)
+                .at(data.getX(), data.getY())
+                .viewWithBBox(new Rectangle(width, height, Color.TRANSPARENT))
+                .collidable()
+                .with(new WaterComponent())
+                .build();
     }
 
 
