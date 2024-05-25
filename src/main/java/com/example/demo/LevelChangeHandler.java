@@ -20,11 +20,6 @@ public abstract class LevelChangeHandler {
         Viewport viewport = FXGL.getGameScene().getViewport();
         viewport.bindToEntity(player, getAppWidth()/2.0,getAppHeight()/2.0);
         viewport.setZoom(2.5);
-        if (getLevelWidth() >= getAppWidth() && getLevelHeight() >= getAppHeight()) {
-            System.out.println("binded");
-            FXGL.getGameScene().getViewport().setBounds(0, 0, getLevelWidth(), getLevelHeight());
-
-        }
         viewport.setLazy(true);
 
 

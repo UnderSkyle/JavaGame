@@ -227,4 +227,10 @@ public class PlayerComponent extends Component {
         getGameTimer().runOnceAfter( () -> FXGL.getGameController().gotoMainMenu(), Duration.millis(50));
 
     }
+
+    public void win() {
+        getDialogService().showMessageBox("You WON!!!! GG.");
+        getGameTimer().runOnceAfter( () -> FXGL.getGameController().gotoMainMenu(), Duration.millis(50));
+
+    }
 }

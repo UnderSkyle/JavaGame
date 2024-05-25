@@ -327,6 +327,8 @@ public class GameFactory implements EntityFactory {
 
         Map<String, Integer> inventory = new HashMap<>();
         inventory.put("sword", 1);
+        inventory.put("key", 1);
+        inventory.put("health potion", 1);
         Map<String, Integer> stats = new HashMap<>();
         stats.put("attack", 20);
         stats.put("defense", 5);
@@ -339,6 +341,29 @@ public class GameFactory implements EntityFactory {
                .with(new EnemyComponent(inventory, stats, data.get("health")))
                .collidable()
                .build();
+    }
+
+    @Spawns("enemy2")
+    public Entity spawnEnemy2(SpawnData data) {
+        Texture tex = texture("Enemy/skull.png");
+
+        Map<String, Integer> inventory = new HashMap<>();
+        inventory.put("sword", 1);
+        inventory.put("key", 1);
+        inventory.put("health potion", 1);
+        Map<String, Integer> stats = new HashMap<>();
+        stats.put("attack", 1);
+        stats.put("defense", 100);
+
+
+        return  entityBuilder(data)
+                .type(ENEMY)
+                .at(data.getX(), data.getY())
+                .viewWithBBox(tex)
+                .with(new EnemyComponent(inventory, stats, data.get("health")))
+                .collidable()
+                .build();
+
     }
 
 
@@ -365,7 +390,11 @@ public class GameFactory implements EntityFactory {
             final Entity player = getGameWorld().getSingleton(PLAYER);
             Entity floorbomb = spawn("bomb", player.getX()-25, player.getY()-20);
             floorbomb.getComponent(CollidableComponent.class).addIgnoredType(PLAYER);
-            Rectangle2D areaSelection = new Rectangle2D(floorbomb.getX()-floorbomb.getWidth()*2, floorbomb.getY()-floorbomb.getHeight()*2, floorbomb.getWidth()*4, floorbomb.getHeight()*4);
+            Rectangle2D areaSelection = new Rectangle2D(floorbomb.getX()+25, floorbomb.getY()+20, floorbomb.getWidth()*4, floorbomb.getHeight()*4);
+            System.out.println(floorbomb.getX()+25);
+            System.out.println(floorbomb.getY()+20);
+            System.out.println(floorbomb.getWidth()*4);
+            System.out.println(floorbomb.getHeight()*4);
             List<Entity> entityList = getGameWorld().getEntitiesInRange(areaSelection);
 
             FXGL.getGameTimer().runOnceAfter(() -> {
@@ -373,7 +402,7 @@ public class GameFactory implements EntityFactory {
                 for(Entity entity : entityList){
                     if(entity.hasComponent(RemovableObstacleComponent.class)){
                         if(entity.hasComponent(CollidableComponent.class)){
-                            entity.getComponent(RemovableObstacleComponent.class).RemoveObstacleComponent();
+                            entity.removeFromWorld();
                             entity.getViewComponent().setOpacity(0.5);
                         }
                     }
@@ -470,6 +499,19 @@ public class GameFactory implements EntityFactory {
                 .viewWithBBox(new Rectangle(width, height, Color.TRANSPARENT))
                 .collidable()
                 .with(new WaterComponent())
+                .build();
+    }
+
+    @Spawns("404")
+    public Entity spawn404(SpawnData data) {
+        int width = data.get("width");
+        int height = data.get("height");
+
+        return  entityBuilder(data)
+                .type(WIN_ITEM)
+                .at(data.getX(), data.getY())
+                .viewWithBBox(new Rectangle(width, height, Color.HOTPINK))
+                .collidable()
                 .build();
     }
 

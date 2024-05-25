@@ -14,6 +14,7 @@ public class ShopComponent extends Component {
         // Initialize the inventory with some items
         inventory.put("health potion", new ShopView.ItemDetails(1, 1));
         inventory.put("life potion", new ShopView.ItemDetails(10, 2));
+        inventory.put("bomb", new ShopView.ItemDetails(2, 2));
         newShopView = new ShopView();
 
     }

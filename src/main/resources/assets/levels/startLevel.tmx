@@ -74,16 +74,11 @@
     <property name="health" type="int" value="100"/>
    </properties>
   </object>
-  <object id="26" type="key" x="258" y="106"/>
-  <object id="27" type="rick" x="106" y="71"/>
-  <object id="28" type="shop npc" x="348.5" y="56.25"/>
-  <object id="31" type="bomb" x="380" y="371"/>
   <object id="35" type="wall" x="369" y="121.75" width="4.75" height="37.25"/>
   <object id="36" type="wall" x="369" y="117.25" width="62.25" height="4"/>
   <object id="37" type="wall" x="427.75" y="122" width="2.25" height="34.25"/>
   <object id="38" type="wall" x="402" y="155.75" width="27.5" height="3.75"/>
   <object id="41" type="wall" x="372" y="155.25" width="13" height="4"/>
-  <object id="42" type="coin" x="172" y="70"/>
   <object id="43" type="spawnpoint" x="393.667" y="192.667">
    <properties>
     <property name="location" value="house front"/>

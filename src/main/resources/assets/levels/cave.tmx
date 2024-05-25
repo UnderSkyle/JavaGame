@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="15" height="15" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="11">
+ <tileset firstgid="1" name="TilesetInteriorFloor" tilewidth="16" tileheight="16" tilecount="374" columns="22">
+  <image source="../../../../../Ninja Adventure - Asset Pack/Backgrounds/Tilesets/Interior/TilesetInteriorFloor.png" width="352" height="272"/>
+ </tileset>
+ <tileset firstgid="375" name="TilesetFloor" tilewidth="16" tileheight="16" tilecount="572" columns="22">
+  <image source="TilesetFloor.png" width="352" height="417"/>
+ </tileset>
+ <tileset firstgid="947" name="TilesetInteriorFloor" tilewidth="16" tileheight="16" tilecount="374" columns="22">
+  <image source="TilesetInteriorFloor.png" width="352" height="272"/>
+ </tileset>
+ <layer id="1" name="Calque de Tuiles 1" width="15" height="15">
+  <data encoding="csv">
+276,277,1223,1223,1223,1223,1223,1223,1223,1223,1223,1223,1223,1223,1224,
+298,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1246,
+1244,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1246,
+1244,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1246,
+1244,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1246,
+1244,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1246,
+1244,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1246,
+1316,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1246,
+1244,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1246,
+1244,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1246,
+1244,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1246,
+1244,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1246,
+1244,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1246,
+1244,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1245,1246,
+1266,1267,1267,1267,1267,1267,1267,1267,1267,1267,1267,1267,1267,1267,1268
+</data>
+ </layer>
+ <objectgroup id="2" name="Calque d'Objets 1">
+  <object id="1" type="wall" x="-8.75" y="-0.5" width="8.75" height="114.75"/>
+  <object id="2" type="wall" x="-9.5" y="126.5" width="9.75" height="113.25"/>
+  <object id="3" type="wall" x="0" y="240.75" width="243" height="7.91667"/>
+  <object id="4" type="wall" x="240" y="-1.33333" width="8" height="240.333"/>
+  <object id="5" type="wall" x="-7" y="-9" width="249" height="8"/>
+  <object id="6" type="world trigger" x="0" y="115.5" width="3" height="10.5">
+   <properties>
+    <property name="spawn name" value="secret cave"/>
+    <property name="to" value="zone2"/>
+   </properties>
+  </object>
+  <object id="7" type="spawnpoint" x="18" y="120.5">
+   <properties>
+    <property name="location" value="entrance"/>
+   </properties>
+  </object>
+  <object id="9" type="rick" x="153.5" y="168.25"/>
+  <object id="10" type="404" x="127.75" y="53.25" width="54.25" height="46.25"/>
+ </objectgroup>
+</map>

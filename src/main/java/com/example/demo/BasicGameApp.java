@@ -240,17 +240,6 @@ public class BasicGameApp extends GameApplication {
             }
         });
 
-        onKeyDown(KeyCode.K, () -> {
-            setLevelFromMap("house.tmx");
-            player.setPosition(75, 130);
-        });
-
-        FXGL.getInput().addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            if (event.getButton() == MouseButton.PRIMARY) {
-                Point2D clickPoint = new Point2D(event.getX(), event.getY());
-                System.out.println("Clicked at: " + clickPoint);
-            }
-        });
 
     }
 

@@ -148,8 +148,14 @@ public class FightHandler {
 
 
         if(FXGLMath.random(0,10) > 2){
-            playerComponent.changeHealth(-1* (enemyComponent.getAttack() - playerComponent.getDefense()));
-            centerText.setText(centerText.getText()+ "and enemy dealt " + (enemyComponent.getAttack() - playerComponent.getDefense() +" damage"));
+            if ((enemyComponent.getAttack() - playerComponent.getDefense()) > 0){
+                playerComponent.changeHealth(-1* (enemyComponent.getAttack() - playerComponent.getDefense()));
+                centerText.setText(centerText.getText()+ "and enemy dealt " + (enemyComponent.getAttack() - playerComponent.getDefense() +" damage"));
+            }
+            else{
+                centerText.setText(centerText.getText()+ "and enemy dealt no damage");
+            }
+
 
         }
         else{

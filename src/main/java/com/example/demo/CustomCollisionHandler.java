@@ -108,6 +108,11 @@ public class CustomCollisionHandler {
                 LevelChangeHandler.setLevelTo(trigger.getString("to"), player, trigger.getString("spawn name"));
             }
         });
+        FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(GameTypes.PLAYER, GameTypes.WIN_ITEM) {
+            protected void onCollisionBegin(Entity player, Entity winItem) {
+                player.getComponent(PlayerComponent.class).win();
+            }
+        });
 
 
     }

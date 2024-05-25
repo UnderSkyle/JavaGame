@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="40">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="45">
  <tileset firstgid="1" name="TilesetFloor" tilewidth="16" tileheight="16" tilecount="572" columns="22">
   <image source="../../../../../Ninja Adventure - Asset Pack/Backgrounds/Tilesets/TilesetFloor.png" width="352" height="417"/>
  </tileset>
@@ -61,11 +61,11 @@
   <object id="13" type="water" x="40" y="409.333" width="159.333" height="31.3333"/>
   <object id="15" type="water" x="166" y="234.667" width="33.3333" height="204"/>
   <object id="18" type="water" x="41.3333" y="232" width="156.833" height="32.8333"/>
-  <object id="23" type="wall" x="350.667" y="320.667" width="16" height="47.3333"/>
+  <object id="23" type="wall" x="350.667" y="320.667" width="12.375" height="47.3333"/>
   <object id="24" type="wall" x="366.667" y="320.667" width="48" height="10"/>
   <object id="25" type="wall" x="401.333" y="322" width="12" height="44.6667"/>
-  <object id="26" type="wall" x="385.333" y="352" width="28.6667" height="15.3333"/>
-  <object id="27" type="door" x="373.333" y="357.667"/>
+  <object id="26" type="wall" x="387.333" y="352" width="26.6667" height="15.3333"/>
+  <object id="27" type="door" x="369.424" y="353.576"/>
   <object id="32" type="spawnpoint" x="239" y="34">
    <properties>
     <property name="location" value="fromStart"/>
@@ -73,7 +73,7 @@
   </object>
   <object id="33" type="spawnpoint" x="375.5" y="378.5">
    <properties>
-    <property name="location" value="bomb house"/>
+    <property name="location" value="key house front"/>
    </properties>
   </object>
   <object id="34" type="spawnpoint" x="431.5" y="207">
@@ -92,6 +92,18 @@
    <properties>
     <property name="spawn name" value="entrance"/>
     <property name="to" value="cave"/>
+   </properties>
+  </object>
+  <object id="41" type="life potion" x="97.5" y="102.5"/>
+  <object id="42" type="world trigger" x="370.75" y="360" width="10" height="2.75">
+   <properties>
+    <property name="spawn name" value="entrance"/>
+    <property name="to" value="key house"/>
+   </properties>
+  </object>
+  <object id="44" type="enemy2" x="325" y="73.3333">
+   <properties>
+    <property name="health" type="int" value="1"/>
    </properties>
   </object>
  </objectgroup>
