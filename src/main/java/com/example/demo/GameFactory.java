@@ -172,14 +172,14 @@ public class GameFactory implements EntityFactory {
 
 
         Runnable onInteract = () -> {
-            if(player.getComponent(PlayerInventoryComponent.class).hasItem("porche")){
+            if(player.getComponent(PlayerInventoryComponent.class).hasItem("health potion")){
                 npcQuestGuy.removeFromWorld();
-                player.getComponent(PlayerInventoryComponent.class).remove("porche");
-                player.getComponent(PlayerInventoryComponent.class).add("cle");
+                player.getComponent(PlayerInventoryComponent.class).remove("health potion");
+                player.getComponent(PlayerInventoryComponent.class).add("key");
             }
 
         };
-        NPCComponent questGuyCompoenent = new NPCComponent("Si tu as une porche dans ton Inventaire je te donnerai une cle. -Aurelien", onInteract);
+        NPCComponent questGuyCompoenent = new NPCComponent("Si tu as une potion de vie dans ton Inventaire je te donnerai une cle.", onInteract);
 
         npcQuestGuy.addComponent(questGuyCompoenent);
 
@@ -240,6 +240,7 @@ public class GameFactory implements EntityFactory {
                .at(data.getX(), data.getY())
                .viewWithBBox(texture)
                 .with(new UsableItemComponent(onUse, itemData))
+                .with(new CombatItemComponent(onUse, itemData))
                 .collidable()
                .build();
     }
@@ -296,6 +297,7 @@ public class GameFactory implements EntityFactory {
                 .at(data.getX(), data.getY())
                 .viewWithBBox(texture)
                 .with(new UsableItemComponent(onUse, itemData))
+                .with(new CombatItemComponent(onUse, itemData))
                 .collidable()
                 .build();
     }
@@ -327,8 +329,8 @@ public class GameFactory implements EntityFactory {
 
         Map<String, Integer> inventory = new HashMap<>();
         inventory.put("sword", 1);
-        inventory.put("key", 1);
-        inventory.put("health potion", 1);
+        inventory.put("life potion", 4);
+        inventory.put("health potion", 2);
         Map<String, Integer> stats = new HashMap<>();
         stats.put("attack", 20);
         stats.put("defense", 5);

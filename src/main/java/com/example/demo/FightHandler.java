@@ -194,10 +194,9 @@ public class FightHandler {
 
             useButton.setOnAction(e -> {
                 playerInventory.remove(itemName.getText());
-                Entity usableItem = spawn(itemName.getText(), 1000, 1000);
+                Entity usableItem = spawn(itemName.getText(), 10000, 10000);
                 centerText.setText("You used " + itemName.getText());
                 usableItem.getComponent(CombatItemComponent.class).onUse(player);
-                playerInventory.remove(itemName.getText());
                 usableItem.removeFromWorld();
                 enemyTurn();
                 updateStatsText();

@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="47">
  <tileset firstgid="1" name="TilesetWallSimple" tilewidth="16" tileheight="16" tilecount="110" columns="10">
-  <image source="../../../../../Ninja Adventure - Asset Pack/Backgrounds/Tilesets/Interior/TilesetWallSimple.png" width="160" height="176"/>
+  <image source="TilesetWallSimple.png" width="160" height="176"/>
  </tileset>
  <tileset firstgid="111" name="TilesetInterior" tilewidth="16" tileheight="16" tilecount="320" columns="16">
-  <image source="../../../../../Ninja Adventure - Asset Pack/Backgrounds/Tilesets/Interior/TilesetInterior.png" width="256" height="320"/>
+  <image source="TilesetInterior.png" width="256" height="320"/>
  </tileset>
  <tileset firstgid="431" name="TilesetInteriorFloor" tilewidth="16" tileheight="16" tilecount="374" columns="22">
-  <image source="../../../../../Ninja Adventure - Asset Pack/Backgrounds/Tilesets/Interior/TilesetInteriorFloor.png" width="352" height="272"/>
+  <image source="TilesetInteriorFloor.png" width="352" height="272"/>
  </tileset>
  <tileset firstgid="805" name="TilesetElement" tilewidth="16" tileheight="16" tilecount="240" columns="16">
-  <image source="../../../../../Ninja Adventure - Asset Pack/Backgrounds/Tilesets/TilesetElement.png" width="256" height="240"/>
+  <image source="TilesetElement.png" width="256" height="240"/>
  </tileset>
  <tileset firstgid="1045" name="TilesetFloor" tilewidth="16" tileheight="16" tilecount="572" columns="22">
-  <image source="../../../../../Ninja Adventure - Asset Pack/Backgrounds/Tilesets/TilesetFloor.png" width="352" height="417"/>
+  <image source="TilesetFloor.png" width="352" height="417"/>
  </tileset>
  <tileset firstgid="1617" name="TilesetNature" tilewidth="16" tileheight="16" tilecount="504" columns="24">
-  <image source="../../../../../Ninja Adventure - Asset Pack/Backgrounds/Tilesets/TilesetNature.png" width="384" height="336"/>
+  <image source="TilesetNature.png" width="384" height="336"/>
  </tileset>
  <tileset firstgid="2121" name="TilesetHouse" tilewidth="16" tileheight="16" tilecount="759" columns="33">
   <image source="TilesetHouse.png" width="528" height="368"/>

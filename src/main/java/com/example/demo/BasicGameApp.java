@@ -62,8 +62,6 @@ public class BasicGameApp extends GameApplication {
         settings.setSceneFactory(new SceneFactory());
         settings.setTicksPerSecond(60);
         settings.setMainMenuEnabled(true);
-        settings.setDeveloperMenuEnabled(true);
-        settings.setApplicationMode(ApplicationMode.DEVELOPER);
     }
 
 

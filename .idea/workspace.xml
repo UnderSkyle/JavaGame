@@ -9,19 +9,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="450a246a-b8c4-4045-9d6d-b0c01123dc97" name="Changes" comment="added going to new lelvs">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/levels/cave.tmx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/textures/Enemy/skull.png" afterDir="false" />
+    <list default="true" id="450a246a-b8c4-4045-9d6d-b0c01123dc97" name="Changes" comment="finished the game almost">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/levels/key house.tmx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/BasicGameApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/BasicGameApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/CustomCollisionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/CustomCollisionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/FightHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/FightHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/GameFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/GameFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/GameTypes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/GameTypes.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/LevelChangeHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/LevelChangeHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/components/PlayerComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/components/PlayerComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/components/ShopComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/components/ShopComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/levels/cave.tmx" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/levels/cave.tmx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/levels/house.tmx" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/levels/house.tmx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/assets/levels/startLevel.tmx" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/levels/startLevel.tmx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/levels/zone2.tmx" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/levels/zone2.tmx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -215,7 +210,8 @@
       <workItem from="1716560551239" duration="82000" />
       <workItem from="1716564870271" duration="52000" />
       <workItem from="1716564928635" duration="3206000" />
-      <workItem from="1716622097513" duration="2457000" />
+      <workItem from="1716622097513" duration="2701000" />
+      <workItem from="1716643935217" duration="604000" />
     </task>
     <task id="LOCAL-00001" summary="setup">
       <option name="closed" value="true" />
@@ -401,7 +397,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716568474215</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="finished the game almost">
+      <option name="closed" value="true" />
+      <created>1716624796098</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1716624796098</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -437,7 +441,8 @@
     <MESSAGE value="Added map support (no support for items that interact with the plauer tho)" />
     <MESSAGE value="removed a lot of warnings (if it breaks go back to here)" />
     <MESSAGE value="added going to new lelvs" />
-    <option name="LAST_COMMIT_MESSAGE" value="added going to new lelvs" />
+    <MESSAGE value="finished the game almost" />
+    <option name="LAST_COMMIT_MESSAGE" value="finished the game almost" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
