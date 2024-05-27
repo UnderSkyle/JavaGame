@@ -10,13 +10,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="450a246a-b8c4-4045-9d6d-b0c01123dc97" name="Changes" comment="finished the game almost">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/levels/key house.tmx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/demo_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/demo_jar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/CustomCollisionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/CustomCollisionHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/FightHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/FightHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/GameFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/GameFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/levels/cave.tmx" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/levels/cave.tmx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/levels/house.tmx" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/levels/house.tmx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/levels/startLevel.tmx" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/levels/startLevel.tmx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/components/EnemyComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/components/EnemyComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/components/PlayerComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/components/PlayerComponent.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,12 +44,12 @@
     &quot;assignee&quot;: &quot;UnderSkyle&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/UnderSkyle/JavaGame&quot;,
-    &quot;accountId&quot;: &quot;e1042283-646b-4fda-b9d3-a6f02e4f0bf3&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/UnderSkyle/JavaGame.git",
+    "accountId": "868be4df-b09e-4d44-ac0d-42ce3ebedf2e"
   }
-}</component>
+}]]></component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/src/main/java/com/example/demo/components/ItemComponent.java" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -65,7 +65,9 @@
   &quot;associatedIndex&quot;: 3
 }</component>
   <component name="ProjectId" id="2fUT0Y5GOU4IkK3bfFLL9qkB7tx" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -158,8 +160,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.15989.150" />
-        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-IU-241.15989.150" />
+        <option value="bundled-jdk-9f38398b9061-18abd8497189-intellij.indexing.shared.core-IU-241.14494.240" />
+        <option value="bundled-js-predefined-1d06a55b98c1-74d2a5396914-JavaScript-IU-241.14494.240" />
       </set>
     </attachedChunks>
   </component>

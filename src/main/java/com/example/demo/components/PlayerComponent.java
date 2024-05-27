@@ -34,7 +34,7 @@ public class PlayerComponent extends Component {
     private final AnimatedTexture texture = texture("Player/DownWalk.png").toAnimatedTexture(4, Duration.seconds(2));
     private String currentDirection = "idleDown";
     private boolean isAnimationPlaying = true;
-    private int tickDamage;
+    private int tickDamage = 0;     //This is a type of self damage
 
     private final Map<String, Integer> status = new HashMap<>();
 
@@ -233,4 +233,6 @@ public class PlayerComponent extends Component {
         getGameTimer().runOnceAfter( () -> FXGL.getGameController().gotoMainMenu(), Duration.millis(50));
 
     }
+
+
 }

@@ -19,6 +19,7 @@ public class EnemyComponent extends Component {
     private Map<String, Integer> inventory;
     private Map<String, Integer> stats;
     private int health = 100;
+    private int tickDamage = 0;
 
     public EnemyComponent(Map<String, Integer> inventory, Map<String, Integer> stats, int health ) {
         this.inventory = inventory;
@@ -98,5 +99,13 @@ public class EnemyComponent extends Component {
             i++;
         }
         return null;
+    }
+
+    public int getTickDamage() {
+        return tickDamage;
+    }
+
+    public void setTickDamage(int tickDamage) {
+        this.tickDamage = tickDamage;
     }
 }
