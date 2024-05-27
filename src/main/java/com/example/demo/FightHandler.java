@@ -118,10 +118,14 @@ public class FightHandler {
         // Placeholder for attack logic
         System.out.println("Attack!");
         if (playerComponent.getAttack() - enemyComponent.getDefense() > 0){
-            enemyComponent.addHealth( -1 * (playerComponent.getAttack() - enemyComponent.getDefense()));
-            centerText.setText("Player dealt " + (playerComponent.getAttack() - enemyComponent.getDefense() + " damage to the enemy"));
+            enemyComponent.addHealth( -1 * (playerComponent.getAttack() - enemyComponent.getDefense() + enemyComponent.getTickDamage()));
+            centerText.setText("Player dealt " + (playerComponent.getAttack() - enemyComponent.getDefense()  + enemyComponent.getTickDamage() + " damage to the enemy"));
         }
         else{
+            if(enemyComponent.getTickDamage() > 0){
+                enemyComponent.addHealth( -1 * enemyComponent.getTickDamage());
+                centerText.setText("Enemy took " + enemyComponent.getTickDamage() + "damage ");
+            }
             centerText.setText("Player dealt no damage ... maybe you should use an item");
         }
         checkIfCombatEnd();
@@ -150,7 +154,7 @@ public class FightHandler {
         if(FXGLMath.random(0,10) > 2){
             if ((enemyComponent.getAttack() - playerComponent.getDefense()) > 0){
                 playerComponent.changeHealth(-1* (enemyComponent.getAttack() - playerComponent.getDefense()));
-                centerText.setText(centerText.getText()+ "and enemy dealt " + (enemyComponent.getAttack() - playerComponent.getDefense() +" damage"));
+                centerText.setText(centerText.getText()+ "and enemy dealt " + (enemyComponent.getAttack() - playerComponent.getDefense() + playerComponent.getTickDamage()+" damage"));
             }
             else{
                 centerText.setText(centerText.getText()+ "and enemy dealt no damage");

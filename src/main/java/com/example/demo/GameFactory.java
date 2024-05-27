@@ -31,7 +31,7 @@ public class GameFactory implements EntityFactory {
 
     
 
-    @Spawns("player")
+    @Spawns("player") //This is ne main player
     public Entity spawnPlayer(SpawnData data) {
         return entityBuilder(data)
                .type(PLAYER)
@@ -45,7 +45,7 @@ public class GameFactory implements EntityFactory {
                .build();
     }
 
-    @Spawns("coin")
+    @Spawns("coin") // A coin item that gives you +5 coin
     public Entity spawnCoin(SpawnData data) {
         AnimatedTexture tex = texture("Items/Coin2.png").toAnimatedTexture(4, Duration.millis(500));
         tex.loop();
@@ -57,7 +57,7 @@ public class GameFactory implements EntityFactory {
                 .build();
     }
 
-    @Spawns("wall")
+    @Spawns("wall") // Simple wall
     public Entity spawnWall(SpawnData data) {
         int width = data.get("width");
         int height = data.get("height");
@@ -72,7 +72,7 @@ public class GameFactory implements EntityFactory {
                 .build();
     }
 
-    @Spawns("trigger")
+    @Spawns("trigger") // that teleports you to a specific location
     public Entity spawnTrigger(SpawnData data) {
         int width = data.get("width");
         int height = data.get("height");
@@ -85,7 +85,7 @@ public class GameFactory implements EntityFactory {
                 .build();
     }
 
-    @Spawns("removable wall")
+    @Spawns("removable wall") //wall that can be removed by an item
     public Entity spawnRemovableWall(SpawnData data) {
 
         int width = data.get("width");
@@ -100,7 +100,7 @@ public class GameFactory implements EntityFactory {
                .build();
     }
 
-    @Spawns("door")
+    @Spawns("door") // Open with collision if you have an item in your inventory
     public Entity spawnDoor(SpawnData data) {
 
         Texture doorTexture = texture("Door.png", 32, 16);
@@ -266,12 +266,23 @@ public class GameFactory implements EntityFactory {
             // Update the player's stats
             playerComponent.updateStats(changeStatus);
         };
+        Runnable onDrop = () -> {
+            // Get the player entity
+            Entity player = getGameWorld().getSingleton(PLAYER);
+            // Get the player component
+            PlayerComponent playerComponent = player.getComponent(PlayerComponent.class);
+
+            Map<String, Integer> statusChangeWhenDroped = new HashMap<>();
+            statusChangeWhenDroped.put("attack", -5);
+
+            playerComponent.updateStats(statusChangeWhenDroped);
+        };
 
         return  entityBuilder(data)
                 .type(EQUIPPED_ITEM)
                 .at(data.getX(), data.getY())
                 .viewWithBBox(texture)
-                .with(new EquipedItemComponent(itemData, onUse))
+                .with(new EquipedItemComponent(itemData, onUse, onDrop))
                 .collidable()
                 .build();
     }

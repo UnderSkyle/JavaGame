@@ -5,6 +5,7 @@ import com.almasb.fxgl.physics.CollisionHandler;
 import com.example.demo.components.*;
 import javafx.geometry.Point2D;
 
+import static com.almasb.fxgl.dsl.FXGLForKtKt.getDialogService;
 
 
 public class CustomCollisionHandler {
@@ -19,6 +20,9 @@ public class CustomCollisionHandler {
                     if(player.getComponent(PlayerInventoryComponent.class).hasItem("key")){
                         wall.getComponent(DoorComponent.class).openDoor();
                         player.getComponent(PlayerInventoryComponent.class).remove("key");
+                    }
+                    else{
+                        getDialogService().showMessageBox("You need a key to open the door");
                     }
                 } else if (wall.hasComponent(WaterComponent.class)){
                     if(player.getComponent(PlayerInventoryComponent.class).hasItem("raft")){
