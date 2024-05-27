@@ -162,16 +162,24 @@ public class FightHandler {
 
 
         }
-        else{
-            Entity enemyItem = enemyComponent.getRandomItem();
-            if( enemyItem == null){
-                centerText.setText(centerText.getText()+ " and Enemy failed it's attack");
+        else {
+            Entity enemyItem = null;
+            if (enemyComponent.getInventory().isEmpty()) {
             }
-            else{
+            else
+            {
+                enemyItem = enemyComponent.getRandomItem();
+
+
+            }
+            if (enemyItem == null) {
+                centerText.setText(centerText.getText() + " and Enemy failed it's attack");
+            } else {
                 enemyItem.getComponent(CombatItemComponent.class).onUse(player);
                 enemyItem.removeFromWorld();
-                centerText.setText(centerText.getText()+ " and Enemy used an item");
+                centerText.setText(centerText.getText() + " and Enemy used an item");
             }
+
 
         }
         updateStatsText();

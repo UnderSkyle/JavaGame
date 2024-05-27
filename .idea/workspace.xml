@@ -11,7 +11,18 @@
   <component name="ChangeListManager">
     <list default="true" id="450a246a-b8c4-4045-9d6d-b0c01123dc97" name="Changes" comment="Some changes before the DS">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/BasicGameApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/BasicGameApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/CustomCollisionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/CustomCollisionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/FightHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/FightHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/GameFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/GameFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/GameTypes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/GameTypes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/LevelChangeHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/LevelChangeHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/PlayerInventoryView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/PlayerInventoryView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/components/EnemyComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/components/EnemyComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/components/NPCComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/components/NPCComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/components/PlayerComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/components/PlayerComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/components/PlayerInventoryComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/components/PlayerInventoryComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/levels/startLevel.tmx" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/levels/startLevel.tmx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -209,7 +220,7 @@
       <workItem from="1716564928635" duration="3206000" />
       <workItem from="1716622097513" duration="2701000" />
       <workItem from="1716643935217" duration="604000" />
-      <workItem from="1716809643379" duration="773000" />
+      <workItem from="1716809643379" duration="11759000" />
     </task>
     <task id="LOCAL-00001" summary="setup">
       <option name="closed" value="true" />
@@ -411,7 +422,23 @@
       <option name="project" value="LOCAL" />
       <updated>1716805482073</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="Some changes before the DS">
+      <option name="closed" value="true" />
+      <created>1716810573151</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1716810573151</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Some changes before the DS">
+      <option name="closed" value="true" />
+      <created>1716810859351</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1716810859351</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

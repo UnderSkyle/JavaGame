@@ -51,7 +51,15 @@ public class PlayerInventoryComponent extends Component {
     public boolean isFull() {
         // Define your logic for determining if the inventory is full
         // For example, you can check the total number of items in the inventory
-        return inventory.size() >= MAX_INVENTORY_SIZE;
+        int itemCount = 0;
+        for (Map.Entry<String, Integer> entry : inventory.entrySet()) {
+            itemCount += entry.getValue();
+        }
+
+        System.out.println("The inventory is  full");
+
+        return itemCount >= MAX_INVENTORY_SIZE;
+
     }
 
 
@@ -64,7 +72,7 @@ public class PlayerInventoryComponent extends Component {
     }
 
     // Define the maximum size of the inventory
-    private static final int MAX_INVENTORY_SIZE = 20;
+    private static final int MAX_INVENTORY_SIZE = 5;
 
     public boolean hasItem(String key) {
         return inventory.containsKey(key);

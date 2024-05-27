@@ -108,4 +108,12 @@ public class EnemyComponent extends Component {
     public void setTickDamage(int tickDamage) {
         this.tickDamage = tickDamage;
     }
+
+    public void setHealth(int i) {
+        this.health = i;
+    }
+
+    public Map<String, Integer> getInventory() {
+        return inventory;
+    }
 }

@@ -87,6 +87,9 @@ public class PlayerComponent extends Component {
         healthBar.setMaxValue(getMaxHealth());
         healthBar.setWidth(getMaxHealth());
         coinCounter.setText(String.valueOf(this.cointCount));
+        if(getCurrentHealth() > getMaxHealth()){
+            setCurrentHealth(getMaxHealth());
+        }
 
         switch (currentDirection) {
             case "right" -> {
@@ -197,6 +200,7 @@ public class PlayerComponent extends Component {
     public void addTickDamage(int i) {
         this.tickDamage = this.tickDamage + i;
     }
+
 
     public Text getCoinCount() {
 

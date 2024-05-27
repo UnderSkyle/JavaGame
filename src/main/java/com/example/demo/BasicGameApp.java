@@ -107,7 +107,18 @@ public class BasicGameApp extends GameApplication {
         GameFactory gameFactory = new GameFactory();
         getGameWorld().addEntityFactory(gameFactory);
         player = spawn("player");
-        LevelChangeHandler.setLevelTo("house", player, "house");
+        LevelChangeHandler.setLevelTo("startLevel", player, "dsSpawn");
+        LevelChangeHandler.removeSpawnPoint("dsSpawn");
+
+        player.getComponent(PlayerInventoryComponent.class).add("404");
+        player.getComponent(PlayerInventoryComponent.class).add("item 4");
+        player.getComponent(PlayerInventoryComponent.class).add("ender pearl");
+        player.getComponent(PlayerInventoryComponent.class).add("item 2");
+        player.getComponent(PlayerInventoryComponent.class).add("item 1");
+
+
+
+
 
         getGameWorld().addEntity(player);
 
@@ -228,9 +239,14 @@ public class BasicGameApp extends GameApplication {
                     item.getComponent(UsableItemComponent.class).onDrop(player.getPosition(), nameOfItem);
                     player.getComponent(PlayerInventoryComponent.class).remove(item.getComponent(UsableItemComponent.class).getName());
                 }
-                else{
+                else if(item.hasComponent(EquipedItemComponent.class)){
                     item.getComponent(EquipedItemComponent.class).onDrop(player.getPosition(), nameOfItem);
                     player.getComponent(PlayerInventoryComponent.class).remove(item.getComponent(EquipedItemComponent.class).getName());
+
+                }
+                else if(item.hasComponent(CombatItemComponent.class)){
+                    item.getComponent(CombatItemComponent.class).onDrop(player.getPosition(), nameOfItem);
+                    player.getComponent(PlayerInventoryComponent.class).remove(item.getComponent(CombatItemComponent.class).getName());
 
                 }
                 item.removeFromWorld();
@@ -238,6 +254,9 @@ public class BasicGameApp extends GameApplication {
             }
         });
 
+        onKeyDown(KeyCode.K, () -> {
+            System.out.println(playerComponent.getInventoryView());
+        });
 
     }
 

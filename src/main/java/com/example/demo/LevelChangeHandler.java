@@ -43,4 +43,8 @@ public abstract class LevelChangeHandler {
         System.out.println("height is " + getGameScene().getHeight());
         return (int) getGameScene().getHeight();
     }
+
+    public static void removeSpawnPoint(String dsSpawn) {
+        getCorrectSpawnPoint(dsSpawn).removeFromWorld();
+    }
 }

@@ -120,6 +120,13 @@ public class CustomCollisionHandler {
                 player.getComponent(PlayerComponent.class).win();
             }
         });
+        FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(GameTypes.PLAYER, GameTypes.DS_NPC) {
+            @Override
+            protected void onCollisionBegin(Entity player, Entity npc){
+                npc.getComponent(DsNPCComponent.class).interact();
+                player.setPosition(npc.getX(), npc.getY()+30);
+            }
+        });
 
 
     }

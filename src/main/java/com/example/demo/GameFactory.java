@@ -1,6 +1,8 @@
 package com.example.demo;
 
 import com.almasb.fxgl.audio.Music;
+import com.almasb.fxgl.core.collection.Array;
+import com.almasb.fxgl.core.math.FXGLMath;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
@@ -22,8 +24,10 @@ import javafx.util.Duration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
+import static com.almasb.fxgl.dsl.FXGLForKtKt.getGameWorld;
 import static com.example.demo.BasicGameApp.CELL_SIZE;
 import static com.example.demo.GameTypes.*;
 
@@ -339,9 +343,6 @@ public class GameFactory implements EntityFactory {
         Texture tex = texture("Enemy/Octopus.png");
 
         Map<String, Integer> inventory = new HashMap<>();
-        inventory.put("sword", 1);
-        inventory.put("life potion", 4);
-        inventory.put("health potion", 2);
         Map<String, Integer> stats = new HashMap<>();
         stats.put("attack", 20);
         stats.put("defense", 5);
@@ -517,13 +518,191 @@ public class GameFactory implements EntityFactory {
 
     @Spawns("404")
     public Entity spawn404(SpawnData data) {
-        int width = data.get("width");
-        int height = data.get("height");
+        Map<String, Object> itemData = new HashMap<>();
+        itemData.put("name", "404");
+        Texture texture = texture("""
+                       Items/Coin2.png""");
+
+        Runnable onUse = () -> {
+
+            PlayerComponent playerComponent = getGameWorld().getSingleton(PLAYER).getComponent(PlayerComponent.class);
+            playerComponent.win();
+        };
 
         return  entityBuilder(data)
-                .type(WIN_ITEM)
+                .type(USABLE_ITEM)
                 .at(data.getX(), data.getY())
-                .viewWithBBox(new Rectangle(width, height, Color.HOTPINK))
+                .viewWithBBox(texture)
+                .with(new UsableItemComponent(onUse, itemData))
+                .collidable()
+                .build();
+
+    }
+
+    @Spawns("ender pearl")
+    public Entity spawnEnderPearl(SpawnData data) {
+
+        Map<String, Object> itemData = new HashMap<>();
+        itemData.put("name", "ender pearl");
+        Texture texture = texture("""
+                       Items/key.png""");
+
+        Runnable onUse = () -> {
+            Entity player = getGameWorld().getSingleton(PLAYER);
+            PlayerComponent playerComponent = getGameWorld().getSingleton(PLAYER).getComponent(PlayerComponent.class);
+            List<Entity> spanPointList =getGameWorld().getEntitiesByType(SPAWNPOINT);
+
+            Random random = new Random();
+            Entity spawnPoint = spanPointList.get(random.nextInt(spanPointList.size()));
+
+            int offsetX = FXGLMath.random(-50,50);
+            int offsetY = FXGLMath.random(-50,50);
+
+
+
+            playerComponent.yeet(new Point2D(spawnPoint.getX() + offsetX, spawnPoint.getY() + offsetY));
+            FXGL.runOnce(() -> {
+                // Action to be performed after 2 seconds
+                player.getComponent(PlayerInventoryComponent.class).add("ender pearl");
+            }, Duration.millis(20));
+
+
+        };
+
+        return  entityBuilder(data)
+                .type(USABLE_ITEM)
+                .at(data.getX(), data.getY())
+                .viewWithBBox(texture)
+                .with(new UsableItemComponent(onUse, itemData))
+                .collidable()
+                .build();
+
+    }
+
+    @Spawns("ds npc")
+    public Entity SpawnDSNPC(SpawnData data) {
+        Texture texture = texture("NPCS/StandardNPC.png");
+        NPCComponent ncpComponent;
+
+        Map<String,Integer> inventory = new HashMap<String,Integer>();
+        if(((int)data.get("type") == 1)){
+            inventory.put("ender pearl", 1);
+            inventory.put("item 4", 3);
+        }
+        if((int)data.get("type") == 2){
+            inventory.put("404", 1);
+            inventory.put("item 2", 1);
+        }
+
+        ncpComponent = new DsNPCComponent(data.get("text"), inventory);
+
+
+        return  entityBuilder(data)
+                .type(DS_NPC)
+                .at(data.getX(), data.getY())
+                .viewWithBBox(texture)
+                .collidable()
+                .with(ncpComponent)
+                .build();
+    }
+
+    @Spawns("item 4")
+    public Entity spawnitem4(SpawnData data) {
+        Texture tex = texture("Items/fire scroll.png");
+        tex.setScaleX(2);
+        tex.setScaleY(2);
+        Map<String, Object> itemData = new HashMap<>();
+        itemData.put("name", "item 4");
+        Runnable onCombatUse = new Runnable(){
+
+            @Override
+            public void run() {
+
+                Entity player = getGameWorld().getSingleton(PLAYER);
+                List<Entity> enemy = getGameWorld().getEntitiesByComponent(InCombatComponent.class); //Singloton
+
+                player.getComponent(PlayerComponent.class).changeHealth(enemy.get(0).getComponent(EnemyComponent.class).getCurrentHealth());
+                enemy.get(0).getComponent(EnemyComponent.class).setHealth(0);
+
+                FXGL.runOnce(() -> {
+                    // Action to be performed after 2 seconds
+                    player.getComponent(PlayerInventoryComponent.class).add("item 4");
+                }, Duration.millis(40));
+
+
+            }
+        };
+
+        return entityBuilder(data)
+                .type(COMBAT_ITEM)
+                .at(data.getX(), data.getY())
+                .viewWithBBox(tex)
+                .with(new CombatItemComponent(onCombatUse, itemData))
+                .collidable()
+                .build();
+    }
+
+    @Spawns("item 1")
+    public Entity spawnitem1(SpawnData data) {
+        Texture tex = texture("Items/life potion.png");
+        tex.setScaleX(2);
+        tex.setScaleY(2);
+        Map<String, Object> itemData = new HashMap<>();
+        itemData.put("name", "item 1");
+        Runnable onUse = new Runnable(){
+
+            @Override
+            public void run() {
+                List<Entity> enemy = getGameWorld().getEntitiesByComponent(MetNPCComponent.class); //Array
+                Entity player = getGameWorld().getSingleton(PLAYER);
+                SelectMetNPCView view = new SelectMetNPCView();
+                view.show(player.getX(), player.getY(), 1);
+                if(getGameWorld().getEntitiesByComponent(MetNPCComponent.class).isEmpty()){
+                    FXGL.runOnce(() -> {
+                        // Action to be performed after 2 seconds
+                        player.getComponent(PlayerInventoryComponent.class).add("item 1");
+                    }, Duration.millis(30));
+                }
+            }
+        };
+
+        return entityBuilder(data)
+                .type(USABLE_ITEM)
+                .at(data.getX(), data.getY())
+                .viewWithBBox(tex)
+                .with(new UsableItemComponent(onUse, itemData))
+                .collidable()
+                .build();
+    }
+    @Spawns("item 2")
+    public Entity spawnitem2(SpawnData data) {
+        Texture tex = texture("Items/health potion.png");
+        tex.setScaleX(2);
+        tex.setScaleY(2);
+        Map<String, Object> itemData = new HashMap<>();
+        itemData.put("name", "item 2");
+        Runnable onUse = new Runnable(){
+
+            @Override
+            public void run() {
+                List<Entity> enemy = getGameWorld().getEntitiesByComponent(MetNPCComponent.class); //Array
+                Entity player = getGameWorld().getSingleton(PLAYER);
+                SelectMetNPCView view = new SelectMetNPCView();
+                view.show(player.getX(), player.getY(), 2);
+                if(getGameWorld().getEntitiesByComponent(MetNPCComponent.class).isEmpty()){
+                    FXGL.runOnce(() -> {
+                        // Action to be performed after 2 seconds
+                        player.getComponent(PlayerInventoryComponent.class).add("item 2");
+                    }, Duration.millis(30));
+                }
+            }
+        };
+
+        return entityBuilder(data)
+                .type(USABLE_ITEM)
+                .at(data.getX(), data.getY())
+                .viewWithBBox(tex)
+                .with(new UsableItemComponent(onUse, itemData))
                 .collidable()
                 .build();
     }

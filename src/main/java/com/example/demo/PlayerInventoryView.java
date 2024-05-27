@@ -189,6 +189,23 @@ public class PlayerInventoryView extends GridPane{
 
             String name = entry.getKey();
             Texture texture = texture("Items/" +name +".png");
+            if(name.equals("ender pearl")){
+                texture = texture("Items/key.png");
+
+            }
+            if(name.equals("404")){
+                texture = texture("Items/Coin2.png");
+            }
+            if(name.equals("item 4")){
+                texture = texture("Items/fire scroll.png");
+            }
+            if(name.equals("item 1")){
+                texture = texture("Items/life potion.png");
+            }
+            if(name.equals("item 2")){
+                texture = texture("Items/health potion.png");
+            }
+
             if(Objects.equals(name, "bomb")){
                 texture.setFitHeight(16);
                 texture.setFitWidth(16);

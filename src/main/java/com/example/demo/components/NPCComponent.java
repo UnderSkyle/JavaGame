@@ -12,7 +12,7 @@ public class NPCComponent extends Component {
         public void run() {
         }
     };
-    private final String message;
+    private String message;
 
     public NPCComponent(String message, Runnable onInteract) {
         this.onInteract = onInteract;
@@ -25,6 +25,13 @@ public class NPCComponent extends Component {
 
     public void interact(){
         getDialogService().showMessageBox(message, onInteract);
+    }
+
+    public String getMessage() {
+        return message;
+    }
+    public void setMessage(String message){
+        this.message = message;
     }
 
 }

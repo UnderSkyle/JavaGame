@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="47">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="63">
  <tileset firstgid="1" name="TilesetWallSimple" tilewidth="16" tileheight="16" tilecount="110" columns="10">
   <image source="TilesetWallSimple.png" width="160" height="176"/>
  </tileset>
@@ -95,6 +95,33 @@
     <property name="location" value="startLevelForest"/>
    </properties>
   </object>
+  <object id="47" type="spawnpoint" x="168.594" y="117.198">
+   <properties>
+    <property name="location" value="dsSpawn"/>
+   </properties>
+  </object>
+  <object id="49" type="ds npc" x="237.901" y="66.9704">
+   <properties>
+    <property name="text" value="placeHolder"/>
+    <property name="type" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="51" type="ds npc" x="104.349" y="64.2448">
+   <properties>
+    <property name="text" value="placeHolder"/>
+    <property name="type" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="53" type="item 1" x="66.581" y="166.647"/>
+  <object id="54" type="item 2" x="149.126" y="204.026"/>
+  <object id="55" type="item 1" x="82.9342" y="114.083"/>
+  <object id="56" type="item 1" x="99.2875" y="170.541"/>
+  <object id="57" type="item 1" x="84.1023" y="235.954"/>
+  <object id="58" type="item 1" x="165.868" y="280.341"/>
+  <object id="59" type="item 2" x="202.469" y="196.628"/>
+  <object id="60" type="item 2" x="251.918" y="161.196"/>
+  <object id="61" type="item 2" x="296.305" y="106.296"/>
+  <object id="62" type="item 2" x="291.633" y="195.071"/>
  </objectgroup>
  <layer id="4" name="Calque de Tuiles 2" width="30" height="30">
   <data encoding="csv">
