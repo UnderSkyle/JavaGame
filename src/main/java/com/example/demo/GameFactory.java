@@ -251,7 +251,7 @@ public class GameFactory implements EntityFactory {
         Map<String, Object> itemData = new HashMap<>();
         itemData.put("name", "sword");
         Map<String, Integer> statusChange = new HashMap<>();
-        statusChange.put("attack", 5);
+        statusChange.put("attack", 20);
         itemData.put("changeStatus", statusChange);
         Texture texture = texture("""
                        Items/sword.png""");

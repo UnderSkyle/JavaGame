@@ -85,8 +85,11 @@ public class CustomCollisionHandler {
         FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(GameTypes.PLAYER, GameTypes.EQUIPPED_ITEM) {
             @Override
             protected void onCollisionBegin(Entity player, Entity item){
-                item.getComponent(EquipedItemComponent.class).onPickup(player);
-                item.getComponent(EquipedItemComponent.class).onUse(player);
+                if(!player.getComponent(PlayerInventoryComponent.class).hasItem(item.getComponent(EquipedItemComponent.class).getName())){
+                    item.getComponent(EquipedItemComponent.class).onPickup(player);
+                    item.getComponent(EquipedItemComponent.class).onUse(player);
+                }
+
             }
         });
         FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(GameTypes.PLAYER, GameTypes.COMBAT_ITEM) {
